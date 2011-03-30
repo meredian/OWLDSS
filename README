@@ -1,0 +1,5 @@
+Installation instructions
+
+1) Run Eclipse
+2) Create java project from existing source
+3) Add external JAR "HermiT.jar" from libs/ to the project

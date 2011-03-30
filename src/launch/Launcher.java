@@ -122,9 +122,9 @@ public class Launcher {
             
             ShortFormProvider shortFormProvider = new SimpleShortFormProvider();
 
-            DLQueryPrinter dlQueryPrinter = new DLQueryPrinter( reasoner, shortFormProvider );
+/*            DLQueryPrinter dlQueryPrinter = new DLQueryPrinter( reasoner, shortFormProvider );
 
-            doQueryLoop( dlQueryPrinter );
+            doQueryLoop( dlQueryPrinter );*/
             
         }
         catch ( OWLOntologyCreationException e ) {
@@ -132,13 +132,10 @@ public class Launcher {
         }
         catch ( OWLOntologyStorageException e ) {
             System.out.println( "Could not save ontology: " + e.getMessage() );
-        } catch ( IOException e ) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        }
 	}
 	
-	private static void doQueryLoop( DLQueryPrinter dlQueryPrinter ) throws IOException {
+	/*private static void doQueryLoop( DLQueryPrinter dlQueryPrinter ) throws IOException {
 		while (true) {
 		    // Prompt the user to enter a class expression
 		    System.out.println("Please type a class expression in Manchester Syntax");
@@ -152,7 +149,7 @@ public class Launcher {
 	        System.out.println();
 	        System.out.println();
 	    }	
-	}
+	}*/
 	
 	private static String readInput() throws IOException {
 	    InputStream is = System.in;
