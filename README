@@ -2,4 +2,17 @@ Installation instructions
 
 1) Run Eclipse
 2) Create java project from existing source
-3) Add external JAR "HermiT.jar" from libs/ to the project
+3) Add JAR "HermiT.jar" from libs/ to the project
+
+ SEMP INSTALLATION
+======================================
+ 1) cp path/to/semp .wine/drive_c
+ 2) wine regsvr32 .wine/drive_c/semp/SempEngineAPI.dll
+ 3) run wine configuration -> libs, add Msvcp60d.dll, Msvcrtd.dll, Msvcirtd.dll as exported, build-in libs
+ 4) cp Msvc* ../windows/system32/
+ 5) wine regedit
+ 6) add "C:\semp" to HKLM\System\CurrentCotrolSet\Control\SessionManager\Environment\Path
+ 7) ...
+ 8) wine cmd && run "!.bat" in module directory to compile it
+ 9) wine pmc EfficiencyTrendAnalysis_Launcher.pm | iconv -f CP1251 -t UTF8 !!!
+
