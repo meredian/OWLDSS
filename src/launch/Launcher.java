@@ -37,6 +37,7 @@ import org.semanticweb.owlapi.vocab.OWLFacet;
 import owlobjects.OWLClassObject;
 import owlobjects.OWLIndividualObject;
 import owlobjects.OWLOntologyObjectShell;
+import semp.SempAdapter;
 
 
 public class Launcher {
