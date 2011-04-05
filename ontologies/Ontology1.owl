@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY Ontology1301989440157 "http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#"
+     xml:base="http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:Ontology1301989440157="http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#">
+    <owl:Ontology rdf:about=""/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasPresentation -->
+
+    <owl:ObjectProperty rdf:about="#HasPresentation">
+        <rdfs:range rdf:resource="#Presentation"/>
+        <rdfs:domain rdf:resource="#TaskResult"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasPumpAnalysisResult -->
+
+    <owl:ObjectProperty rdf:about="#HasPumpAnalysisResult">
+        <rdfs:subPropertyOf rdf:resource="#HasResult"/>
+        <rdfs:range rdf:resource="#PumpAnalysisResult"/>
+        <rdfs:domain rdf:resource="#PumpAnalysisTask"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasResult -->
+
+    <owl:ObjectProperty rdf:about="#HasResult">
+        <rdfs:domain rdf:resource="#Task"/>
+        <rdfs:range rdf:resource="#TaskResult"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Imports -->
+
+    <owl:ObjectProperty rdf:about="#Imports">
+        <rdfs:domain rdf:resource="#SolvingMethod"/>
+        <rdfs:range rdf:resource="#SubjectArea"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Solves -->
+
+    <owl:ObjectProperty rdf:about="#Solves">
+        <rdfs:domain rdf:resource="#SolvingMethod"/>
+        <rdfs:range rdf:resource="#Task"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SolvesPumpAnalysisTask -->
+
+    <owl:ObjectProperty rdf:about="#SolvesPumpAnalysisTask">
+        <rdfs:domain rdf:resource="#PumpAnalysisSolvingMethod"/>
+        <rdfs:range rdf:resource="#PumpAnalysisTask"/>
+        <rdfs:subPropertyOf rdf:resource="#Solves"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SupportsPresentation -->
+
+    <owl:ObjectProperty rdf:about="#SupportsPresentation">
+        <rdfs:domain rdf:resource="#ExportingMethod"/>
+        <rdfs:range rdf:resource="#Presentation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SupportsTablePresentation -->
+
+    <owl:ObjectProperty rdf:about="#SupportsTablePresentation">
+        <rdfs:subPropertyOf rdf:resource="#SupportsPresentation"/>
+        <rdfs:domain rdf:resource="#TableExportingMethod"/>
+        <rdfs:range rdf:resource="#TablePresentation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#ImporterClass -->
+
+    <owl:DatatypeProperty rdf:about="#ImporterClass">
+        <rdfs:domain rdf:resource="#SolvingMethod"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpIdentifier -->
+
+    <owl:DatatypeProperty rdf:about="#PumpIdentifier">
+        <rdfs:domain rdf:resource="#PumpAnalysisTask"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SolverClass -->
+
+    <owl:DatatypeProperty rdf:about="#SolverClass">
+        <rdfs:domain rdf:resource="#SolvingMethod"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Equipment -->
+
+    <owl:Class rdf:about="#Equipment">
+        <rdfs:subClassOf rdf:resource="#SubjectArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#ExportingMethod -->
+
+    <owl:Class rdf:about="#ExportingMethod">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#SupportsPresentation"/>
+                <owl:someValuesFrom rdf:resource="#Presentation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#SubjectArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Presentation -->
+
+    <owl:Class rdf:about="#Presentation">
+        <owl:disjointWith rdf:resource="#SubjectArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Pump -->
+
+    <owl:Class rdf:about="#Pump">
+        <rdfs:subClassOf rdf:resource="#Equipment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisResult -->
+
+    <owl:Class rdf:about="#PumpAnalysisResult">
+        <rdfs:subClassOf rdf:resource="#SemanticTaskResults"/>
+        <rdfs:subClassOf rdf:resource="#TaskResult"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSolvingMethod -->
+
+    <owl:Class rdf:about="#PumpAnalysisSolvingMethod">
+        <rdfs:subClassOf rdf:resource="#SolvingMethod"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisTask -->
+
+    <owl:Class rdf:about="#PumpAnalysisTask">
+        <rdfs:subClassOf rdf:resource="#Task"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SemanticTaskResults -->
+
+    <owl:Class rdf:about="#SemanticTaskResults">
+        <rdfs:subClassOf rdf:resource="#TaskResult"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#HasPresentation"/>
+                <owl:onClass rdf:resource="#StringPresentation"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SolvingMethod -->
+
+    <owl:Class rdf:about="#SolvingMethod">
+        <owl:disjointWith rdf:resource="#SubjectArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#StringPresentation -->
+
+    <owl:Class rdf:about="#StringPresentation">
+        <rdfs:subClassOf rdf:resource="#Presentation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SubjectArea -->
+
+    <owl:Class rdf:about="#SubjectArea">
+        <owl:disjointWith rdf:resource="#Task"/>
+        <owl:disjointWith rdf:resource="#TaskResult"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TableExportingMethod -->
+
+    <owl:Class rdf:about="#TableExportingMethod">
+        <rdfs:subClassOf rdf:resource="#ExportingMethod"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#SupportsTablePresentation"/>
+                <owl:someValuesFrom rdf:resource="#TablePresentation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TablePresentation -->
+
+    <owl:Class rdf:about="#TablePresentation">
+        <rdfs:subClassOf rdf:resource="#Presentation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Task -->
+
+    <owl:Class rdf:about="#Task"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TaskResult -->
+
+    <owl:Class rdf:about="#TaskResult"/>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSolvingMethodStandard -->
+
+    <owl:Thing rdf:about="#PumpAnalysisSolvingMethodStandard">
+        <rdf:type rdf:resource="#PumpAnalysisSolvingMethod"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisTask_1 -->
+
+    <PumpAnalysisTask rdf:about="#PumpAnalysisTask_1">
+        <rdf:type rdf:resource="&owl;Thing"/>
+        <PumpIdentifier rdf:datatype="&xsd;integer">5</PumpIdentifier>
+    </PumpAnalysisTask>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 2.2.1.1138) http://owlapi.sourceforge.net -->
+
