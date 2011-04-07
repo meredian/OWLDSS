@@ -1,12 +1,15 @@
 package supervisor;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import owlobjects.OWLClassObject;
 import owlobjects.OWLIndividualObject;
 import owlobjects.OWLOntologyObjectShell;
+import renderers.Presentation;
 
 public class Task {
 
@@ -59,5 +62,10 @@ public class Task {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public Set< Presentation > getPresentations() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
