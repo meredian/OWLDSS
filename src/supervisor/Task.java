@@ -40,11 +40,11 @@ public class Task {
 	}
 
 	public OWLIndividualObject putInto( OWLOntologyObjectShell objectOntology ) {
-		OWLClassObject taskClassObject = objectOntology.getClassByName( this.className );
+		OWLClassObject taskClassObject = objectOntology.getClassObject( this.className );
 		if( taskClassObject == null )
 			return null;
 		
-		OWLIndividualObject individual = taskClassObject.spawnIndividualNumbered();
+		OWLIndividualObject individual = objectOntology.createIndividual( objectOntology.getClassObject( this.className ) );
 		
 		try {
 			for( Entry< String, String > entry: parametersString.entrySet() )

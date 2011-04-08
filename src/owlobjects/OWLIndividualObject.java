@@ -12,18 +12,12 @@ public class OWLIndividualObject {
 	//private OWLOntologyObjectShell objectOntology;
 	private OWLNamedIndividual owlIndividual;
 	
-	private Map< String, OWLIndividualPropertyObject > properties = new TreeMap< String, OWLIndividualPropertyObject >();
+	//private Map< String, OWLIndividualPropertyObject > properties = new TreeMap< String, OWLIndividualPropertyObject >();
 	
-	public OWLIndividualObject( OWLOntologyObjectShell objectOntology, OWLClassObject classObject, OWLNamedIndividual owlIndividual ) {
+	public OWLIndividualObject( OWLOntologyObjectShell objectOntology, OWLNamedIndividual owlIndividual ) {
 		//this.classObject = classObject;
 		//this.objectOntology = objectOntology;
 		this.owlIndividual = owlIndividual;
-		
-		Map< String, OWLClassPropertyObject > classProperties = classObject.getAllProperties();
-		for( Entry< String, OWLClassPropertyObject > entry: classProperties.entrySet() ) {
-			this.properties.put( entry.getValue().getName(), 
-					new OWLIndividualPropertyObject( objectOntology, entry.getValue(), this ) );
-		}
 	}
 	
 	public OWLNamedIndividual getOwlIndividual() {
@@ -31,11 +25,11 @@ public class OWLIndividualObject {
 	}
 	
 	public Map< String, OWLIndividualPropertyObject > getProperties() {
-		return properties;
+		return null;
 	}
 	
 	public OWLIndividualPropertyObject getPropertyByName( String propertyName ) {
-		return this.properties.get( propertyName );
+		return null;
 	}
 
 }

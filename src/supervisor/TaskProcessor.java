@@ -34,7 +34,7 @@ public class TaskProcessor implements TaskListener {
 	}
 	
 	void defineTaskIndexes( OWLOntologyObjectShell taskContext, OWLIndividualObject parentingTaskObject ) throws Exception {
-		Collection< OWLIndividualObject > allTasks = taskContext.getClassByName( ABSTRACT_TASK_CLASS ).getDescendantIndividuals();
+		Collection< OWLIndividualObject > allTasks = taskContext.getClassObject( ABSTRACT_TASK_CLASS ).getIndividuals( false );
 		int maxPriority = 0;
 		
 		/** 
@@ -95,8 +95,8 @@ public class TaskProcessor implements TaskListener {
 				// 2a. Initialize some services
 				OWLOntologyObjectShell taskContext = new OWLOntologyObjectShell( ontologyManager, "http://www.iis.nsk.su/ontologies/main" );
 				SolverManager solverManager = new SolverManager( taskContext );
-				QueryServiceManager queryServiceManager = new QueryServiceManager();
-				PostServiceManager postServiceManager = new PostServiceManager();
+				// QueryServiceManager queryServiceManager = new QueryServiceManager();
+				// PostServiceManager postServiceManager = new PostServiceManager();
             
 				// 3. Put the initial task into the task context
 				OWLIndividualObject initialTask = nextTask.putInto( taskContext );
@@ -107,7 +107,7 @@ public class TaskProcessor implements TaskListener {
 					// ?
 			
 					// 5. Import the data needed for the chosen solving method
-					queryServiceManager.runQuery( nextTaskObject );
+					// queryServiceManager.runQuery( nextTaskObject );
 					
 					// 6. Run the chosen solving method
 					solverManager.runSolver( nextTaskObject );
@@ -127,7 +127,7 @@ public class TaskProcessor implements TaskListener {
 				// ?
 				
 				// 10. Run the chosen post method 
-				postServiceManager.runPost( initialTask );
+				// postServiceManager.runPost( initialTask );
 			} catch( Exception e ) {
 				System.err.println( "Task solution failed! Stack trace follows..." );
 				e.printStackTrace();
@@ -138,8 +138,8 @@ public class TaskProcessor implements TaskListener {
 
 
 	private OWLIndividualObject selectNextTaskObject( OWLOntologyObjectShell taskContext ) throws Exception {
-		OWLClassObject abstractTaskClassObject = taskContext.getClassByName( ABSTRACT_TASK_CLASS );
-		Collection< OWLIndividualObject > allTasks = abstractTaskClassObject.getDescendantIndividuals();
+		OWLClassObject abstractTaskClassObject = taskContext.getClassObject( ABSTRACT_TASK_CLASS );
+		Collection< OWLIndividualObject > allTasks = abstractTaskClassObject.getIndividuals( false );
 		
 		String minIndex = new String();
 		OWLIndividualObject chosenTask = null;

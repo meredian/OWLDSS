@@ -41,7 +41,7 @@ import owlobjects.OWLOntologyObjectShell;
 
 public class Launcher {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {  
 		try {
             OWLOntologyManager man = OWLManager.createOWLOntologyManager();
 
@@ -78,15 +78,14 @@ public class Launcher {
             
             OWLOntologyObjectShell objectOntology = new OWLOntologyObjectShell( man, "http://www.iis.nsk.su/ontologies/main" );
             try {
-				OWLClassObject classObject = objectOntology.getClassByName( "ConcreteTask" );
-				OWLIndividualObject individualObject = classObject.spawnIndividual( "Task1" );
+				OWLClassObject classObject = objectOntology.getClassObject( "ConcreteTask" );
+				OWLIndividualObject individualObject = objectOntology.createIndividual( classObject );
 				individualObject.getPropertyByName( "TaskPriority" ).setIntegerValue( 19 );
 				System.out.println( individualObject.getPropertyByName( "TaskPriority" ).getIntegerValue() );
 				
-				OWLClassObject abstractClassObject = objectOntology.getClassByName( "AbstractTask" );
-				Collection< OWLIndividualObject > inds = abstractClassObject.getDescendantIndividuals();
-				for( OWLIndividualObject ind: inds ) {
-	            	
+				OWLClassObject abstractClassObject = objectOntology.getClassObject( "AbstractTask" );
+				Collection< OWLIndividualObject > inds = abstractClassObject.getIndividuals( false );
+				for( OWLIndividualObject ind: inds ) {	            	
 					System.out.println( "Priority: " + ind.getPropertyByName( "TaskPriority" ).getIntegerValue() );
 	            }
 				//classObject.getDirectParent();

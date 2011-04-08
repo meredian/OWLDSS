@@ -9,6 +9,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -22,7 +23,8 @@ public class OWLOntologyObjectShell {
 	
 	private OWLOntology ontology;
 	private OWLOntologyManager manager;
-	private Map< String, OWLClassObject > classes = new TreeMap< String, OWLClassObject >();
+	private Map< IRI, OWLClassObject > classes = new TreeMap< IRI, OWLClassObject >();
+	private Map< IRI, OWLIndividualObject > individuals = new TreeMap< IRI, OWLIndividualObject >();
 	
 	private OWLReasonerFactory reasonerFactory;
 	private OWLReasonerConfiguration config;
@@ -32,13 +34,13 @@ public class OWLOntologyObjectShell {
 	
 	private final String DELIMITER = "#";
 	
-	public String getClassAddress( String className ) {
-		return this.getOntologyAddress() + DELIMITER + className;
+	public IRI getClassIRIByName( String className ) {
+		return IRI.create( this.getOntologyAddress() + DELIMITER + className );
 	}
 	
-	public String getIndividualAddress( String className, String individualName ) {
+	/*public String getIndividualIRI( String className, String individualName ) {
 		return this.getClassAddress( className ) + "." + individualName;
-	}
+	}*/
 	
 	public String getOntologyAddress() {
 		return this.ontologyAddress;
@@ -51,9 +53,12 @@ public class OWLOntologyObjectShell {
 		return split[ split.length - 1 ];
 	}
 	
-	public OWLClassObject getClassByName( String className ) {
-		OWLClassObject result = classes.get( className );
-		IRI classIRI = IRI.create( this.getClassAddress( className ) );
+	public OWLClassObject getClassObject( String className ) {
+		return this.getClassObject( this.getClassIRIByName( className ) );
+	}
+	
+	public OWLClassObject getClassObject( IRI classIRI ) {
+		OWLClassObject result = classes.get( classIRI );
 		
 		if( result == null ) {
 			Set< OWLClass > owlClasses = ontology.getClassesInSignature( false ); // do not include other ontologies, etc.
@@ -66,7 +71,7 @@ public class OWLOntologyObjectShell {
 						return null; // two or more classes with the same name: how can it happen though??
 					}
 					result = new OWLClassObject( this, owlClass );
-					classes.put( className, result );
+					classes.put( classIRI, result );
 				}
 			}
 		}
@@ -99,7 +104,7 @@ public class OWLOntologyObjectShell {
 
 	public OWLClassObject getClassObject( OWLClass owlClass ) {
 		try {
-			return this.getClassByName( this.getEntityNameByIRI( owlClass.getIRI() ) );
+			return this.getClassObject( owlClass.getIRI() );
 		} catch( Exception e ) {
 			e.printStackTrace();
 			return null; // should never happen!
@@ -116,6 +121,44 @@ public class OWLOntologyObjectShell {
 
 	public void removeAxiom( OWLAxiom axiom ) {
 		this.manager.removeAxiom( this.ontology, axiom );
+	}
+
+	public OWLIndividualObject getIndividualObject( IRI individualIRI ) {
+		OWLIndividualObject result = individuals.get( individualIRI );
+		
+		if( result == null ) {
+			Set< OWLNamedIndividual > individuals = ontology.getIndividualsInSignature( false ); // do not include other ontologies, etc.
+			
+			for( OWLNamedIndividual owlIndividual: individuals ) {
+				IRI temp = owlIndividual.getIRI();
+				if( temp.equals( individualIRI ) ) {
+					if( result != null ) {
+						System.err.println( "Two or more classes with the same name met!" );
+						return null; // two or more classes with the same name: how can it happen though??
+					}
+					result = new OWLIndividualObject( this, owlIndividual );
+					this.individuals.put( individualIRI, result );
+				}
+			}
+		}
+		return result;
+	}
+	
+	public OWLIndividualObject createIndividual( OWLClassObject classObject ) {
+		IRI individualIRI = classObject.getNewIndividualIRI();
+		
+		if( this.individuals.containsKey( individualIRI ) )
+			return null; // trying to spawn new individual with existing IRI - should never happen
+		
+		OWLIndividualObject indObj = new OWLIndividualObject( this,
+				this.getDataFactory().getOWLNamedIndividual( individualIRI ) );
+		
+		this.addAxiom( this.getDataFactory().getOWLClassAssertionAxiom( 
+				classObject.getOWLClass(), indObj.getOwlIndividual() ) );
+		
+		this.individuals.put( individualIRI, indObj );
+		
+		return indObj;
 	}
 	
 }

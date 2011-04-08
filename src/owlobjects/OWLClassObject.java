@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -16,98 +17,41 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLRuntimeException;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.reasoner.Node;
+import org.semanticweb.owlapi.reasoner.NodeSet;
 
 public class OWLClassObject {
 	
 	private OWLClass owlClass = null;
 	private OWLOntologyObjectShell objectOntology = null;
 	
-	private Map< String, OWLClassPropertyObject > classProperties = new TreeMap< String, OWLClassPropertyObject >();
-	private Map< IRI, OWLIndividualObject > individuals = new TreeMap< IRI, OWLIndividualObject >();
-	
 	private int individualId = 0;
 	
 	public OWLClassObject( OWLOntologyObjectShell objectOntology, OWLClass owlClass ) {
 		this.owlClass = owlClass;
 		this.objectOntology = objectOntology;
-		
-		OWLOntology owlOntology = objectOntology.getOwlOntology();
-		
-		// Select all properties from the ontology which can be defined for this class
-		Set< OWLAxiom > allAxioms = owlOntology.getAxioms();
-		
-		for( OWLAxiom axiom: allAxioms ) {
-			if( axiom instanceof OWLPropertyDomainAxiom<?> ) {
-				OWLPropertyDomainAxiom<?> domainAxiom = (OWLPropertyDomainAxiom<?>) axiom;
-				
-				if( ! domainAxiom.getDomain().asOWLClass().getIRI().equals( owlClass.getIRI() ) )
-					continue;
-				
-				OWLClassPropertyObject propertyObject = new OWLClassPropertyObject( objectOntology, domainAxiom );
-				classProperties.put( propertyObject.getName(), propertyObject ); 
+	}
+	
+	public IRI getNewIndividualIRI() {
+		return IRI.create( this.owlClass.getIRI().toString() + "." + String.valueOf( this.individualId++ ) );
+	}
+	
+	public OWLClass getOWLClass() {
+		return this.owlClass;
+	}
+	
+	public Collection< OWLIndividualObject > getIndividuals( boolean direct ) {
+		// true means direct
+		NodeSet< OWLNamedIndividual > directInstances = objectOntology.getReasoner().getInstances( owlClass, direct );
+		Collection< OWLIndividualObject > result = new TreeSet< OWLIndividualObject >();
+		for( Node< OWLNamedIndividual > node : directInstances.getNodes() ) {
+			for( OWLNamedIndividual instance : node.getEntities() ) {
+				result.add( objectOntology.getIndividualObject( instance.getIRI() ) );
 			}
 		}
-		
-		// Select all individuals of this class 
-		for( OWLAxiom axiom: allAxioms ) {
-			if( axiom instanceof OWLClassAssertionAxiom ) {
-				OWLClassAssertionAxiom classAssertionAxiom = (OWLClassAssertionAxiom) axiom;
-				
-				if( ! classAssertionAxiom.getClassExpression().asOWLClass().equals( owlClass.getIRI() ) )
-					continue;
-				
-				OWLNamedIndividual namedIndividual = classAssertionAxiom.getIndividual().asOWLNamedIndividual();
-				
-				individuals.put( namedIndividual.getIRI(), new OWLIndividualObject( objectOntology, this, namedIndividual ) ); 
-			}
-		}
+		return result; 
 	}
-	
-	public Collection< OWLIndividualObject > getDirectIndividuals() {
-		return individuals.values();
-	}
-	
-	public Collection< OWLIndividualObject > getDescendantIndividuals() throws Exception {
-		Collection< OWLIndividualObject > set = new HashSet< OWLIndividualObject >();
-		set.addAll( individuals.values() );
-		
-		for( OWLClassObject classObject: this.getDirectSuccessors() ) {
-			set.addAll( classObject.getDirectIndividuals() );
-		}
-		
-		return set;
-	}
- 	
-	public OWLIndividualObject spawnIndividualNumbered() {
-		IRI individualIRI;
-		do {
-			++individualId;
-			individualIRI = IRI.create( owlClass.getIRI().toString() + "." + String.valueOf( individualId ) );
-		} while( this.individuals.containsKey( individualIRI ) );
-		return this.spawnIndividual( String.valueOf( individualId ) ); // it must never fail
-	}
-	
-	public OWLIndividualObject spawnIndividual( String name ) {
-		IRI individualIRI = IRI.create( owlClass.getIRI().toString() + "." + name );
-		
-		if( this.individuals.containsKey( individualIRI ) )
-			return null; // trying to spawn new individual with existing IRI - should never happen
-		
-		OWLIndividualObject indObj = new OWLIndividualObject( objectOntology, this, 
-				this.objectOntology.getDataFactory().getOWLNamedIndividual( individualIRI ) );
-		
-		this.objectOntology.addAxiom( this.objectOntology.getDataFactory().getOWLClassAssertionAxiom( 
-				this.owlClass, indObj.getOwlIndividual() ) );
-		
-		this.individuals.put( individualIRI, indObj );
-		
-		return indObj;
-	}
-	
-	public Map< String, OWLClassPropertyObject > getAllProperties() {
-		return this.classProperties;
-	}
-	
+
 	/*public OWLClassObject getDirectParent() throws Exception {
 		OWLOntology owlOntology = objectOntology.getOwlOntology();
 		
