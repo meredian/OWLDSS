@@ -1,4 +1,4 @@
-package owlobjects;
+package core.owl;
 
 import java.util.Map;
 import java.util.Set;
@@ -18,6 +18,9 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerConfiguration;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
 import org.semanticweb.owlapi.util.OWLOntologyMerger;
+
+import core.owl.objects.OWLClassObject;
+import core.owl.objects.OWLIndividualObject;
 
 public class OWLOntologyObjectShell {
 	

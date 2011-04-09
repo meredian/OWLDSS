@@ -1,4 +1,6 @@
-package renderers;
+package core.managers;
+
+import implementation.renderers.ConsoleOutputRenderer;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -7,7 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import supervisor.Task;
+import core.interfaces.Presentation;
+import core.interfaces.Renderer;
+import core.supervisor.Task;
 
 public class RenderManager {
 
@@ -25,7 +29,7 @@ public class RenderManager {
 			Set< Renderer > availableRenderers = new HashSet< Renderer >();
 			
 			for( Renderer renderer: this.renderers )
-				if( renderer.supports( presentation ) )
+				if( renderer.Supports( presentation ) )
 					availableRenderers.add( renderer );
 			
 			if( ! availableRenderers.isEmpty() )
@@ -40,6 +44,6 @@ public class RenderManager {
 		Presentation chosenPresentation = renderings.keySet().iterator().next();
 		Renderer chosenRenderer = renderings.get( chosenPresentation ).iterator().next();
 		
-		chosenRenderer.run( chosenPresentation );
+		chosenRenderer.Render( chosenPresentation );
 	}
 }

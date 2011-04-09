@@ -1,14 +1,17 @@
-package renderers;
+package implementation.renderers;
+
+import core.interfaces.Presentation;
+import core.interfaces.Renderer;
 
 public class ConsoleOutputRenderer implements Renderer {
 
 	@Override
-	public boolean supports( Presentation presentation ) {
+	public boolean Supports( Presentation presentation ) {
 		return presentation.getClass() == StringPresentation.class;
 	}
 	
 	@Override
-	public void run( Presentation presentation ) throws Exception {
+	public void Render( Presentation presentation ) throws Exception {
 		Object value = presentation.GetValue();
 		if( value.getClass() == String.class ) {
 			String stringValue = (String) value;

@@ -1,4 +1,4 @@
-package launch;
+package core;
 
 
 import java.io.BufferedReader;
@@ -34,9 +34,10 @@ import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.semanticweb.owlapi.util.SimpleShortFormProvider;
 import org.semanticweb.owlapi.vocab.OWLFacet;
 
-import owlobjects.OWLClassObject;
-import owlobjects.OWLIndividualObject;
-import owlobjects.OWLOntologyObjectShell;
+import core.owl.OWLOntologyObjectShell;
+import core.owl.objects.OWLClassObject;
+import core.owl.objects.OWLIndividualObject;
+
 
 
 public class Launcher {
@@ -154,7 +155,7 @@ public class Launcher {
 	    InputStream is = System.in;
 	    InputStreamReader reader = new InputStreamReader(is);
 	    BufferedReader br = new BufferedReader(reader);
-	    return br.readLine();
-	
+		return br.readLine();
+
 	}
 }

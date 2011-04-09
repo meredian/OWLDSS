@@ -1,24 +1,20 @@
-package owlobjects;
+package core.owl.objects;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClassAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLRuntimeException;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
+
+import core.owl.OWLOntologyObjectShell;
 
 public class OWLClassObject {
 	

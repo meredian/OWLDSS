@@ -1,4 +1,4 @@
-package importers;
+package core.managers;
 
 public class ImportManager {
 

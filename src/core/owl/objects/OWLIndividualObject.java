@@ -1,10 +1,10 @@
-package owlobjects;
+package core.owl.objects;
 
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+
+import core.owl.OWLOntologyObjectShell;
 
 public class OWLIndividualObject {
 

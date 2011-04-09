@@ -1,15 +1,14 @@
-package supervisor;
+package core.supervisor;
 
-import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
-import owlobjects.OWLClassObject;
-import owlobjects.OWLIndividualObject;
-import owlobjects.OWLOntologyObjectShell;
-import renderers.Presentation;
+import core.interfaces.Presentation;
+import core.owl.OWLOntologyObjectShell;
+import core.owl.objects.OWLClassObject;
+import core.owl.objects.OWLIndividualObject;
 
 public class Task {
 

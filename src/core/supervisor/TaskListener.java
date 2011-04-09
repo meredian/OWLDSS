@@ -1,4 +1,4 @@
-package supervisor;
+package core.supervisor;
 
 
 public interface TaskListener {

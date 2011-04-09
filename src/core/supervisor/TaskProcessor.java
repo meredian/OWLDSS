@@ -1,4 +1,4 @@
-package supervisor;
+package core.supervisor;
 
 import java.io.File;
 import java.util.Collection;
@@ -8,10 +8,12 @@ import java.util.Queue;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
-import owlobjects.OWLClassObject;
-import owlobjects.OWLIndividualObject;
-import owlobjects.OWLIndividualPropertyObject;
-import owlobjects.OWLOntologyObjectShell;
+import core.managers.SolverManager;
+import core.owl.OWLOntologyObjectShell;
+import core.owl.objects.OWLClassObject;
+import core.owl.objects.OWLIndividualObject;
+import core.owl.objects.OWLIndividualPropertyObject;
+
 
 
 public class TaskProcessor implements TaskListener {

@@ -1,8 +1,10 @@
-package owlobjects;
+package core.owl.objects;
 
 import org.semanticweb.owlapi.model.OWLNamedObject;
 import org.semanticweb.owlapi.model.OWLProperty;
 import org.semanticweb.owlapi.model.OWLPropertyDomainAxiom;
+
+import core.owl.OWLOntologyObjectShell;
 
 public class OWLClassPropertyObject {
 

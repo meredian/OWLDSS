@@ -1,4 +1,4 @@
-package owlobjects;
+package core.owl.objects;
 
 import java.util.Set;
 
@@ -9,6 +9,8 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
+
+import core.owl.OWLOntologyObjectShell;
 
 public class OWLIndividualPropertyObject {
 	

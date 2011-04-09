@@ -1,6 +1,7 @@
-package renderers;
+package implementation.renderers;
 
-import owlobjects.OWLIndividualObject;
+import core.interfaces.Presentation;
+import core.owl.objects.OWLIndividualObject;
 
 public class StringPresentation implements Presentation {
 
