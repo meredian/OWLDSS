@@ -52,7 +52,7 @@ public class SolverSignature implements Serializable {
 		}
 		return params.get(key);
 	}
-	
+
 	public boolean assertParams( List<String> keys ) {
 		for (String key : keys) {
 			if( !params.containsKey(key) ) {

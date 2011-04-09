@@ -8,11 +8,11 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 import core.interfaces.Adapter;
 
 public abstract class AbstractAdapter implements Adapter {
-	
+
 	protected List<SolverSignature> solvers;
 	protected List<String> mandatoryParams;
 	protected List<String> optionalParams;
-	
+
 	@Override
 	public List<SolverSignature> getSolvers() {
 		return solvers;
@@ -75,13 +75,13 @@ public abstract class AbstractAdapter implements Adapter {
 
 	@Override
 	public SolverSignature testSolver(SolverSignature solver) {
-		if ( solver != null ) { 
+		if ( solver != null ) {
 			solver.setStatus(callTest(solver));
 			return solver;
 		} else {
 			return null;
 		}
 	}
-	
+
 	protected abstract SolverStatus callTest(SolverSignature solver);
 }

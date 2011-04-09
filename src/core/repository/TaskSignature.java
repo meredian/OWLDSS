@@ -13,7 +13,7 @@ public class TaskSignature implements Comparable<TaskSignature>, Serializable {
 	public static final int COMPARE_DIFF_TASK_NAMES = -1;
 	public static final int COMPARE_DIFF_PARAMS_LENGTH = 1;
 	public static final int COMPARE_DIFF_PARAMS_NAMES = 2;
-	
+
 	private static final long serialVersionUID = 992083451642438902L;
 
 	private final String taskName;

@@ -9,7 +9,7 @@ public class ConsoleOutputRenderer implements Renderer {
 	public boolean supports( Presentation presentation ) {
 		return presentation.getClass() == StringPresentation.class;
 	}
-	
+
 	@Override
 	public void render( Presentation presentation ) throws Exception {
 		Object value = presentation.getValue();
