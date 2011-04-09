@@ -3,8 +3,8 @@ package core.interfaces;
 
 public interface Renderer {
 
-	public boolean Supports(Presentation presentation);
+	public boolean supports(Presentation presentation);
 
-	public void Render(Presentation presentation) throws Exception;
+	public void render(Presentation presentation) throws Exception;
 
 }

@@ -5,7 +5,7 @@ import core.owl.objects.OWLIndividualObject;
 
 public class SolverManager {
 
-	OWLOntologyObjectShell objectOntology;
+	private OWLOntologyObjectShell objectOntology;
 	
 	public SolverManager( OWLOntologyObjectShell objectOntology ) {
 		this.objectOntology = objectOntology;

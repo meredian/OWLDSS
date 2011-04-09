@@ -12,7 +12,7 @@ public class StringPresentation implements Presentation {
 	}
 	
 	@Override
-	public String GetValue() {
+	public String getValue() {
 		return this.value;
 	}
 

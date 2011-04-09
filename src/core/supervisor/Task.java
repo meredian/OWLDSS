@@ -19,6 +19,8 @@ public class Task {
 	private String className;
 	
 	public Task( String taskClassName ) {
+		if ( taskClassName == null)
+			throw new NullPointerException("taskClassName is null");
 		this.className = taskClassName;
 	}
 	

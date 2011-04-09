@@ -29,7 +29,7 @@ public class RenderManager {
 			Set< Renderer > availableRenderers = new HashSet< Renderer >();
 			
 			for( Renderer renderer: this.renderers )
-				if( renderer.Supports( presentation ) )
+				if( renderer.supports( presentation ) )
 					availableRenderers.add( renderer );
 			
 			if( ! availableRenderers.isEmpty() )
@@ -44,6 +44,6 @@ public class RenderManager {
 		Presentation chosenPresentation = renderings.keySet().iterator().next();
 		Renderer chosenRenderer = renderings.get( chosenPresentation ).iterator().next();
 		
-		chosenRenderer.Render( chosenPresentation );
+		chosenRenderer.render( chosenPresentation );
 	}
 }
