@@ -7,16 +7,11 @@ import java.util.Map;
 
 public class SolverSignature implements Serializable {
 
-	public static final int STATUS_UNKNOWN = -1;
-	public static final int STATUS_OK = 0;
-	public static final int STATUS_WARNING = 1;
-	public static final int STATUS_ERROR = 2;
-
 	private static final long serialVersionUID = -7320743339154303279L;
 
 	private final String name;
 	private final TaskSignature signature;
-	private int status = STATUS_UNKNOWN;
+	private SolverStatus status = SolverStatus.STATUS_UNKNOWN;
 	private Map<String, String> params = null;
 
 	public SolverSignature(String solverName, TaskSignature taskSignature) {
@@ -67,11 +62,11 @@ public class SolverSignature implements Serializable {
 		return true;
 	}
 
-	public int getStatus() {
+	public SolverStatus getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int newStatus) {
+	public void setStatus(SolverStatus newStatus) {
 		this.status = newStatus;
 	}
 }

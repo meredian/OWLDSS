@@ -68,7 +68,7 @@ public abstract class AbstractAdapter implements Adapter {
 	@Override
 	public List<SolverSignature> testSolvers() {
 		for (SolverSignature solver : solvers) {
-			solver = testSolver(solver);
+			testSolver(solver);
 		}
 		return this.getSolvers();
 	}
@@ -83,5 +83,5 @@ public abstract class AbstractAdapter implements Adapter {
 		}
 	}
 	
-	protected abstract int callTest(SolverSignature solver);
+	protected abstract SolverStatus callTest(SolverSignature solver);
 }
