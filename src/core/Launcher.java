@@ -34,15 +34,29 @@ import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.semanticweb.owlapi.util.SimpleShortFormProvider;
 import org.semanticweb.owlapi.vocab.OWLFacet;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import core.owl.OWLOntologyObjectShell;
 import core.owl.objects.OWLClassObject;
 import core.owl.objects.OWLIndividualObject;
+import core.repository.SolverStatus;
 
 
 
 public class Launcher {
 
 	public static void main(String[] args) {  
+
+		XStream xstream = new XStream(new DomDriver());
+		SolverStatus status = new SolverStatus(123123123, "It works!");
+		String xmlStatus = xstream.toXML(status);
+		System.out.println(xmlStatus);
+		
+		SolverStatus newOne = (SolverStatus) xstream.fromXML(xmlStatus);
+		System.out.println("We got new status: ");
+		System.out.println(newOne.getCode());
+		System.out.println(newOne.getMessage());
 		try {
             OWLOntologyManager man = OWLManager.createOWLOntologyManager();
 
