@@ -1,17 +1,18 @@
 package core.managers;
 
-import core.owl.OWLOntologyObjectShell;
-import core.owl.objects.OWLIndividualObject;
+import core.owl.OWLObjectFactory;
+import core.owl.objects.SolvingMethod;
+import core.owl.objects.Task;
 
 public class SolverManager {
 
-	private OWLOntologyObjectShell objectOntology;
+	private OWLObjectFactory objectFactory;
 
-	public SolverManager( OWLOntologyObjectShell objectOntology ) {
-		this.objectOntology = objectOntology;
+	public SolverManager( OWLObjectFactory objectFactory ) {
+		this.objectFactory = objectFactory;
 	}
 
-	public void runSolver( OWLIndividualObject task ) {
+	public void runSolver( SolvingMethod solvingMethod, Task task ) {
 		// TODO
 	}
 

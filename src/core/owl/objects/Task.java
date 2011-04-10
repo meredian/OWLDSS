@@ -1,17 +1,20 @@
-package core.supervisor;
+package core.owl.objects;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
-import core.interfaces.Presentation;
 import core.owl.OWLOntologyObjectShell;
-import core.owl.objects.OWLClassObject;
-import core.owl.objects.OWLIndividualObject;
+import core.owl.base.OWLClassObject;
+import core.owl.base.OWLIndividualObject;
 
 public class Task {
-
+	
+	public enum Status {
+		QUEUED, SOLVED;
+	}
+	
 	private Map< String, String > parametersString = new TreeMap< String, String >();
 	private Map< String, Integer > parametersInteger = new TreeMap< String, Integer >();
 	private Map< String, Double > parametersDouble = new TreeMap< String, Double >();
@@ -44,9 +47,9 @@ public class Task {
 		OWLClassObject taskClassObject = objectOntology.getClassObject( this.className );
 		if( taskClassObject == null )
 			return null;
-		
+
 		OWLIndividualObject individual = objectOntology.createIndividual( objectOntology.getClassObject( this.className ) );
-		
+
 		try {
 			for( Entry< String, String > entry: parametersString.entrySet() )
 				individual.getPropertyByName( entry.getKey() ).setStringValue( entry.getValue() );
@@ -56,7 +59,7 @@ public class Task {
 				individual.getPropertyByName( entry.getKey() ).setDoubleValue( entry.getValue() );
 			for( Entry< String, Boolean > entry: parametersBoolean.entrySet() )
 				individual.getPropertyByName( entry.getKey() ).setBooleanValue( entry.getValue() );
-			
+
 			return individual;
 		} catch( Exception e ) {
 			System.err.println( "Cannot not translate task into OWL representation!" );
@@ -65,8 +68,29 @@ public class Task {
 		}
 	}
 
-	public Set< Presentation > getPresentations() {
-		// TODO Auto-generated method stub
+	public Set<SolvingMethod> getSolvingMethods() {
+		// TODO
 		return null;
 	}
+	
+	public Set<OWLIndividualObject> getInputObjects() {
+		// TODO
+		return null;
+	}
+	
+	public Set<OWLIndividualObject> getImportedObjects() {
+		// TODO
+		return null;
+	}
+	
+	public Set<TaskResult> getResult() {
+		// TODO: may be return one object
+		return null;
+	}
+
+	public void setStatus(Status status) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

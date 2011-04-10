@@ -1,5 +1,7 @@
 package core.supervisor;
 
+import core.owl.objects.Task;
+
 
 public interface TaskListener {
 

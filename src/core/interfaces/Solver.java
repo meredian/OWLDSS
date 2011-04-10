@@ -1,6 +1,6 @@
 package core.interfaces;
 
-import core.supervisor.Task;
+import core.owl.objects.Task;
 
 public interface Solver {
 

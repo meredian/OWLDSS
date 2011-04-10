@@ -38,10 +38,9 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import core.owl.OWLOntologyObjectShell;
-import core.owl.objects.OWLClassObject;
-import core.owl.objects.OWLIndividualObject;
 import core.repository.SolverStatus;
-
+import core.owl.base.OWLClassObject;
+import core.owl.base.OWLIndividualObject;
 
 
 public class Launcher {

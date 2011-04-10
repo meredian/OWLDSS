@@ -1,22 +1,22 @@
 package implementation.renderers;
 
-import core.interfaces.Presentation;
 import core.interfaces.Renderer;
+import core.owl.base.OWLIndividualPropertyObject;
+import core.owl.objects.Presentation;
 
 public class ConsoleOutputRenderer implements Renderer {
 
 	@Override
 	public boolean supports( Presentation presentation ) {
-		return presentation.getClass() == StringPresentation.class;
+		return presentation.getType() == "StringPresentation"; // TODO
 	}
 
 	@Override
 	public void render( Presentation presentation ) throws Exception {
-		Object value = presentation.getValue();
-		if( value.getClass() == String.class ) {
-			String stringValue = (String) value;
-			System.out.println( stringValue );
-		} else
+		OWLIndividualPropertyObject property = presentation.get();
+		if( property.getStringValue() != null )
+			System.out.println( property.getStringValue() );
+		else
 			throw new Exception( "Presentation object is not supported" );
 	}
 }

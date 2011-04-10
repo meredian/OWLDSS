@@ -1,4 +1,4 @@
-package core.owl.objects;
+package core.owl.base;
 
 import org.semanticweb.owlapi.model.OWLNamedObject;
 import org.semanticweb.owlapi.model.OWLProperty;

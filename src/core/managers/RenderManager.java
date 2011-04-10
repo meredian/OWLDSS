@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import core.interfaces.Presentation;
 import core.interfaces.Renderer;
-import core.supervisor.Task;
+import core.owl.objects.Presentation;
+import core.owl.objects.TaskResult;
 
 public class RenderManager {
 
@@ -21,8 +21,8 @@ public class RenderManager {
 		this.renderers.add( new ConsoleOutputRenderer() );
 	}
 
-	void process( Task task ) throws Exception {
-		Set< Presentation > presentations = task.getPresentations();
+	void process( TaskResult taskResult ) throws Exception {
+		Set< Presentation > presentations = taskResult.getPresentations();
 		Map< Presentation, Set< Renderer > > renderings = new TreeMap< Presentation, Set< Renderer > >();
 
 		for( Presentation presentation: presentations ) {

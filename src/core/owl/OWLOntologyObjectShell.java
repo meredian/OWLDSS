@@ -19,10 +19,10 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
 import org.semanticweb.owlapi.util.OWLOntologyMerger;
 
-import core.owl.objects.OWLClassObject;
-import core.owl.objects.OWLIndividualObject;
+import core.owl.base.OWLClassObject;
+import core.owl.base.OWLIndividualObject;
 
-public class OWLOntologyObjectShell {
+public class OWLOntologyObjectShell implements OWLObjectFactory {
 	
 	private OWLOntology ontology;
 	private OWLOntologyManager manager;

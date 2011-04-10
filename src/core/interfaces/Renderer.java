@@ -1,5 +1,7 @@
 package core.interfaces;
 
+import core.owl.objects.Presentation;
+
 
 public interface Renderer {
 

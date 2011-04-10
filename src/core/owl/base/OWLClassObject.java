@@ -1,4 +1,4 @@
-package core.owl.objects;
+package core.owl.base;
 
 import java.util.Collection;
 import java.util.HashSet;

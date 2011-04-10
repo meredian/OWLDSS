@@ -10,11 +10,10 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import core.managers.SolverManager;
 import core.owl.OWLOntologyObjectShell;
-import core.owl.objects.OWLClassObject;
-import core.owl.objects.OWLIndividualObject;
-import core.owl.objects.OWLIndividualPropertyObject;
-
-
+import core.owl.base.OWLClassObject;
+import core.owl.base.OWLIndividualObject;
+import core.owl.objects.SolvingMethod;
+import core.owl.objects.Task;
 
 public class TaskProcessor implements TaskListener {
 
@@ -103,26 +102,24 @@ public class TaskProcessor implements TaskListener {
 				// 3. Put the initial task into the task context
 				OWLIndividualObject initialTask = nextTask.putInto( taskContext );
 				assert( initialTask != null );
-				OWLIndividualObject nextTaskObject = initialTask; 
+				Task nextTaskObject; 
 				do {
+					// 8. Select next subtask
+					this.defineTaskIndexes( taskContext, null );
+					nextTaskObject = this.selectNextTaskObject( taskContext );
+					
 					// 4. Choose solving method
 					// ?
+					SolvingMethod solvingMethod = null;
 			
 					// 5. Import the data needed for the chosen solving method
 					// queryServiceManager.runQuery( nextTaskObject );
 					
 					// 6. Run the chosen solving method
-					solverManager.runSolver( nextTaskObject );
+					solverManager.runSolver( solvingMethod, nextTaskObject );
 					
 					// 7. Mark the [sub]task object as solved
-					OWLIndividualPropertyObject solved = nextTaskObject.getPropertyByName( TASK_SOLVED_ATTR );
-					assert( solved != null );
-					solved.purgeDataValue();
-					solved.setBooleanValue( true );
-					
-					// 8. Select next subtask
-					this.defineTaskIndexes( taskContext, nextTaskObject );
-					nextTaskObject = this.selectNextTaskObject( taskContext );
+					nextTaskObject.setStatus( Task.Status.SOLVED );
 				} while( nextTaskObject != null );
 				
 				// 9. Choose post method
@@ -139,7 +136,7 @@ public class TaskProcessor implements TaskListener {
 	}
 
 
-	private OWLIndividualObject selectNextTaskObject( OWLOntologyObjectShell taskContext ) throws Exception {
+	private Task selectNextTaskObject( OWLOntologyObjectShell taskContext ) throws Exception {
 		OWLClassObject abstractTaskClassObject = taskContext.getClassObject( ABSTRACT_TASK_CLASS );
 		Collection< OWLIndividualObject > allTasks = abstractTaskClassObject.getIndividuals( false );
 		
@@ -161,7 +158,7 @@ public class TaskProcessor implements TaskListener {
 			}
 		}
 		
-		return chosenTask;
+		return null; // TODO chosenTask;
 	}
 	
 }
