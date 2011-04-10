@@ -3,59 +3,41 @@ package core.repository;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.semanticweb.owlapi.model.OWLIndividual;
-
-import core.interfaces.Adapter;
+import core.interfaces.Solver;
+import core.owl.objects.Task;
 
 public class Repository {
 	
-	private List<Adapter> adapters = new LinkedList<Adapter>();
+	private List<Solver> solvers = new LinkedList<Solver>();
 	
 	public Repository() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void addAdapter(Adapter newAdapter) {
-		this.adapters.add(newAdapter);
+	public void addAdapter(Solver newAdapter) {
+		this.solvers.add(newAdapter);
 	}
 	
-	public List<SolverSignature> getSolvers() {
-		List<SolverSignature> solvers = new LinkedList<SolverSignature>();
-		for (Adapter adapter : adapters) {
-			solvers.addAll(adapter.getSolvers());
+	public List<MethodSignature> getSolvers() {
+		List<MethodSignature> methods = new LinkedList<MethodSignature>();
+		for (Solver solver : solvers) {
+			methods.addAll(solver.getMethods());
 		}
-		return solvers;
+		return methods;
 	}
 	
-	public List<SolverSignature> getSolversByTask(TaskSignature task) {
-		List<SolverSignature> solvers = new LinkedList<SolverSignature>();
-		for (Adapter adapter : adapters) {
-			solvers.addAll(adapter.getSolversByTask(task));
+	public List<MethodSignature> getSolversByName(String solverName) {
+		List<MethodSignature> methods = new LinkedList<MethodSignature>();
+		for (Solver solver : solvers) {
+			methods.addAll(solver.getMethodsByName(solverName));
 		}
-		return solvers;
-	}
-	
-	public List<SolverSignature> getSolversByName(String solverName) {
-		List<SolverSignature> solvers = new LinkedList<SolverSignature>();
-		for (Adapter adapter : adapters) {
-			solvers.addAll(adapter.getSolversByName(solverName));
-		}
-		return solvers;
+		return methods;
 	}
 
-	public boolean solveTask(OWLIndividual task) {
-		for (Adapter adapter : adapters) {
-			if(adapter.solveTask(task)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public boolean solveTaskBySolver(OWLIndividual task, SolverSignature solver) {
-		for (Adapter adapter : adapters) {
-			if(adapter.getSolvers().contains(solver)) {
-				return adapter.solveTaskBySolver(task, solver);
+	public boolean solveTaskBySolver(Task task, MethodSignature method) {
+		for (Solver solver : solvers) {
+			if(solver.getMethods().contains(solver)) {
+				return solver.solveTaskByMethod(task, method);
 			}
 		}
 		return false;

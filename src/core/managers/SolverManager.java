@@ -13,7 +13,7 @@ public class SolverManager {
 	public SolverManager(ImportManager importManager) {
 		this.importManager = importManager;
 	}
-	
+
 	private Solver getSolver(SolvingMethod method) {
 		// TODO
 		return null;
@@ -21,14 +21,12 @@ public class SolverManager {
 
 	public void process(Task task) {
 		Set<SolvingMethod> solvingMethods = task.getSolvingMethods();
-		
 		// TODO: choose solving method
 		SolvingMethod solvingMethod = solvingMethods.iterator().next();
 		
+		importManager.process(solvingMethod, task);
 		Solver solver = this.getSolver(solvingMethod);
 		
-		importManager.process(solvingMethod, task);
-		solver.run(task);
+		solver.solveTask(task);
 	}
-
 }

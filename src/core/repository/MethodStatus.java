@@ -1,6 +1,6 @@
 package core.repository;
 
-public class SolverStatus {
+public class MethodStatus {
 
 	public static final int STATUS_CODE_UNKNOWN = -1;
 	public static final int STATUS_CODE_OK = 0;
@@ -10,12 +10,12 @@ public class SolverStatus {
 	private final int code;
 	private final String message;
 
-	public SolverStatus(int code, String message) {
+	public MethodStatus(int code, String message) {
 		this.code = code;
 		this.message = message;
 	}
 
-	public SolverStatus(int code) {
+	public MethodStatus(int code) {
 		this.code = code;
 		this.message = null;
 	}
@@ -28,5 +28,5 @@ public class SolverStatus {
 		return this.code;
 	}
 
-	public static SolverStatus STATUS_UNKNOWN = new SolverStatus(STATUS_CODE_UNKNOWN);
+	public static MethodStatus STATUS_UNKNOWN = new MethodStatus(STATUS_CODE_UNKNOWN);
 }
