@@ -46,15 +46,8 @@
     <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasInput -->
 
     <owl:ObjectProperty rdf:about="#HasInput">
+        <rdfs:domain rdf:resource="#Task"/>
         <rdfs:range rdf:resource="#TaskInput"/>
-        <rdfs:domain>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="#ImportingMethod"/>
-                    <rdf:Description rdf:about="#Task"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -76,6 +69,23 @@
     
 
 
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasOutput -->
+
+    <owl:ObjectProperty rdf:about="#HasOutput">
+        <rdfs:domain rdf:resource="#Task"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#SubjectArea"/>
+                    <rdf:Description rdf:about="#Task"/>
+                    <rdf:Description rdf:about="#TaskResult"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasPresentation -->
 
     <owl:ObjectProperty rdf:about="#HasPresentation">
@@ -90,14 +100,7 @@
     <owl:ObjectProperty rdf:about="#HasPump">
         <rdfs:subPropertyOf rdf:resource="#HasInput"/>
         <rdfs:range rdf:resource="#Pump"/>
-        <rdfs:domain>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="#ElectroConsumptionImportingMethod"/>
-                    <rdf:Description rdf:about="#PumpAnalysisTask"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:domain>
+        <rdfs:domain rdf:resource="#PumpAnalysisTask"/>
     </owl:ObjectProperty>
     
 
@@ -120,6 +123,28 @@
             <rdf:Description rdf:about="#Solves"/>
             <rdf:Description rdf:about="#HasInput"/>
         </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasSubTask -->
+
+    <owl:ObjectProperty rdf:about="#HasSubTask">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="#Task"/>
+        <rdfs:range rdf:resource="#Task"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasSuperTask -->
+
+    <owl:ObjectProperty rdf:about="#HasSuperTask">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <owl:inverseOf rdf:resource="#HasSubTask"/>
     </owl:ObjectProperty>
     
 
@@ -209,6 +234,23 @@
     
 
 
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSempOptimizationModifier -->
+
+    <owl:DatatypeProperty rdf:about="#PumpAnalysisSempOptimizationModifier">
+        <rdfs:domain rdf:resource="#PumpAnalysisSempSolvingMethod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SempModule -->
+
+    <owl:DatatypeProperty rdf:about="#SempModule">
+        <rdfs:domain rdf:resource="#SempSolvingMethod"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SolverClass -->
 
     <owl:DatatypeProperty rdf:about="#SolverClass">
@@ -262,13 +304,6 @@
         <rdfs:subClassOf rdf:resource="#ImportingMethod"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#HasPump"/>
-                <owl:onClass rdf:resource="#Pump"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="#ImporterClass"/>
                 <owl:hasValue rdf:datatype="&xsd;string"
                     >ElectroConsumptionImporter</owl:hasValue>
@@ -303,9 +338,7 @@
 
     <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#ImportingMethod -->
 
-    <owl:Class rdf:about="#ImportingMethod">
-        <owl:disjointWith rdf:resource="#Task"/>
-    </owl:Class>
+    <owl:Class rdf:about="#ImportingMethod"/>
     
 
 
@@ -346,15 +379,15 @@
         <rdfs:subClassOf rdf:resource="#Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#SolvedBy"/>
-                <owl:hasValue rdf:resource="#OrganizationAnalysisBestMethod"/>
+                <owl:onProperty rdf:resource="#HasOrganization"/>
+                <owl:onClass rdf:resource="#Organization"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#HasOrganization"/>
-                <owl:onClass rdf:resource="#Organization"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="#SolvedBy"/>
+                <owl:hasValue rdf:resource="#OrganizationAnalysisBestMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -407,6 +440,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSempSolvingMethod -->
+
+    <owl:Class rdf:about="#PumpAnalysisSempSolvingMethod">
+        <rdfs:subClassOf rdf:resource="#PumpAnalysisSolvingMethod"/>
+        <rdfs:subClassOf rdf:resource="#SempSolvingMethod"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSolvingMethod -->
 
     <owl:Class rdf:about="#PumpAnalysisSolvingMethod">
@@ -427,6 +469,19 @@
         <rdfs:subClassOf rdf:resource="#Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="#HasPump"/>
+                <owl:onClass rdf:resource="#Pump"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#SolvedBy"/>
+                <owl:hasValue rdf:resource="#PumpAnalysisSolvingMethodStandard"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="#HasOrganization"/>
                 <owl:onClass rdf:resource="#Organization"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -439,17 +494,18 @@
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SempSolvingMethod -->
+
+    <owl:Class rdf:about="#SempSolvingMethod">
+        <rdfs:subClassOf rdf:resource="#SolvingMethod"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#SolvedBy"/>
-                <owl:hasValue rdf:resource="#PumpAnalysisSolvingMethodStandard"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="#HasPump"/>
-                <owl:onClass rdf:resource="#Pump"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="#SolverClass"/>
+                <owl:hasValue>SempSolver</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -563,13 +619,13 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Last24HoursElectroConsumptionImportingMethod -->
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Last24HoursElectroConsumptionImporingMethod -->
 
-    <ElectroConsumptionImportingMethod rdf:about="#Last24HoursElectroConsumptionImportingMethod">
-        <rdf:type rdf:resource="&owl;Thing"/>
+    <owl:Thing rdf:about="#Last24HoursElectroConsumptionImporingMethod">
+        <rdf:type rdf:resource="#ElectroConsumptionImportingMethod"/>
         <TimeRowInterval rdf:datatype="&xsd;string">1 hour</TimeRowInterval>
         <TimeRowLength rdf:datatype="&xsd;string">24 hours</TimeRowLength>
-    </ElectroConsumptionImportingMethod>
+    </owl:Thing>
     
 
 
@@ -630,12 +686,12 @@
 
     <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSolvingMethodStandard -->
 
-    <owl:Thing rdf:about="#PumpAnalysisSolvingMethodStandard">
-        <rdf:type rdf:resource="#PumpAnalysisSolvingMethod"/>
-        <SolverClass rdf:datatype="&xsd;string"
-            >PumpAnalysisStandardSolver</SolverClass>
-        <UsesImporter rdf:resource="#Last24HoursElectroConsumptionImportingMethod"/>
-    </owl:Thing>
+    <PumpAnalysisSempSolvingMethod rdf:about="#PumpAnalysisSolvingMethodStandard">
+        <rdf:type rdf:resource="&owl;Thing"/>
+        <SempModule
+            >PumpAnalysisStandardSolver</SempModule>
+        <UsesImporter rdf:resource="#Last24HoursElectroConsumptionImporingMethod"/>
+    </PumpAnalysisSempSolvingMethod>
     
 
 
@@ -655,7 +711,7 @@
     <StringPresentation rdf:about="#PumpAnalysis_1_StringPresentation">
         <rdf:type rdf:resource="&owl;Thing"/>
         <StringPresentationValue rdf:datatype="&xsd;string"
-            >Pump is ok! It is broken!</StringPresentationValue>
+            >Pump is ok! It\&#39;s broken!</StringPresentationValue>
     </StringPresentation>
     
 
@@ -663,8 +719,15 @@
     <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Pump_1 -->
 
     <owl:Thing rdf:about="#Pump_1">
+        <rdf:type rdf:resource="#Pump"/>
         <Id rdf:datatype="&xsd;integer">5</Id>
     </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#StringPresentationMethod_1 -->
+
+    <owl:Thing rdf:about="#StringPresentationMethod_1"/>
 </rdf:RDF>
 
 
