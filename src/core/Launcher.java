@@ -84,7 +84,7 @@ public class Launcher {
             OWLDatatypeRestriction integerMin1 = dataFactory.getOWLDatatypeRestriction( integer, OWLFacet.MIN_INCLUSIVE, oneLiteral );
             man.addAxiom( ont, dataFactory.getOWLDataPropertyRangeAxiom( taskPriority, integerMin1 ) );
 
-            OWLIndividual concreteTask = dataFactory.getOWLNamedIndividual( IRI.create(base + "#FirstTask" ) );
+            OWLNamedIndividual concreteTask = dataFactory.getOWLNamedIndividual( IRI.create(base + "#FirstTask" ) );
             man.addAxiom( ont, dataFactory.getOWLClassAssertionAxiom( concreteTaskClass, concreteTask ) );
             man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskName, concreteTask, "First task" ) );
             

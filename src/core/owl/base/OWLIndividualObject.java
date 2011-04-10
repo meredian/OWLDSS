@@ -24,6 +24,7 @@ public class OWLIndividualObject {
 		return owlIndividual;
 	}
 	
+	
 	public Map< String, OWLIndividualPropertyObject > getProperties() {
 		return null;
 	}

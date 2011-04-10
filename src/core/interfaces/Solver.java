@@ -4,6 +4,6 @@ import core.owl.objects.Task;
 
 public interface Solver {
 
-	void Solve( Task task );
+	public void run(Task task);
 
 }

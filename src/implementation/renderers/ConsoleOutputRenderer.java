@@ -7,12 +7,7 @@ import core.owl.objects.Presentation;
 public class ConsoleOutputRenderer implements Renderer {
 
 	@Override
-	public boolean supports( Presentation presentation ) {
-		return presentation.getType() == "StringPresentation"; // TODO
-	}
-
-	@Override
-	public void render( Presentation presentation ) throws Exception {
+	public void run( Presentation presentation ) throws Exception {
 		OWLIndividualPropertyObject property = presentation.get();
 		if( property.getStringValue() != null )
 			System.out.println( property.getStringValue() );

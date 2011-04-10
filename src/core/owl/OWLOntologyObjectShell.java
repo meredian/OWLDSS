@@ -21,6 +21,7 @@ import org.semanticweb.owlapi.util.OWLOntologyMerger;
 
 import core.owl.base.OWLClassObject;
 import core.owl.base.OWLIndividualObject;
+import core.owl.objects.Task;
 
 public class OWLOntologyObjectShell implements OWLObjectFactory {
 	
@@ -162,6 +163,11 @@ public class OWLOntologyObjectShell implements OWLObjectFactory {
 		this.individuals.put( individualIRI, indObj );
 		
 		return indObj;
+	}
+
+	public Set<Task> getTasks() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

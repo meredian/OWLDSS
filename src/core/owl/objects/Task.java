@@ -15,11 +15,30 @@ public class Task {
 		QUEUED, SOLVED;
 	}
 	
+	private static final String PRIORITY_ATTR = "TaskPriority";
+	private static final String INDEX_ATTR = "TaskIndex";
+	private static final String SOLVED_ATTR = "TaskSolved";
+	
 	private Map< String, String > parametersString = new TreeMap< String, String >();
 	private Map< String, Integer > parametersInteger = new TreeMap< String, Integer >();
 	private Map< String, Double > parametersDouble = new TreeMap< String, Double >();
 	private Map< String, Boolean > parametersBoolean = new TreeMap< String, Boolean >();
 	private String className;
+	
+	public Integer getPriority() {
+		// TODO return individual.getProperty( PRIORITY_ATTR ).getIntValue();
+		return null;
+	}
+	
+	public Task getSuperTask() {
+		// TODO
+		return null;
+	}
+	
+	public Set<Task> getSubTasks() {
+		// TODO
+		return null;
+	}
 	
 	public Task( String taskClassName ) {
 		if ( taskClassName == null)
@@ -83,14 +102,42 @@ public class Task {
 		return null;
 	}
 	
-	public Set<TaskResult> getResult() {
-		// TODO: may be return one object
+	public TaskResult getResult() {
+		// TODO
 		return null;
 	}
 
 	public void setStatus(Status status) {
 		// TODO Auto-generated method stub
+	}
+	
+	public Status getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public String getIndex() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setPriority(Integer taskPriority) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	public void setIndex(String string) {
+		// TODO Auto-generated method stub
+	}
+
+	public void addSubTask(Task outputTask) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Set<Task> getOutputTasks() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

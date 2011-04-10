@@ -2,48 +2,40 @@ package core.managers;
 
 import implementation.renderers.ConsoleOutputRenderer;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 import core.interfaces.Renderer;
 import core.owl.objects.Presentation;
+import core.owl.objects.PresentationMethod;
 import core.owl.objects.TaskResult;
 
 public class RenderManager {
 
-	private Collection< Renderer > renderers = new LinkedList< Renderer >();
-
-	RenderManager() {
-		this.renderers.add( new ConsoleOutputRenderer() );
+	private Renderer getRenderer(PresentationMethod presentationMethod) {
+		if (presentationMethod.getRendererName() == ConsoleOutputRenderer.class.getSimpleName()) {
+			return new ConsoleOutputRenderer(); 
+		}
+		return null;
 	}
 
-	void process( TaskResult taskResult ) throws Exception {
-		Set< Presentation > presentations = taskResult.getPresentations();
-		Map< Presentation, Set< Renderer > > renderings = new TreeMap< Presentation, Set< Renderer > >();
+	public void process(TaskResult taskResult) throws Exception {
+		Set<Presentation> presentations = taskResult.getPresentations();
+		Map<Presentation, Renderer> renderings = new TreeMap<Presentation, Renderer>();
 
-		for( Presentation presentation: presentations ) {
-			Set< Renderer > availableRenderers = new HashSet< Renderer >();
-
-			for( Renderer renderer: this.renderers )
-				if( renderer.supports( presentation ) )
-					availableRenderers.add( renderer );
-
-			if( ! availableRenderers.isEmpty() )
-				renderings.put( presentation, availableRenderers );
-		}
+		for (Presentation presentation : presentations)
+			for (PresentationMethod method : presentation.getPresentationMethods())
+				renderings.put(presentation, this.getRenderer(method));
 
 		// TODO choose rendering!
 
-		if( renderings.isEmpty() )
-			throw new Exception( "No renderings available!" );
+		if (renderings.isEmpty())
+			throw new Exception("No renderings available!");
 
 		Presentation chosenPresentation = renderings.keySet().iterator().next();
-		Renderer chosenRenderer = renderings.get( chosenPresentation ).iterator().next();
+		Renderer chosenRenderer = renderings.get(chosenPresentation);
 
-		chosenRenderer.render( chosenPresentation );
+		chosenRenderer.run(chosenPresentation);
 	}
 }

@@ -1,19 +1,34 @@
 package core.managers;
 
-import core.owl.OWLObjectFactory;
+import java.util.Set;
+
+import core.interfaces.Solver;
 import core.owl.objects.SolvingMethod;
 import core.owl.objects.Task;
 
 public class SolverManager {
 
-	private OWLObjectFactory objectFactory;
+	private ImportManager importManager;
 
-	public SolverManager( OWLObjectFactory objectFactory ) {
-		this.objectFactory = objectFactory;
+	public SolverManager(ImportManager importManager) {
+		this.importManager = importManager;
+	}
+	
+	private Solver getSolver(SolvingMethod method) {
+		// TODO
+		return null;
 	}
 
-	public void runSolver( SolvingMethod solvingMethod, Task task ) {
-		// TODO
+	public void process(Task task) {
+		Set<SolvingMethod> solvingMethods = task.getSolvingMethods();
+		
+		// TODO: choose solving method
+		SolvingMethod solvingMethod = solvingMethods.iterator().next();
+		
+		Solver solver = this.getSolver(solvingMethod);
+		
+		importManager.process(solvingMethod, task);
+		solver.run(task);
 	}
 
 }
