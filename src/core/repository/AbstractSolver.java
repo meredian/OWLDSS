@@ -1,6 +1,7 @@
 package core.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import core.interfaces.Solver;
 import core.owl.objects.SolvingMethod;
@@ -9,7 +10,7 @@ public abstract class AbstractSolver implements Solver {
 
 	protected List<MethodSignature> methods;
 	protected List<String> mandatoryParams;
-	protected List<String> optionalParams;
+	protected Map<String, String> options;
 
 	@Override
 	public List<MethodSignature> getMethods() {
@@ -39,8 +40,8 @@ public abstract class AbstractSolver implements Solver {
 	}
 
 	@Override
-	public List<String> getOptionalParams() {
-		return optionalParams;
+	public Map<String, String> getOptions() {
+		return options;
 	}
 
 	@Override

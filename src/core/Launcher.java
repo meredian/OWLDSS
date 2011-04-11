@@ -1,6 +1,8 @@
 package core;
 
 
+import implementation.solvers.SempEmptySolver;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,57 +35,90 @@ import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.semanticweb.owlapi.util.SimpleShortFormProvider;
 import org.semanticweb.owlapi.vocab.OWLFacet;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import core.owl.OWLOntologyObjectShell;
 import core.owl.base.OWLClassObject;
 import core.owl.base.OWLIndividualObject;
+import core.owl.objects.SolvingMethod;
+import core.repository.ConfigStorage;
+import core.repository.SolverRepository;
 
 
 public class Launcher {
 
 	public static void main(String[] args) {  
-
-		//XStream xstream = new XStream(new DomDriver());
-		//String xmlStatus = xstream.toXML("Some Crappy String");
-		//String newOne = (String) xstream.fromXML(xmlStatus);
-		//System.out.println("We got new status: ");
-		//System.out.println(newOne);
+		//storageTests();
+		System.out.println(SempEmptySolver.class.getName());
+		//repositoryTests();
+	}
+	
+	private static void storageTests() {
+		System.out.println("STARING STORAGE TEST");
+		ConfigStorage storage = new ConfigStorage("storage");
+		System.out.println(storage.readConfig("SomeSolver"));
+		storage.writeConfig("SomeSolver", "This is initial config string");
+		System.out.println(storage.readConfig("SomeSolver"));
+		storage.writeConfig("SomeSolver", "This is initial config string");
+		System.out.println(storage.readConfig("SomeSolver"));
+		System.out.println("END STORAGE TEST");
+	}
+	
+	private static void repositoryTests() {
+		System.out.println("STARING REPOSITORY TEST");
+		SolverRepository repo = new SolverRepository();
+		//repo.getSolver(new SolvingMethod("implementation.solvers.SempEmptySolver", "methodName"));
+		//repo.saveToStorage();
+		System.out.println("END REPOSITORY TEST");
 		
+	}
+	
+	private static void XStreamStartup() {
+		XStream xstream = new XStream(new DomDriver());
+		String xmlStatus = xstream.toXML("Some Crappy String");
+		String newOne = (String) xstream.fromXML(xmlStatus);
+		System.out.println("We got new status: ");
+		System.out.println(newOne);
+	}
+	
+	private static void OWLStartup() {
 		try {
-            OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-
-            String base = "http://www.iis.nsk.su/ontologies/main";
-
-            OWLOntology ont = man.createOntology(IRI.create(base));
-            
-            OWLDataFactory dataFactory = man.getOWLDataFactory();
-
-            OWLClass abstractTaskClass = dataFactory.getOWLClass( IRI.create(base + "#AbstractTask" ) );
-            OWLClass concreteTaskClass = dataFactory.getOWLClass( IRI.create(base + "#ConcreteTask" ) );
-            
-            man.addAxiom(ont, dataFactory.getOWLSubClassOfAxiom( concreteTaskClass, abstractTaskClass ) );
-            
-            OWLDataProperty taskName = dataFactory.getOWLDataProperty( IRI.create(base + "#TaskName" ) );
-            OWLDataProperty taskPriority = dataFactory.getOWLDataProperty( IRI.create(base + "#TaskPriority" ) );
-            
-            man.addAxiom( ont, dataFactory.getOWLDataPropertyDomainAxiom( taskName, abstractTaskClass ) );
-            man.addAxiom( ont, dataFactory.getOWLDataPropertyRangeAxiom( taskName, dataFactory.getRDFPlainLiteral() ) );
-            //man.addAxiom( ont, dataFactory.getOWLSubClassOfAxiom( abstractTaskClass, dataFactory.getOWLDataExactCardinality( 1, taskName ) ) );
-            
-            man.addAxiom( ont, dataFactory.getOWLDataPropertyDomainAxiom( taskPriority, abstractTaskClass ) );
-            
-            OWLLiteral oneLiteral = dataFactory.getOWLLiteral(1);
-            OWLDatatype integer = dataFactory.getIntegerOWLDatatype();
-            OWLDatatypeRestriction integerMin1 = dataFactory.getOWLDatatypeRestriction( integer, OWLFacet.MIN_INCLUSIVE, oneLiteral );
-            man.addAxiom( ont, dataFactory.getOWLDataPropertyRangeAxiom( taskPriority, integerMin1 ) );
-
-            OWLNamedIndividual concreteTask = dataFactory.getOWLNamedIndividual( IRI.create(base + "#FirstTask" ) );
-            man.addAxiom( ont, dataFactory.getOWLClassAssertionAxiom( concreteTaskClass, concreteTask ) );
-            man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskName, concreteTask, "First task" ) );
-            
-            man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskPriority, concreteTask, 5 ) ); 
-            
-            OWLOntologyObjectShell objectOntology = new OWLOntologyObjectShell( man, "http://www.iis.nsk.su/ontologies/main" );
-            try {
+			OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+			
+			String base = "http://www.iis.nsk.su/ontologies/main";
+			
+			OWLOntology ont = man.createOntology(IRI.create(base));
+			
+			OWLDataFactory dataFactory = man.getOWLDataFactory();
+			
+			OWLClass abstractTaskClass = dataFactory.getOWLClass( IRI.create(base + "#AbstractTask" ) );
+			OWLClass concreteTaskClass = dataFactory.getOWLClass( IRI.create(base + "#ConcreteTask" ) );
+			
+			man.addAxiom(ont, dataFactory.getOWLSubClassOfAxiom( concreteTaskClass, abstractTaskClass ) );
+			
+			OWLDataProperty taskName = dataFactory.getOWLDataProperty( IRI.create(base + "#TaskName" ) );
+			OWLDataProperty taskPriority = dataFactory.getOWLDataProperty( IRI.create(base + "#TaskPriority" ) );
+			
+			man.addAxiom( ont, dataFactory.getOWLDataPropertyDomainAxiom( taskName, abstractTaskClass ) );
+			man.addAxiom( ont, dataFactory.getOWLDataPropertyRangeAxiom( taskName, dataFactory.getRDFPlainLiteral() ) );
+			//man.addAxiom( ont, dataFactory.getOWLSubClassOfAxiom( abstractTaskClass, dataFactory.getOWLDataExactCardinality( 1, taskName ) ) );
+			
+			man.addAxiom( ont, dataFactory.getOWLDataPropertyDomainAxiom( taskPriority, abstractTaskClass ) );
+			
+			OWLLiteral oneLiteral = dataFactory.getOWLLiteral(1);
+			OWLDatatype integer = dataFactory.getIntegerOWLDatatype();
+			OWLDatatypeRestriction integerMin1 = dataFactory.getOWLDatatypeRestriction( integer, OWLFacet.MIN_INCLUSIVE, oneLiteral );
+			man.addAxiom( ont, dataFactory.getOWLDataPropertyRangeAxiom( taskPriority, integerMin1 ) );
+			
+			OWLNamedIndividual concreteTask = dataFactory.getOWLNamedIndividual( IRI.create(base + "#FirstTask" ) );
+			man.addAxiom( ont, dataFactory.getOWLClassAssertionAxiom( concreteTaskClass, concreteTask ) );
+			man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskName, concreteTask, "First task" ) );
+			
+			man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskPriority, concreteTask, 5 ) ); 
+			
+			OWLOntologyObjectShell objectOntology = new OWLOntologyObjectShell( man, "http://www.iis.nsk.su/ontologies/main" );
+			try {
 				OWLClassObject classObject = objectOntology.getClassObject( "ConcreteTask" );
 				OWLIndividualObject individualObject = objectOntology.createIndividual( classObject );
 				individualObject.getPropertyByName( "TaskPriority" ).setIntegerValue( 19 );
@@ -93,53 +128,53 @@ public class Launcher {
 				Collection< OWLIndividualObject > inds = abstractClassObject.getIndividuals( false );
 				for( OWLIndividualObject ind: inds ) {	            	
 					System.out.println( "Priority: " + ind.getPropertyByName( "TaskPriority" ).getIntegerValue() );
-	            }
+				}
 				//classObject.getDirectParent();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            
-            // Save our ontology
-            man.saveOntology( ont, IRI.create( "file:/home/where-is-s/workspace/temp/example.owl" ) );
-            
-            OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
-            ConsoleProgressMonitor progressMonitor = new ConsoleProgressMonitor();
-            OWLReasonerConfiguration config = new SimpleConfiguration( progressMonitor );
-            OWLReasoner reasoner = reasonerFactory.createReasoner( ont, config );
-            reasoner.precomputeInferences();
-            
-            boolean consistent = reasoner.isConsistent();
-            System.out.println( "Consistent: " + consistent + "\n" );
-            
-            NodeSet<OWLNamedIndividual> set = reasoner.getInstances( abstractTaskClass, false );
-            System.out.println( "Count of tasks: " + set.getNodes().size() + "\n" );
-            for( Node<OWLNamedIndividual> node: set.getNodes() ) {
-            	Set<OWLLiteral> literals = node.getRepresentativeElement().getDataPropertyValues( taskName, ont );
-            	for( OWLLiteral literal: literals ) {
-            		System.out.println( "Name: " + literal.getLiteral() );
-            	}
-            	literals = node.getRepresentativeElement().getDataPropertyValues( taskPriority, ont );
-            	for( OWLLiteral literal: literals ) {
-            		System.out.println( "Priority: " + literal.parseInteger() );
-            	}
-            }
-            
-            ShortFormProvider shortFormProvider = new SimpleShortFormProvider();
-
-/*            DLQueryPrinter dlQueryPrinter = new DLQueryPrinter( reasoner, shortFormProvider );
+			
+			// Save our ontology
+			man.saveOntology( ont, IRI.create( "file:/home/where-is-s/workspace/temp/example.owl" ) );
+			
+			OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
+			ConsoleProgressMonitor progressMonitor = new ConsoleProgressMonitor();
+			OWLReasonerConfiguration config = new SimpleConfiguration( progressMonitor );
+			OWLReasoner reasoner = reasonerFactory.createReasoner( ont, config );
+			reasoner.precomputeInferences();
+			
+			boolean consistent = reasoner.isConsistent();
+			System.out.println( "Consistent: " + consistent + "\n" );
+			
+			NodeSet<OWLNamedIndividual> set = reasoner.getInstances( abstractTaskClass, false );
+			System.out.println( "Count of tasks: " + set.getNodes().size() + "\n" );
+			for( Node<OWLNamedIndividual> node: set.getNodes() ) {
+				Set<OWLLiteral> literals = node.getRepresentativeElement().getDataPropertyValues( taskName, ont );
+				for( OWLLiteral literal: literals ) {
+					System.out.println( "Name: " + literal.getLiteral() );
+				}
+				literals = node.getRepresentativeElement().getDataPropertyValues( taskPriority, ont );
+				for( OWLLiteral literal: literals ) {
+					System.out.println( "Priority: " + literal.parseInteger() );
+				}
+			}
+			
+			ShortFormProvider shortFormProvider = new SimpleShortFormProvider();
+			
+			/*            DLQueryPrinter dlQueryPrinter = new DLQueryPrinter( reasoner, shortFormProvider );
 
             doQueryLoop( dlQueryPrinter );*/
-            
-        }
-        catch ( OWLOntologyCreationException e ) {
-            System.out.println( "Could not create ontology: " + e.getMessage() );
-        }
-        catch ( OWLOntologyStorageException e ) {
-            System.out.println( "Could not save ontology: " + e.getMessage() );
-        }
+			
+		}
+		catch ( OWLOntologyCreationException e ) {
+			System.out.println( "Could not create ontology: " + e.getMessage() );
+		}
+		catch ( OWLOntologyStorageException e ) {
+			System.out.println( "Could not save ontology: " + e.getMessage() );
+		}
 	}
-	
+
 	/*private static void doQueryLoop( DLQueryPrinter dlQueryPrinter ) throws IOException {
 		while (true) {
 		    // Prompt the user to enter a class expression

@@ -20,11 +20,11 @@ public class MethodSignature {
 	public String getName() {
 		return name;
 	}
-	
+
 	public MethodStatus getStatus() {
 		return this.status;
 	}
-	
+
 	public void setStatus(MethodStatus newStatus) {
 		this.status = newStatus;
 	}
@@ -56,7 +56,7 @@ public class MethodSignature {
 		}
 		return params.get(key);
 	}
-	
+
 	public boolean ensureParams( List<String> keys ) {
 		for (String key : keys) {
 			if( !params.containsKey(key) ) {
@@ -65,23 +65,22 @@ public class MethodSignature {
 		}
 		return true;
 	}
-	
-	public Map<String, String> assertOptions(Map<String, String> currentOptions) {
+
+	public Map<String, String> assertOptions(Map<String, String> curentOptions) {
 		HashMap<String, String> actualOptions = new HashMap<String, String>(this.options);
-		for (String key : options.keySet()) {
-			if( currentOptions.containsKey(key) ) {
-				actualOptions.put(key, currentOptions.get(key));
+		for (String key : this.options.keySet()) {
+			if( curentOptions.containsKey(key) ) {
+				actualOptions.put(key, curentOptions.get(key));
 			}
 		}
 		return actualOptions;
 	}
-	
-	public MethodSignature cloneWithOptions(Map<String, String> currentOptions) {
+
+	public MethodSignature cloneWithOptions(Map<String, String> curentOptions) {
 		MethodSignature asserted = new MethodSignature(this.name);
 		asserted.params = new HashMap<String, String>(this.options);
 		asserted.status = this.status;
-		asserted.options = assertOptions(currentOptions);
+		asserted.options = assertOptions(curentOptions);
 		return asserted;
-		
 	}
 }

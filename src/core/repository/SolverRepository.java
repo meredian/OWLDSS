@@ -1,37 +1,97 @@
 package core.repository;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import core.interfaces.Solver;
 import core.owl.objects.SolvingMethod;
 
 public class SolverRepository {
 
-	private List<Solver> solvers = new LinkedList<Solver>();
+	private static final String SOLVER_REPO_CONFIG_PATH = "config/repositary/solver";
+	private final ConfigStorage storage = new ConfigStorage(SOLVER_REPO_CONFIG_PATH);
+	private final XStream xstream = new XStream(new DomDriver());
+	private Map<String, Solver> solvers = new HashMap<String, Solver>();
 
-	public SolverRepository() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public Solver getSolver(SolvingMethod solvingMethod) {
-		return null;
+		String solverClassName = solvingMethod.getSolverClassName();
+		if( solvers.containsKey(solverClassName)) {
+			return solvers.get(solverClassName);
+		} else {
+			Solver newSolver;
+			newSolver = loadSolverFromStorage(solverClassName);
+			if(newSolver == null ) {
+				newSolver = constructSolverByClassName(solverClassName);
+			}
+			solvers.put(solverClassName, newSolver);
+			return newSolver;
+		}
 	}
 
 	public MethodSignature getMethod(SolvingMethod solvingMethod) {
 		return this.getSolver(solvingMethod).getMethodBySolvingMethod(solvingMethod);
 	}
 
-	public List<Solver> getSolvers() {
-		return solvers;
+	public Collection<Solver> getSolvers() {
+		return solvers.values();
 	}
 
 	public void addSolver(Solver solver) {
-		this.solvers.add(solver);
+		this.solvers.put(extractSolverName(solver), solver);
 	}
 
 	public void removeSolver(Solver solver) {
-		this.solvers.remove(solver);
+		this.solvers.remove(extractSolverName(solver));
 	}
 
+	public void saveToStorage() {
+		for (Solver solver : solvers.values()) {
+			saveSolverToStorage(solver);
+		}
+	}
+
+	public void updateFromStorage() {
+		for (Solver solver : solvers.values()) {
+			Solver updatedSolver = loadSolverFromStorage(solver);
+			solver = (updatedSolver == null) ? solver : updatedSolver;
+		}
+	}
+
+	private String extractSolverName(Solver solver) {
+		return solver.getClass().getName();
+	}
+
+	private Solver constructSolverByClassName(String solverClassName) {
+		try {
+			return (Solver) Class.forName(solverClassName).newInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AssertionError("Failed to resolve Solver by SolverClassName \""+solverClassName+"\"");
+		}
+	}
+
+	private Solver loadSolverFromStorage(Solver solver) {
+		return loadSolverFromStorage(extractSolverName(solver));
+	}
+
+	private Solver loadSolverFromStorage(String solverClassName) {
+		try
+		{
+			String xmlSerializtion = storage.readConfig(solverClassName);
+			return (Solver) xstream.fromXML(xmlSerializtion);
+		} catch ( Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private void saveSolverToStorage(Solver solver) {
+		String xmlSerialization = xstream.toXML(solver);
+		storage.writeConfig(extractSolverName(solver), xmlSerialization);
+	}
 }
