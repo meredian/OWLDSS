@@ -19,8 +19,7 @@ public class SolverRepository {
 	}
 
 	public MethodSignature getMethod(SolvingMethod solvingMethod) {
-		return this.getSolver(solvingMethod).getMethodBySolvingMethod(
-				solvingMethod);
+		return this.getSolver(solvingMethod).getMethodBySolvingMethod(solvingMethod);
 	}
 
 	public List<Solver> getSolvers() {

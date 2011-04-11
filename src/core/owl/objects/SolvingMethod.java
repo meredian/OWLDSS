@@ -11,7 +11,7 @@ public class SolvingMethod {
 		return null;
 	}
 	
-	public String getSolverName() {
+	public String getSolverClassName() {
 		// TODO Auto-generated method stub
 		return null;
 	}

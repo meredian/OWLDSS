@@ -234,6 +234,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#MethodName -->
+
+    <owl:DatatypeProperty rdf:about="#MethodName">
+        <rdfs:domain rdf:resource="#SolvingMethod"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSempOptimizationModifier -->
 
     <owl:DatatypeProperty rdf:about="#PumpAnalysisSempOptimizationModifier">
@@ -304,16 +313,16 @@
         <rdfs:subClassOf rdf:resource="#ImportingMethod"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#ImporterClass"/>
-                <owl:hasValue rdf:datatype="&xsd;string"
-                    >ElectroConsumptionImporter</owl:hasValue>
+                <owl:onProperty rdf:resource="#Imports"/>
+                <owl:onClass rdf:resource="#ElectroConsumptionTimeRow"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#Imports"/>
-                <owl:onClass rdf:resource="#ElectroConsumptionTimeRow"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="#ImporterClass"/>
+                <owl:hasValue rdf:datatype="&xsd;string"
+                    >ElectroConsumptionImporter</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -379,6 +388,13 @@
         <rdfs:subClassOf rdf:resource="#Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="#HasResult"/>
+                <owl:onClass rdf:resource="#OrganizationAnalysisResult"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="#HasOrganization"/>
                 <owl:onClass rdf:resource="#Organization"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -388,13 +404,6 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#SolvedBy"/>
                 <owl:hasValue rdf:resource="#OrganizationAnalysisBestMethod"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="#HasResult"/>
-                <owl:onClass rdf:resource="#OrganizationAnalysisResult"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <owl:disjointWith rdf:resource="#PumpAnalysisTask"/>
@@ -469,13 +478,6 @@
         <rdfs:subClassOf rdf:resource="#Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#HasPump"/>
-                <owl:onClass rdf:resource="#Pump"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="#SolvedBy"/>
                 <owl:hasValue rdf:resource="#PumpAnalysisSolvingMethodStandard"/>
             </owl:Restriction>
@@ -484,6 +486,13 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#HasOrganization"/>
                 <owl:onClass rdf:resource="#Organization"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#HasPump"/>
+                <owl:onClass rdf:resource="#Pump"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -688,8 +697,8 @@
 
     <PumpAnalysisSempSolvingMethod rdf:about="#PumpAnalysisSolvingMethodStandard">
         <rdf:type rdf:resource="&owl;Thing"/>
-        <SempModule
-            >PumpAnalysisStandardSolver</SempModule>
+        <MethodName
+            >PumpAnalysisStandardSolver</MethodName>
         <UsesImporter rdf:resource="#Last24HoursElectroConsumptionImporingMethod"/>
     </PumpAnalysisSempSolvingMethod>
     
