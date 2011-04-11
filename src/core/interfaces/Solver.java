@@ -2,16 +2,18 @@ package core.interfaces;
 
 import java.util.List;
 
+import core.owl.objects.SolvingMethod;
 import core.owl.objects.Task;
 import core.repository.MethodSignature;
 
 public interface Solver {
 
 	public List<MethodSignature> getMethods();
-	public List<MethodSignature> getMethodsByName(String methodName);
+	public MethodSignature getMethodByName(String name);
+	public MethodSignature getMethodBySolvingMethod(SolvingMethod solvingMethod);
 
-	public boolean solveTaskByMethod(Task task, MethodSignature solver);
-	public boolean solveTask(Task task);
+	public boolean solveTaskByMethod(Task task, MethodSignature method);
+	
 	/*
 	 * While adapters can be cross-language, each adapter can need different options for each
 	 * solver module (paths, execution options, various setting), so they can explicitly
@@ -20,10 +22,10 @@ public interface Solver {
 	public List<String> getMandatoryParams();
 	public List<String> getOptionalParams();
 
-	public boolean addSolver(MethodSignature solver);
-	public boolean removeSolver(MethodSignature solver);
+	public boolean addMethod(MethodSignature method);
+	public boolean removeMethod(MethodSignature method);
 
 	public List<MethodSignature> testMethods();
-	public MethodSignature testMethod(MethodSignature solver);
+	public MethodSignature testMethod(MethodSignature method);
 
 }

@@ -13,6 +13,8 @@ public class ImportManager {
 	private final OWLObjectFactory objectFactory;
 
 	public ImportManager(OWLObjectFactory objectFactory) {
+		if (objectFactory == null)
+			throw new NullPointerException("objectFactory is null");
 		this.objectFactory = objectFactory;
 		// TODO Auto-generated constructor stub
 	}

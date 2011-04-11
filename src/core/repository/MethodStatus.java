@@ -2,10 +2,10 @@ package core.repository;
 
 public class MethodStatus {
 
-	public static final int STATUS_CODE_UNKNOWN = -1;
-	public static final int STATUS_CODE_OK = 0;
-	public static final int STATUS_CODE_WARNING = 1;
-	public static final int STATUS_CODE_ERROR = 2;
+	public static final int CODE_UNKNOWN = -1;
+	public static final int CODE_OK = 0;
+	public static final int CODE_WARNING = 1;
+	public static final int CODE_ERROR = 2;
 
 	private final int code;
 	private final String message;
@@ -28,5 +28,5 @@ public class MethodStatus {
 		return this.code;
 	}
 
-	public static MethodStatus STATUS_UNKNOWN = new MethodStatus(STATUS_CODE_UNKNOWN);
+	public static MethodStatus UNKNOWN = new MethodStatus(CODE_UNKNOWN);
 }

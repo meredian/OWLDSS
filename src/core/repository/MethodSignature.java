@@ -7,7 +7,7 @@ import java.util.Map;
 public class MethodSignature {
 
 	private final String name;
-	private MethodStatus status = MethodStatus.STATUS_UNKNOWN;
+	private MethodStatus status = MethodStatus.UNKNOWN;
 	private Map<String, String> params = null;
 	private Map<String, String> options = null;
 
@@ -20,36 +20,44 @@ public class MethodSignature {
 	public String getName() {
 		return name;
 	}
+	
+	public MethodStatus getStatus() {
+		return this.status;
+	}
+	
+	public void setStatus(MethodStatus newStatus) {
+		this.status = newStatus;
+	}
 
-	public void setParams(String key, String value) {
+	public void setParam(String key, String value) {
 		if (params == null) {
 			params = new HashMap<String, String>();
 		}
 		params.put(key, value);
 	}
 
-	public String getParams(String key) {
+	public String getParam(String key) {
 		if (params == null) {
 			return null;
 		}
 		return params.get(key);
 	}
 
-	public void setOptions(String key, String value) {
+	public void setOption(String key, String value) {
 		if (options == null) {
 			options = new HashMap<String, String>();
 		}
 		options.put(key, value);
 	}
 
-	public String getOptions(String key) {
+	public String getOption(String key) {
 		if (options == null) {
 			return null;
 		}
 		return params.get(key);
 	}
 	
-	public boolean assertParams( List<String> keys ) {
+	public boolean ensureParams( List<String> keys ) {
 		for (String key : keys) {
 			if( !params.containsKey(key) ) {
 				return false;
@@ -57,12 +65,23 @@ public class MethodSignature {
 		}
 		return true;
 	}
-
-	public MethodStatus getStatus() {
-		return this.status;
+	
+	public Map<String, String> assertOptions(Map<String, String> currentOptions) {
+		HashMap<String, String> actualOptions = new HashMap<String, String>(this.options);
+		for (String key : options.keySet()) {
+			if( currentOptions.containsKey(key) ) {
+				actualOptions.put(key, currentOptions.get(key));
+			}
+		}
+		return actualOptions;
 	}
-
-	public void setStatus(MethodStatus newStatus) {
-		this.status = newStatus;
+	
+	public MethodSignature cloneWithOptions(Map<String, String> currentOptions) {
+		MethodSignature asserted = new MethodSignature(this.name);
+		asserted.params = new HashMap<String, String>(this.options);
+		asserted.status = this.status;
+		asserted.options = assertOptions(currentOptions);
+		return asserted;
+		
 	}
 }
