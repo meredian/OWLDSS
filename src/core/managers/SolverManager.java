@@ -11,7 +11,7 @@ import core.repository.SolverRepository;
 public class SolverManager {
 
 	private ImportManager importManager;
-	private SolverRepository repository; 
+	private SolverRepository repository;
 
 	public SolverManager(ImportManager importManager) {
 		if (importManager == null)
@@ -19,16 +19,16 @@ public class SolverManager {
 		this.importManager = importManager;
 	}
 
-	
+
 	public void process(Task task) {
 		Set<SolvingMethod> solvingMethods = task.getSolvingMethods();
 		// TODO: choose solving method
 		SolvingMethod solvingMethod = solvingMethods.iterator().next();
-		
+
 		importManager.process(solvingMethod, task);
 		Solver solver = this.repository.getSolver(solvingMethod);
 		MethodSignature method = solver.getMethodBySolvingMethod(solvingMethod);
-		
+
 		solver.solveTaskByMethod(task, method);
 	}
 }

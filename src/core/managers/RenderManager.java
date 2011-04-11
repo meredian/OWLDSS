@@ -15,7 +15,7 @@ public class RenderManager {
 
 	private Renderer getRenderer(PresentationMethod presentationMethod) {
 		if (presentationMethod.getRendererName() == ConsoleOutputRenderer.class.getSimpleName()) {
-			return new ConsoleOutputRenderer(); 
+			return new ConsoleOutputRenderer();
 		}
 		return null;
 	}

@@ -12,7 +12,7 @@ public class Presentation {
 		// TODO: return class of the presentation (StringPresentation, TablePresentation...)
 		return null;
 	}
-	
+
 	public OWLIndividualPropertyObject get() {
 		// TODO
 		return null;

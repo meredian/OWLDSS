@@ -9,7 +9,7 @@ import core.owl.objects.SolvingMethod;
 import core.owl.objects.Task;
 
 public class ImportManager {
-	
+
 	private final OWLObjectFactory objectFactory;
 
 	public ImportManager(OWLObjectFactory objectFactory) {
@@ -23,11 +23,11 @@ public class ImportManager {
 		// TODO
 		return null;
 	}
-	
+
 	public void process(SolvingMethod solvingMethod, Task task) {
 		Set<ImportingMethod> importingMethods = solvingMethod.getImportingMethods();
 		for( ImportingMethod importingMethod: importingMethods )
 			this.getImporter(importingMethod).run(task);
 	}
-	
+
 }
