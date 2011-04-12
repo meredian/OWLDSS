@@ -127,6 +127,29 @@ public class Launcher {
 		ontologyShell.dumpOntology();
 	}
 	
+	private static void simpleReasonerTest() throws OWLOntologyCreationException {
+		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+		String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
+		OWLOntology ont = man.createOntology(IRI.create(ontologyAddress));
+		
+		OWLDataFactory dataFactory = man.getOWLDataFactory();
+		
+		OWLClass taskClass = dataFactory.getOWLClass(IRI.create(ontologyAddress + "#Task"));
+		OWLClass subtaskClass = dataFactory.getOWLClass(IRI.create(ontologyAddress + "#SubTask"));
+		man.addAxiom(ont, dataFactory.getOWLSubClassOfAxiom(subtaskClass, taskClass));
+		
+		OWLNamedIndividual individual = dataFactory.getOWLNamedIndividual(IRI.create(ontologyAddress + "#SubTask_0"));
+		man.addAxiom(ont, dataFactory.getOWLClassAssertionAxiom(subtaskClass, individual));
+		
+		OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
+		ConsoleProgressMonitor progressMonitor = new ConsoleProgressMonitor();
+		OWLReasonerConfiguration config = new SimpleConfiguration( progressMonitor );
+		OWLReasoner reasoner = reasonerFactory.createReasoner( ont, config );
+		
+		NodeSet<OWLNamedIndividual> individuals = reasoner.getInstances(taskClass, false);
+		assert(!individuals.isEmpty());
+	}
+	
 	private static void OWLStartup() {
 		try {
 			OWLOntologyManager man = OWLManager.createOWLOntologyManager();
