@@ -1,5 +1,6 @@
 package core.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,10 @@ public abstract class AbstractSolver implements Solver {
 	@Override
 	public MethodSignature getMethodBySolvingMethod(SolvingMethod solvingMethod) {
 		MethodSignature method = this.getMethodByName(solvingMethod.getMethodName());
-		//method = method.cloneWithOptions(solvingMethod.getParameters());
+		/*Map<String, Set<?>> attributes = solvingMethod.getAllAttributes();
+		for (Entry<String, Set<?>> entry: attributes.entrySet()) TODO*/
+			
+		method = method.cloneWithOptions(new HashMap<String, String>());
 		return method;
 	}
 

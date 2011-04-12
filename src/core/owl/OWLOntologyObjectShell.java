@@ -2,8 +2,8 @@ package core.owl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -136,7 +136,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 				this.getOWLClass(this.getEntityIRIByName(Task.CLASS_NAME)), false
 		).getFlattened();
 		
-		Set<Task> tasks = new TreeSet<Task>();
+		Set<Task> tasks = new HashSet<Task>();
 		for (OWLNamedIndividual individual: individuals)
 			tasks.add(this.getTask(individual.getIRI()));
 		return tasks;

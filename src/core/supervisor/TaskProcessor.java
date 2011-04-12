@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
+import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
@@ -19,7 +20,13 @@ public class TaskProcessor implements TaskListener {
 	private Queue< String > taskQueue = new LinkedList< String >();
 	private boolean canceled = false;
 	
-	private static final String ONTOLOGY_PATH = "file:/c:/main.owl";
+	private final String ontologyPath;
+	private final String ontologyIRI;
+	
+	public TaskProcessor(String ontologyPath, String ontologyIRI) {
+		this.ontologyPath = ontologyPath;
+		this.ontologyIRI = ontologyIRI;
+	}
 	
 	@Override
 	/**
@@ -29,8 +36,7 @@ public class TaskProcessor implements TaskListener {
 		taskQueue.add( newTaskXML );
 	}
 	
-	void process() {
-		
+	public void process() {
 		String taskXML;
 		while( ! this.canceled ) {
 			// Obtain initial task from the outside 
@@ -45,29 +51,30 @@ public class TaskProcessor implements TaskListener {
 			try {
 				// Generate new task context
 				OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-				ontologyManager.loadOntologyFromOntologyDocument( new File( ONTOLOGY_PATH ) );
+				ontologyManager.loadOntologyFromOntologyDocument(new File(ontologyPath));
 
 				// Initialize some services
-				OWLOntologyObjectShell taskContext = new OWLOntologyObjectShell( ontologyManager, "http://www.iis.nsk.su/ontologies/main" );
-				ImportManager importManager = new ImportManager(taskContext); 
-				SolverManager solverManager = new SolverManager(importManager);
-				RenderManager renderManager = new RenderManager(); 
-            
+				OWLOntologyObjectShell taskContext = new OWLOntologyObjectShell(ontologyManager, this.ontologyIRI);
+				ImportManager importManager = new ImportManager(taskContext);
+				SolverManager solverManager = new SolverManager(taskContext, importManager);
+				RenderManager renderManager = new RenderManager();
+
 				// Put the initial task into the task context
-				taskContext.createIndividualsFromXML( taskXML );
-				Task currentTask = this.selectNextTaskObject( taskContext );
-				while(true) {
+				taskContext.createIndividualsFromXML(taskXML);
+				taskContext.dumpOntology();
+				Task currentTask = this.selectNextTaskObject(taskContext);
+				while (true) {
 					// Import the data needed for the chosen solving method
-					// 	  ...and run the chosen solving method
+					// ...and run the chosen solving method
 					solverManager.process(currentTask);
-					
+
 					// Mark the [sub]task object as solved
 					currentTask.markAsSolved();
-					
+
 					this.bindNewSubtasksToTree(currentTask);
-					
+
 					// Select next subtask
-					Task nextTask = this.selectNextTaskObject( taskContext );
+					Task nextTask = this.selectNextTaskObject(taskContext);
 					if (nextTask != null)
 						currentTask = nextTask;
 					else

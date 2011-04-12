@@ -3,6 +3,7 @@ package core.interfaces;
 import java.util.List;
 import java.util.Map;
 
+import core.owl.OWLOntologyObjectShell;
 import core.owl.objects.SolvingMethod;
 import core.owl.objects.Task;
 import core.repository.MethodSignature;
@@ -13,7 +14,7 @@ public interface Solver {
 	public MethodSignature getMethodByName(String name);
 	public MethodSignature getMethodBySolvingMethod(SolvingMethod solvingMethod);
 
-	public boolean solveTaskByMethod(Task task, MethodSignature method);
+	public boolean solveTaskByMethod(OWLOntologyObjectShell ontologyShell, Task task, MethodSignature method);
 
 	/*
 	 * While adapters can be cross-language, each adapter can need different options for each

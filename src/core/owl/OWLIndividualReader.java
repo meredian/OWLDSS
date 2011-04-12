@@ -70,11 +70,11 @@ public class OWLIndividualReader {
 	 * @return non-null Set object, even if attribute name is invalid, etc.
 	 */
 	public Set<IRI> getObjectValuesByClass(String attribute, String owlClassName) {
+		IRI attributeIRI = this.ontologyShell.getEntityIRIByName(attribute);
+		OWLObjectProperty property = this.ontologyShell.getOWLObjectProperty(attributeIRI);
 		Set<OWLNamedIndividual> values = this.ontologyShell.getReasoner().getObjectPropertyValues(
 			owlIndividual, 
-			this.ontologyShell.getOWLObjectProperty( 
-				this.ontologyShell.getEntityIRIByName(attribute)
-			)
+			property 
 		).getFlattened();
 		
 		Set<IRI> result = new TreeSet<IRI>();

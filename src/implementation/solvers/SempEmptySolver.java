@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import core.owl.OWLOntologyObjectShell;
 import core.owl.objects.Task;
 import core.repository.AbstractSolver;
 import core.repository.MethodSignature;
 import core.repository.MethodStatus;
 
 public class SempEmptySolver extends AbstractSolver {
-
+	
 	public SempEmptySolver() {
 		mandatoryParams = new ArrayList<String>();
 		mandatoryParams.add("MODULE_PATH");
@@ -20,7 +21,7 @@ public class SempEmptySolver extends AbstractSolver {
 	}
 
 	@Override
-	public boolean solveTaskByMethod(Task task, MethodSignature method) {
+	public boolean solveTaskByMethod(OWLOntologyObjectShell ontologyShell, Task task, MethodSignature method) {
 		// TODO Auto-generated method stub
 		return true;
 	}

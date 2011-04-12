@@ -39,6 +39,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import core.owl.OWLOntologyObjectShell;
 import core.repository.ConfigStorage;
 import core.repository.SolverRepository;
+import core.supervisor.TaskProcessor;
 
 
 public class Launcher {
@@ -48,7 +49,7 @@ public class Launcher {
 		//System.out.println(SempEmptySolver.class.getName());
 		//repositoryTests();
 		try {
-			testTaskContextCreation();
+			testRowInvertTask();
 		} catch (OWLOntologyCreationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,11 +84,34 @@ public class Launcher {
 		System.out.println(newOne);
 	}
 	
-	private static void testTaskContextCreation() throws OWLOntologyCreationException {
-		String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
+	private static void testRowInvertTask() throws OWLOntologyCreationException {
+		/*String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
 		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
 		File file = new File("ontologies/Ontology1.owl");
 		ontologyManager.loadOntologyFromOntologyDocument(IRI.create("file:"+file.getAbsolutePath()));
+		
+		OWLOntologyObjectShell ontologyShell = new OWLOntologyObjectShell(ontologyManager, ontologyAddress);*/
+		String testXML = "<individual class='RowInvertTask'>" +
+				"<attr name='HasInput' type='object'>" +
+					"<individual class='Row'>" +
+						"<attr name='RowValue' type='string' value='1 2 63 123 3 9'/>" +
+					"</individual>" +
+				"</attr>" +
+			"</individual>";
+		
+		TaskProcessor processor = new TaskProcessor(
+			new File("ontologies/Ontology1.owl").getAbsolutePath(),
+			"http://www.iis.nsk.su/ontologies/main.owl"
+		);
+		processor.onTaskReceived(testXML);
+		processor.process();
+		//ontologyShell.dumpOntology();
+	}
+	
+	private static void testTaskContextCreation() throws OWLOntologyCreationException {
+		String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
+		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+		ontologyManager.loadOntologyFromOntologyDocument(new File("ontologies/Ontology1.owl"));
 		//OWLOntology ontology = ontologyManager.getOntology(IRI.create(base));
 		//Set<OWLOntology> set = ontologyManager.getOntologies();
 		
