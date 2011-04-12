@@ -1,13 +1,14 @@
 package core.owl.objects;
 
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.Map.Entry;
+import java.util.TreeSet;
 
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+
+import core.owl.OWLIndividualBuilder;
+import core.owl.OWLIndividualReader;
 import core.owl.OWLOntologyObjectShell;
-import core.owl.base.OWLClassObject;
-import core.owl.base.OWLIndividualObject;
 
 public class Task {
 	
@@ -15,129 +16,94 @@ public class Task {
 		QUEUED, SOLVED;
 	}
 	
-	private static final String PRIORITY_ATTR = "TaskPriority";
-	private static final String INDEX_ATTR = "TaskIndex";
-	private static final String SOLVED_ATTR = "TaskSolved";
+	OWLNamedIndividual owlIndividual;
+	OWLIndividualBuilder individualBuilder;
+	OWLIndividualReader individualReader;
+	OWLOntologyObjectShell ontologyShell;
 	
-	private Map< String, String > parametersString = new TreeMap< String, String >();
-	private Map< String, Integer > parametersInteger = new TreeMap< String, Integer >();
-	private Map< String, Double > parametersDouble = new TreeMap< String, Double >();
-	private Map< String, Boolean > parametersBoolean = new TreeMap< String, Boolean >();
-	private String className;
+	public static final String CLASS_NAME = "Task";
+	private static final String ATTRIBUTE_HAS_SUBTASK = "HasSubTask";
+	private static final String ATTRIBUTE_HAS_SUPERTASK = "HasSuperTask";
+	private static final String ATTRIBUTE_SOLVED_BY = "SolvedBy";
+	private static final String ATTRIBUTE_HAS_INPUT = "HasInput";
+	private static final String ATTRIBUTE_HAS_OUTPUT = "HasOutput";
+	private static final String ATTRIBUTE_HAS_IMPORT = "HasImport";
+	private static final String ATTRIBUTE_HAS_RESULT = "HasResult";
+	private static final String ATTRIBUTE_IS_SOLVED = "IsSolved";
 	
-	public Integer getPriority() {
-		// TODO return individual.getProperty( PRIORITY_ATTR ).getIntValue();
-		return null;
+	public Task(OWLNamedIndividual owlIndividual, OWLIndividualBuilder individualBuilder, 
+			OWLIndividualReader individualReader, OWLOntologyObjectShell ontologyShell) {
+		this.owlIndividual = owlIndividual;
+		this.individualBuilder = individualBuilder;
+		this.individualReader = individualReader;
+		this.ontologyShell = ontologyShell;
 	}
 	
 	public Task getSuperTask() {
-		// TODO
-		return null;
+		IRI taskIRI = this.individualReader.getSingleObjectValue(ATTRIBUTE_HAS_SUPERTASK);
+		if( taskIRI == null )
+			return null;
+		else
+			return ontologyShell.getTask(taskIRI);
 	}
 	
 	public Set<Task> getSubTasks() {
-		// TODO
-		return null;
-	}
-	
-	public Task( String taskClassName ) {
-		if ( taskClassName == null)
-			throw new NullPointerException("taskClassName is null");
-		this.className = taskClassName;
-	}
-	
-	public void addParameter( String name, String value ) {
-		parametersString.put( name, value );
-	}
-	
-	public void addParameter( String name, Integer value ) {
-		parametersInteger.put( name, value );
-	}
-	
-	public void addParameter( String name, Double value ) {
-		parametersDouble.put( name, value );
-	}
-	
-	public void addParameter( String name, Boolean value ) {
-		parametersBoolean.put( name, value );
-	}
-
-	public OWLIndividualObject putInto( OWLOntologyObjectShell objectOntology ) {
-		OWLClassObject taskClassObject = objectOntology.getClassObject( this.className );
-		if( taskClassObject == null )
-			return null;
-
-		OWLIndividualObject individual = objectOntology.createIndividual( objectOntology.getClassObject( this.className ) );
-
-		try {
-			for( Entry< String, String > entry: parametersString.entrySet() )
-				individual.getPropertyByName( entry.getKey() ).setStringValue( entry.getValue() );
-			for( Entry< String, Integer > entry: parametersInteger.entrySet() )
-				individual.getPropertyByName( entry.getKey() ).setIntegerValue( entry.getValue() );
-			for( Entry< String, Double > entry: parametersDouble.entrySet() )
-				individual.getPropertyByName( entry.getKey() ).setDoubleValue( entry.getValue() );
-			for( Entry< String, Boolean > entry: parametersBoolean.entrySet() )
-				individual.getPropertyByName( entry.getKey() ).setBooleanValue( entry.getValue() );
-
-			return individual;
-		} catch( Exception e ) {
-			System.err.println( "Cannot not translate task into OWL representation!" );
-			e.printStackTrace();
-			return null;
-		}
+		Set<IRI> taskIRIs = this.individualReader.getObjectValues(ATTRIBUTE_HAS_SUBTASK);
+		Set<Task> result = new TreeSet<Task>();
+		for (IRI iri: taskIRIs)
+			result.add(ontologyShell.getTask(iri));
+		return result;
 	}
 
 	public Set<SolvingMethod> getSolvingMethods() {
-		// TODO
-		return null;
+		Set<IRI> taskIRIs = this.individualReader.getObjectValues(ATTRIBUTE_SOLVED_BY);
+		Set<SolvingMethod> result = new TreeSet<SolvingMethod>();
+		for (IRI iri: taskIRIs)
+			result.add(ontologyShell.getSolvingMethod(iri));
+		return result;
 	}
 	
-	public Set<OWLIndividualObject> getInputObjects() {
-		// TODO
-		return null;
+	public Set<IRI> getInputObjects() {
+		return this.individualReader.getObjectValues(ATTRIBUTE_HAS_INPUT);
 	}
 	
-	public Set<OWLIndividualObject> getImportedObjects() {
-		// TODO
-		return null;
+	public Set<IRI> getImportedObjects() {
+		return this.individualReader.getObjectValues(ATTRIBUTE_HAS_IMPORT);
 	}
 	
 	public TaskResult getResult() {
-		// TODO
-		return null;
-	}
-
-	public void setStatus(Status status) {
-		// TODO Auto-generated method stub
+		return this.ontologyShell.getTaskResult(individualReader.getSingleObjectValue(ATTRIBUTE_HAS_RESULT));
 	}
 	
-	public Status getStatus() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public String getIndex() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setPriority(Integer taskPriority) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setIndex(String string) {
-		// TODO Auto-generated method stub
+	public Set<Task> getOutputTasks() {
+		Set<IRI> taskIRIs = this.individualReader.getObjectValuesByClass(ATTRIBUTE_HAS_OUTPUT, CLASS_NAME);
+		Set<Task> result = new TreeSet<Task>();
+		for (IRI iri: taskIRIs)
+			result.add(ontologyShell.getTask(iri));
+		return result;
 	}
 
 	public void addSubTask(Task outputTask) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Set<Task> getOutputTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		this.individualBuilder.addObjectAxiom(ATTRIBUTE_HAS_SUBTASK, outputTask.getIRI());		
 	}
 	
+	private IRI getIRI() {
+		return this.owlIndividual.getIRI();
+	}
+
+	public void markAsSolved() {
+		this.individualBuilder.addAxiom(ATTRIBUTE_IS_SOLVED, true);
+	}
+	
+	public Status getStatus() {
+		return this.individualReader.getBooleanValue(ATTRIBUTE_IS_SOLVED) == null ? Status.QUEUED : Status.SOLVED;
+	}
+	
+	public OWLIndividualReader getReader() {
+		return this.individualReader;
+	}
+	
+	public OWLIndividualBuilder getBuilder() {
+		return this.individualBuilder;
+	}
 }

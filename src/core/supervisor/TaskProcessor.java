@@ -12,12 +12,11 @@ import core.managers.ImportManager;
 import core.managers.RenderManager;
 import core.managers.SolverManager;
 import core.owl.OWLOntologyObjectShell;
-import core.owl.base.OWLIndividualObject;
 import core.owl.objects.Task;
 
 public class TaskProcessor implements TaskListener {
 
-	private Queue< Task > taskQueue = new LinkedList< Task >();
+	private Queue< String > taskQueue = new LinkedList< String >();
 	private boolean canceled = false;
 	
 	private static final String ONTOLOGY_PATH = "file:/c:/main.owl";
@@ -26,17 +25,17 @@ public class TaskProcessor implements TaskListener {
 	/**
 	 * Inserts a new task into queue.
 	 */
-	public void onTaskReceived( Task newTask ) {
-		taskQueue.add( newTask );
+	public void onTaskReceived( String newTaskXML ) {
+		taskQueue.add( newTaskXML );
 	}
 	
 	void process() {
 		
-		Task nextTask;
+		String taskXML;
 		while( ! this.canceled ) {
 			// Obtain initial task from the outside 
-			nextTask = taskQueue.poll();
-			if( nextTask == null ) {
+			taskXML = taskQueue.poll();
+			if( taskXML == null ) {
 				try {
 					Thread.sleep( 50 ); // sleep portions of 50 ms until a task is obtained
 				} catch( InterruptedException ignored ) {} 
@@ -55,27 +54,27 @@ public class TaskProcessor implements TaskListener {
 				RenderManager renderManager = new RenderManager(); 
             
 				// Put the initial task into the task context
-				OWLIndividualObject initialTask = nextTask.putInto( taskContext );
-				assert( initialTask != null );
-				Task nextTaskObject; 
-				do {
-					// Select next subtask
-					nextTaskObject = this.selectNextTaskObject( taskContext );
-					
+				taskContext.createIndividualsFromXML( taskXML );
+				Task currentTask = this.selectNextTaskObject( taskContext );
+				while(true) {
 					// Import the data needed for the chosen solving method
 					// 	  ...and run the chosen solving method
-					solverManager.process(nextTaskObject);
+					solverManager.process(currentTask);
 					
 					// Mark the [sub]task object as solved
-					nextTaskObject.setStatus( Task.Status.SOLVED );
+					currentTask.markAsSolved();
 					
-					this.bindNewSubtasksToTree(nextTaskObject); 
-				} while( nextTaskObject != null );
+					this.bindNewSubtasksToTree(currentTask);
+					
+					// Select next subtask
+					Task nextTask = this.selectNextTaskObject( taskContext );
+					if (nextTask != null)
+						currentTask = nextTask;
+					else
+						break;
+				}
 				
-				renderManager.process( nextTask.getResult() );
-				
-				// Run the chosen post method 
-				// postServiceManager.runPost( initialTask );
+				renderManager.process( currentTask.getResult() );
 			} catch( Exception e ) {
 				System.err.println( "Task solution failed! Stack trace follows..." );
 				e.printStackTrace();

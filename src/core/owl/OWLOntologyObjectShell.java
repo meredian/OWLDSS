@@ -1,13 +1,14 @@
 package core.owl;
 
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
+import java.util.TreeSet;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -18,33 +19,37 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerConfiguration;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
 import org.semanticweb.owlapi.util.OWLOntologyMerger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-import core.owl.base.OWLClassObject;
-import core.owl.base.OWLIndividualObject;
+import core.owl.objects.ImportingMethod;
+import core.owl.objects.Presentation;
+import core.owl.objects.PresentationMethod;
+import core.owl.objects.SolvingMethod;
 import core.owl.objects.Task;
+import core.owl.objects.TaskResult;
 
-public class OWLOntologyObjectShell implements OWLObjectFactory {
+public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	
 	private OWLOntology ontology;
 	private OWLOntologyManager manager;
-	private Map< IRI, OWLClassObject > classes = new TreeMap< IRI, OWLClassObject >();
-	private Map< IRI, OWLIndividualObject > individuals = new TreeMap< IRI, OWLIndividualObject >();
-	
 	private OWLReasonerFactory reasonerFactory;
 	private OWLReasonerConfiguration config;
 	private OWLReasoner reasoner;
+	private OWLIndividualIRIFactory individualIRIFactory;
 	
-	private String ontologyAddress = null;
+	private String ontologyAddress;
 	
 	private final String DELIMITER = "#";
 	
 	public IRI getClassIRIByName( String className ) {
-		return IRI.create( this.getOntologyAddress() + DELIMITER + className );
+		return this.getEntityIRIByName( className );
 	}
 	
-	/*public String getIndividualIRI( String className, String individualName ) {
-		return this.getClassAddress( className ) + "." + individualName;
-	}*/
+	public IRI getEntityIRIByName( String entityName ) {
+		return IRI.create( this.getOntologyAddress() + DELIMITER + entityName );
+	}
 	
 	public String getOntologyAddress() {
 		return this.ontologyAddress;
@@ -57,31 +62,6 @@ public class OWLOntologyObjectShell implements OWLObjectFactory {
 		return split[ split.length - 1 ];
 	}
 	
-	public OWLClassObject getClassObject( String className ) {
-		return this.getClassObject( this.getClassIRIByName( className ) );
-	}
-	
-	public OWLClassObject getClassObject( IRI classIRI ) {
-		OWLClassObject result = classes.get( classIRI );
-		
-		if( result == null ) {
-			Set< OWLClass > owlClasses = ontology.getClassesInSignature( false ); // do not include other ontologies, etc.
-			
-			for( OWLClass owlClass: owlClasses ) {
-				IRI temp = owlClass.getIRI();
-				if( temp.equals( classIRI ) ) {
-					if( result != null ) {
-						System.err.println( "Two or more classes with the same name met!" );
-						return null; // two or more classes with the same name: how can it happen though??
-					}
-					result = new OWLClassObject( this, owlClass );
-					classes.put( classIRI, result );
-				}
-			}
-		}
-		return result;
-	}
-	
 	public OWLReasoner getReasoner() {
 		return this.reasoner;
 	}
@@ -89,32 +69,25 @@ public class OWLOntologyObjectShell implements OWLObjectFactory {
 	public OWLOntology getOwlOntology() {
 		return ontology;
 	}
-	
-	public OWLOntologyObjectShell( OWLOntologyManager manager, String ontologyAddress ) throws OWLOntologyCreationException {
+
+	public OWLOntologyObjectShell(OWLOntologyManager manager, String ontologyAddress) 
+			throws OWLOntologyCreationException {
 		this.manager = manager;
 		this.ontologyAddress = ontologyAddress;
-		this.ontology = manager.getOntology( IRI.create( this.getOntologyAddress() ) );
-		if( this.ontology == null ) {
-			OWLOntologyMerger merger = new OWLOntologyMerger( manager );
-			this.ontology = merger.createMergedOntology( manager, IRI.create( this.ontologyAddress ) );
-			System.out.println( "Task context ontology not found! It is created by merging all known ontologies." );
+		this.individualIRIFactory = new OWLIndividualIRIFactory(ontologyAddress);
+		this.ontology = manager.getOntology(IRI.create(this.getOntologyAddress()));
+		if (this.ontology == null) {
+			OWLOntologyMerger merger = new OWLOntologyMerger(manager);
+			this.ontology = merger.createMergedOntology(manager, IRI.create(this.ontologyAddress));
+			System.out.println("Task context ontology not found! It is created by merging all known ontologies.");
 		}
-		
+
 		this.reasonerFactory = new Reasoner.ReasonerFactory();
 		this.config = new SimpleConfiguration( null );
 		this.reasoner = this.reasonerFactory.createReasoner( this.ontology, this.config );
 		this.reasoner.precomputeInferences();
 	}
 
-	public OWLClassObject getClassObject( OWLClass owlClass ) {
-		try {
-			return this.getClassObject( owlClass.getIRI() );
-		} catch( Exception e ) {
-			e.printStackTrace();
-			return null; // should never happen!
-		}
-	}
-	
 	public void addAxiom( OWLAxiom axiom ) {
 		this.manager.addAxiom( this.ontology, axiom );
 	}
@@ -126,48 +99,118 @@ public class OWLOntologyObjectShell implements OWLObjectFactory {
 	public void removeAxiom( OWLAxiom axiom ) {
 		this.manager.removeAxiom( this.ontology, axiom );
 	}
-
-	public OWLIndividualObject getIndividualObject( IRI individualIRI ) {
-		OWLIndividualObject result = individuals.get( individualIRI );
+	
+	public OWLIndividualBuilder createIndividual(String className) {
+		IRI individualIRI = this.individualIRIFactory.getNewIRI(className);
 		
-		if( result == null ) {
-			Set< OWLNamedIndividual > individuals = ontology.getIndividualsInSignature( false ); // do not include other ontologies, etc.
-			
-			for( OWLNamedIndividual owlIndividual: individuals ) {
-				IRI temp = owlIndividual.getIRI();
-				if( temp.equals( individualIRI ) ) {
-					if( result != null ) {
-						System.err.println( "Two or more classes with the same name met!" );
-						return null; // two or more classes with the same name: how can it happen though??
-					}
-					result = new OWLIndividualObject( this, owlIndividual );
-					this.individuals.put( individualIRI, result );
-				}
-			}
-		}
-		return result;
+		OWLNamedIndividual owlIndividual = this.getDataFactory().getOWLNamedIndividual(individualIRI);
+		
+		this.addAxiom( 
+			this.getDataFactory().getOWLClassAssertionAxiom( 
+				this.getDataFactory().getOWLClass( this.getClassIRIByName(className) ),
+				owlIndividual
+			)
+		);
+		
+		return new OWLIndividualBuilder(owlIndividual, this);
 	}
 	
-	public OWLIndividualObject createIndividual( OWLClassObject classObject ) {
-		IRI individualIRI = classObject.getNewIndividualIRI();
-		
-		if( this.individuals.containsKey( individualIRI ) )
-			return null; // trying to spawn new individual with existing IRI - should never happen
-		
-		OWLIndividualObject indObj = new OWLIndividualObject( this,
-				this.getDataFactory().getOWLNamedIndividual( individualIRI ) );
-		
-		this.addAxiom( this.getDataFactory().getOWLClassAssertionAxiom( 
-				classObject.getOWLClass(), indObj.getOwlIndividual() ) );
-		
-		this.individuals.put( individualIRI, indObj );
-		
-		return indObj;
-	}
-
 	public Set<Task> getTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		// false = all including indirect
+		Set<OWLNamedIndividual> individuals = this.reasoner.getInstances(
+				this.getDataFactory().getOWLClass(this.getEntityIRIByName(Task.CLASS_NAME)), false
+		).getFlattened();
+		
+		Set<Task> tasks = new TreeSet<Task>();
+		for (OWLNamedIndividual individual: individuals)
+			tasks.add(this.getTask(individual.getIRI()));
+		return tasks;
+	}
+
+	public Task getTask(IRI taskIRI) {
+		return new Task(this.getDataFactory().getOWLNamedIndividual(taskIRI), this.getBuilder(taskIRI),
+			this.getReader(taskIRI), this);
+	}
+
+	public SolvingMethod getSolvingMethod(IRI methodIRI) {
+		return new SolvingMethod(this.getReader(methodIRI), this);
+	}
+
+	public TaskResult getTaskResult(IRI taskResultIRI) {
+		return new TaskResult(this.getReader(taskResultIRI), this);
 	}
 	
+	public ImportingMethod getImportingMethod(IRI iri) {
+		return new ImportingMethod(this.getReader(iri));
+	}
+
+	public Presentation getPresentation(IRI iri) {
+		return new Presentation(this.getReader(iri), this);
+	}
+
+	public PresentationMethod getPresentationMethod(IRI iri) {
+		return new PresentationMethod(this.getReader(iri));
+	}
+	
+	private OWLIndividualBuilder getBuilder(IRI iri) {
+		return new OWLIndividualBuilder(this.getDataFactory().getOWLNamedIndividual(iri), this);
+	}
+	
+	private OWLIndividualReader getReader(IRI iri) {
+		return new OWLIndividualReader(this.getDataFactory().getOWLNamedIndividual(iri), this);
+	}
+
+	private OWLIndividualBuilder createIndividualFromXML(Element individualElement) throws Exception {
+		NodeList childNodes = individualElement.getChildNodes();
+		
+		String individualClass = individualElement.getAttribute("class");
+		OWLIndividualBuilder builder = this.createIndividual(individualClass);
+		
+		for (int i = 0; i < childNodes.getLength(); ++i) {
+			// get the attribute element
+			Element attrElement = (Element) childNodes.item(i);
+			assert(attrElement.getTagName().equals("attr"));
+			
+			String attrType = attrElement.getAttribute("type");
+			String attrName = attrElement.getAttribute("name");
+			
+			if (attrType.equals("object")) {
+				NodeList attrObjects = attrElement.getChildNodes();
+				for (int j = 0; j < attrObjects.getLength(); ++j) {
+					// get the attribute element
+					Element subIndividual = (Element) attrObjects.item(j);
+					IRI subIndividualIRI = this.createIndividualFromXML(subIndividual).getIRI();
+					builder.addObjectAxiom(attrName, subIndividualIRI);
+				}
+			} else { 
+				String attrValue = attrElement.getAttribute("value");
+				if (attrType.equals("string"))
+					builder.addAxiom(attrName, attrValue);
+				else if (attrType.equals("int"))
+					builder.addAxiom(attrName, Integer.parseInt(attrValue));
+				else if (attrType.equals("double"))
+					builder.addAxiom(attrName, Double.parseDouble(attrValue));
+				else if (attrType.equals("boolean"))
+					builder.addAxiom(attrName, Boolean.parseBoolean(attrValue));
+				else
+					throw new Exception("Wrong attribute type met (" + attrType + ")!");
+			}
+			
+		}
+		
+		return builder;
+	}
+	
+	public void createIndividualsFromXML(String taskXML) {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document xml = db.parse("employees.xml");
+			Element rootElement = xml.getDocumentElement();
+			this.createIndividualFromXML(rootElement);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
