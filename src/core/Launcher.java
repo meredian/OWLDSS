@@ -1,14 +1,11 @@
 package core;
 
 
-import implementation.solvers.SempEmptySolver;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collection;
 import java.util.Set;
 
 import org.semanticweb.HermiT.Reasoner;
@@ -89,7 +86,8 @@ public class Launcher {
 	private static void testTaskContextCreation() throws OWLOntologyCreationException {
 		String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
 		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-		ontologyManager.loadOntologyFromOntologyDocument( IRI.create( "file:/home/where-is-s/src/OWLDSS/ontologies/Ontology1.owl" ) );
+		File file = new File("ontologies/Ontology1.owl");
+		ontologyManager.loadOntologyFromOntologyDocument(IRI.create("file:"+file.getAbsolutePath()));
 		//OWLOntology ontology = ontologyManager.getOntology(IRI.create(base));
 		//Set<OWLOntology> set = ontologyManager.getOntologies();
 		
@@ -198,22 +196,6 @@ public class Launcher {
 		}
 	}
 
-	/*private static void doQueryLoop( DLQueryPrinter dlQueryPrinter ) throws IOException {
-		while (true) {
-		    // Prompt the user to enter a class expression
-		    System.out.println("Please type a class expression in Manchester Syntax");
-		    System.out.println("");
-		    String classExpression = readInput();
-		    // Check for exit condition
-		    if(classExpression.equalsIgnoreCase("x")) {
-	            break;
-	        }
-	        dlQueryPrinter.askQuery(classExpression.trim());
-	        System.out.println();
-	        System.out.println();
-	    }	
-	}*/
-	
 	private static String readInput() throws IOException {
 	    InputStream is = System.in;
 	    InputStreamReader reader = new InputStreamReader(is);
