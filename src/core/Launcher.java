@@ -4,6 +4,7 @@ package core;
 import implementation.solvers.SempEmptySolver;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,9 +40,6 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import core.owl.OWLOntologyObjectShell;
-import core.owl.base.OWLClassObject;
-import core.owl.base.OWLIndividualObject;
-import core.owl.objects.SolvingMethod;
 import core.repository.ConfigStorage;
 import core.repository.SolverRepository;
 
@@ -50,8 +48,14 @@ public class Launcher {
 
 	public static void main(String[] args) {  
 		//storageTests();
-		System.out.println(SempEmptySolver.class.getName());
+		//System.out.println(SempEmptySolver.class.getName());
 		//repositoryTests();
+		try {
+			testTaskContextCreation();
+		} catch (OWLOntologyCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private static void storageTests() {
@@ -80,6 +84,25 @@ public class Launcher {
 		String newOne = (String) xstream.fromXML(xmlStatus);
 		System.out.println("We got new status: ");
 		System.out.println(newOne);
+	}
+	
+	private static void testTaskContextCreation() throws OWLOntologyCreationException {
+		String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
+		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+		ontologyManager.loadOntologyFromOntologyDocument( IRI.create( "file:/home/where-is-s/src/OWLDSS/ontologies/Ontology1.owl" ) );
+		//OWLOntology ontology = ontologyManager.getOntology(IRI.create(base));
+		//Set<OWLOntology> set = ontologyManager.getOntologies();
+		
+		OWLOntologyObjectShell ontologyShell = new OWLOntologyObjectShell(ontologyManager, ontologyAddress);
+		String testXML = "<individual class='PumpAnalysisTask'>" +
+				"<attr name='HasPump' type='object'>" +
+					"<individual class='Pump'>" +
+						"<attr name='Id' type='int' value='5'/>" +
+					"</individual>" +
+				"</attr>" +
+			"</individual>";
+		ontologyShell.createIndividualsFromXML(testXML);
+		ontologyShell.dumpOntology();
 	}
 	
 	private static void OWLStartup() {
@@ -118,7 +141,7 @@ public class Launcher {
 			man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskPriority, concreteTask, 5 ) ); 
 			
 			OWLOntologyObjectShell objectOntology = new OWLOntologyObjectShell( man, "http://www.iis.nsk.su/ontologies/main" );
-			try {
+			/*try {
 				OWLClassObject classObject = objectOntology.getClassObject( "ConcreteTask" );
 				OWLIndividualObject individualObject = objectOntology.createIndividual( classObject );
 				individualObject.getPropertyByName( "TaskPriority" ).setIntegerValue( 19 );
@@ -133,7 +156,7 @@ public class Launcher {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			
 			// Save our ontology
 			man.saveOntology( ont, IRI.create( "file:/home/where-is-s/workspace/temp/example.owl" ) );
