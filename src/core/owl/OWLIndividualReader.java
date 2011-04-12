@@ -47,7 +47,7 @@ public class OWLIndividualReader {
 	
 	public OWLLiteral getSingleDataValue( String attribute ) {
 		Set<OWLLiteral> values = this.ontologyShell.getReasoner().getDataPropertyValues(owlIndividual, 
-			this.ontologyShell.getDataFactory().getOWLDataProperty( 
+			this.ontologyShell.getOWLDataProperty( 
 				this.ontologyShell.getEntityIRIByName(attribute)
 			)
 		);
@@ -72,7 +72,7 @@ public class OWLIndividualReader {
 	public Set<IRI> getObjectValuesByClass(String attribute, String owlClassName) {
 		Set<OWLNamedIndividual> values = this.ontologyShell.getReasoner().getObjectPropertyValues(
 			owlIndividual, 
-			this.ontologyShell.getDataFactory().getOWLObjectProperty( 
+			this.ontologyShell.getOWLObjectProperty( 
 				this.ontologyShell.getEntityIRIByName(attribute)
 			)
 		).getFlattened();
@@ -80,7 +80,7 @@ public class OWLIndividualReader {
 		Set<IRI> result = new TreeSet<IRI>();
 		
 		OWLClass owlClass = owlClassName == null ? null : 
-			this.ontologyShell.getDataFactory().getOWLClass(
+			this.ontologyShell.getOWLClass(
 				this.ontologyShell.getEntityIRIByName(owlClassName)
 			);
 		

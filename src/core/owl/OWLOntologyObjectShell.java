@@ -1,5 +1,7 @@
 package core.owl;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -9,11 +11,16 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerConfiguration;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
@@ -42,6 +49,14 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	private String ontologyAddress;
 	
 	private final String DELIMITER = "#";
+	
+	public void dumpOntology() {
+		try {
+			this.manager.saveOntology( this.ontology, IRI.create( "file:/home/where-is-s/src/OWLDSS/dump.owl" ) );
+		} catch (OWLOntologyStorageException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public IRI getClassIRIByName( String className ) {
 		return this.getEntityIRIByName( className );
@@ -93,7 +108,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	}
 	
 	public OWLDataFactory getDataFactory() {
-		return manager.getOWLDataFactory(); 
+		return manager.getOWLDataFactory();
 	}
 
 	public void removeAxiom( OWLAxiom axiom ) {
@@ -107,7 +122,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 		
 		this.addAxiom( 
 			this.getDataFactory().getOWLClassAssertionAxiom( 
-				this.getDataFactory().getOWLClass( this.getClassIRIByName(className) ),
+				this.getOWLClass(this.getClassIRIByName(className)),
 				owlIndividual
 			)
 		);
@@ -118,7 +133,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	public Set<Task> getTasks() {
 		// false = all including indirect
 		Set<OWLNamedIndividual> individuals = this.reasoner.getInstances(
-				this.getDataFactory().getOWLClass(this.getEntityIRIByName(Task.CLASS_NAME)), false
+				this.getOWLClass(this.getEntityIRIByName(Task.CLASS_NAME)), false
 		).getFlattened();
 		
 		Set<Task> tasks = new TreeSet<Task>();
@@ -128,7 +143,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	}
 
 	public Task getTask(IRI taskIRI) {
-		return new Task(this.getDataFactory().getOWLNamedIndividual(taskIRI), this.getBuilder(taskIRI),
+		return new Task(this.getOWLNamedIndividual(taskIRI), this.getBuilder(taskIRI),
 			this.getReader(taskIRI), this);
 	}
 
@@ -153,11 +168,11 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	}
 	
 	private OWLIndividualBuilder getBuilder(IRI iri) {
-		return new OWLIndividualBuilder(this.getDataFactory().getOWLNamedIndividual(iri), this);
+		return new OWLIndividualBuilder(this.getOWLNamedIndividual(iri), this);
 	}
 	
 	private OWLIndividualReader getReader(IRI iri) {
-		return new OWLIndividualReader(this.getDataFactory().getOWLNamedIndividual(iri), this);
+		return new OWLIndividualReader(this.getOWLNamedIndividual(iri), this);
 	}
 
 	private OWLIndividualBuilder createIndividualFromXML(Element individualElement) throws Exception {
@@ -205,7 +220,8 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document xml = db.parse("employees.xml");
+			InputStream stream = new ByteArrayInputStream(taskXML.getBytes());
+			Document xml = db.parse(stream);
 			Element rootElement = xml.getDocumentElement();
 			this.createIndividualFromXML(rootElement);
 		} catch(Exception e) {
@@ -213,4 +229,58 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 		}
 	}
 
+	public void addDataPropertyAssertionAxiom(IRI individualIRI, String propertyName, OWLLiteral value) {
+		this.manager.addAxiom( 
+			this.ontology,
+			this.getDataFactory().getOWLDataPropertyAssertionAxiom( 
+				this.getOWLDataProperty(this.getEntityIRIByName(propertyName)), 
+				this.getOWLNamedIndividual(individualIRI),
+				value 
+			)
+		);		
+	}
+
+	public OWLNamedIndividual getOWLNamedIndividual(IRI individualIRI) {
+		Set<OWLNamedIndividual> individuals = this.ontology.getIndividualsInSignature(true); // include imports closure
+		for (OWLNamedIndividual individual: individuals)
+			if (individual.getIRI().equals(individualIRI))
+				return individual;
+		return this.getDataFactory().getOWLNamedIndividual(individualIRI);
+	}
+
+	public OWLDataProperty getOWLDataProperty(IRI dataPropertyIRI) {
+		Set<OWLDataProperty> dataProperties = this.ontology.getDataPropertiesInSignature(true); // include imports closure
+		for (OWLDataProperty dataProperty: dataProperties)
+			if (dataProperty.getIRI().equals(dataPropertyIRI))
+				return dataProperty;
+		return this.getDataFactory().getOWLDataProperty(dataPropertyIRI);
+	}
+	
+	public OWLObjectProperty getOWLObjectProperty(IRI objectPropertyIRI) {
+		Set<OWLObjectProperty> objectProperties = this.ontology.getObjectPropertiesInSignature(true); // include imports closure
+		for (OWLObjectProperty objectProperty: objectProperties)
+			if (objectProperty.getIRI().equals(objectPropertyIRI))
+				return objectProperty;
+		return this.getDataFactory().getOWLObjectProperty(objectPropertyIRI);
+	}
+
+	public OWLClass getOWLClass(IRI classIRI) {
+		Set<OWLClass> classes = this.ontology.getClassesInSignature(true); // include imports closure
+		for (OWLClass clazz: classes)
+			if (clazz.getIRI().equals(classIRI))
+				return clazz;
+		return this.getDataFactory().getOWLClass(classIRI);
+	}
+
+	public void addObjectPropertyAssertionAxiom(IRI individualIRI, String propertyName, IRI objectIRI) {
+		this.manager.addAxiom( 
+				this.ontology,
+				this.getDataFactory().getOWLObjectPropertyAssertionAxiom( 
+					this.getOWLObjectProperty(this.getEntityIRIByName(propertyName)), 
+					this.getOWLNamedIndividual(individualIRI),
+					this.getOWLNamedIndividual(objectIRI)
+				)
+			);		
+	}
+	
 }
