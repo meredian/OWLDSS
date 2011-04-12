@@ -6,19 +6,19 @@
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY main "http://www.iis.nsk.su/ontologies/main.owl#" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-    <!ENTITY Ontology1301989440157 "http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#" >
 ]>
 
 
-<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#"
-     xml:base="http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl"
+<rdf:RDF xmlns="http://www.iis.nsk.su/ontologies/main.owl#"
+     xml:base="http://www.iis.nsk.su/ontologies/main.owl"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:Ontology1301989440157="http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#">
+     xmlns:main="http://www.iis.nsk.su/ontologies/main.owl#">
     <owl:Ontology rdf:about=""/>
     
 
@@ -34,7 +34,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasImport -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasImport -->
 
     <owl:ObjectProperty rdf:about="#HasImport">
         <rdfs:range rdf:resource="#SubjectArea"/>
@@ -43,7 +43,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasInput -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasInput -->
 
     <owl:ObjectProperty rdf:about="#HasInput">
         <rdfs:domain rdf:resource="#Task"/>
@@ -52,7 +52,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasOrganization -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasOrganization -->
 
     <owl:ObjectProperty rdf:about="#HasOrganization">
         <rdfs:subPropertyOf rdf:resource="#HasInput"/>
@@ -69,7 +69,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasOutput -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasOutput -->
 
     <owl:ObjectProperty rdf:about="#HasOutput">
         <rdfs:domain rdf:resource="#Task"/>
@@ -86,7 +86,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasPresentation -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasPresentation -->
 
     <owl:ObjectProperty rdf:about="#HasPresentation">
         <rdfs:range rdf:resource="#Presentation"/>
@@ -95,7 +95,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasPump -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasPump -->
 
     <owl:ObjectProperty rdf:about="#HasPump">
         <rdfs:subPropertyOf rdf:resource="#HasInput"/>
@@ -105,7 +105,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasResult -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasResult -->
 
     <owl:ObjectProperty rdf:about="#HasResult">
         <rdfs:domain rdf:resource="#Task"/>
@@ -114,7 +114,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasSolvingMethodInput -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasSolvingMethodInput -->
 
     <owl:ObjectProperty rdf:about="#HasSolvingMethodInput">
         <rdfs:domain rdf:resource="#SolvingMethod"/>
@@ -127,18 +127,18 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasSubTask -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasSubTask -->
 
     <owl:ObjectProperty rdf:about="#HasSubTask">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
         <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
-        <rdfs:domain rdf:resource="#Task"/>
         <rdfs:range rdf:resource="#Task"/>
+        <rdfs:domain rdf:resource="#Task"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#HasSuperTask -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasSuperTask -->
 
     <owl:ObjectProperty rdf:about="#HasSuperTask">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
@@ -149,7 +149,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Imports -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Imports -->
 
     <owl:ObjectProperty rdf:about="#Imports">
         <rdfs:domain rdf:resource="#ImportingMethod"/>
@@ -158,7 +158,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SolvedBy -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#SolvedBy -->
 
     <owl:ObjectProperty rdf:about="#SolvedBy">
         <rdfs:range rdf:resource="#SolvingMethod"/>
@@ -167,7 +167,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Solves -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Solves -->
 
     <owl:ObjectProperty rdf:about="#Solves">
         <owl:inverseOf rdf:resource="#SolvedBy"/>
@@ -177,7 +177,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SupportedByPresentationMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#SupportedByPresentationMethod -->
 
     <owl:ObjectProperty rdf:about="#SupportedByPresentationMethod">
         <rdfs:domain rdf:resource="#Presentation"/>
@@ -187,7 +187,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SupportsPresentation -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#SupportsPresentation -->
 
     <owl:ObjectProperty rdf:about="#SupportsPresentation">
         <rdfs:range rdf:resource="#Presentation"/>
@@ -196,7 +196,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#UsesImporter -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#UsesImporter -->
 
     <owl:ObjectProperty rdf:about="#UsesImporter">
         <rdfs:range rdf:resource="#ImportingMethod"/>
@@ -216,7 +216,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Id -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Id -->
 
     <owl:DatatypeProperty rdf:about="#Id">
         <rdfs:domain rdf:resource="#SubjectArea"/>
@@ -225,7 +225,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#ImporterClass -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#ImporterClass -->
 
     <owl:DatatypeProperty rdf:about="#ImporterClass">
         <rdfs:domain rdf:resource="#ImportingMethod"/>
@@ -234,7 +234,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#MethodName -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#MethodName -->
 
     <owl:DatatypeProperty rdf:about="#MethodName">
         <rdfs:domain rdf:resource="#SolvingMethod"/>
@@ -243,7 +243,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSempOptimizationModifier -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSempOptimizationModifier -->
 
     <owl:DatatypeProperty rdf:about="#PumpAnalysisSempOptimizationModifier">
         <rdfs:domain rdf:resource="#PumpAnalysisSempSolvingMethod"/>
@@ -251,7 +251,16 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SempModule -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#RendererClass -->
+
+    <owl:DatatypeProperty rdf:about="#RendererClass">
+        <rdfs:domain rdf:resource="#PresentationMethod"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#SempModule -->
 
     <owl:DatatypeProperty rdf:about="#SempModule">
         <rdfs:domain rdf:resource="#SempSolvingMethod"/>
@@ -260,7 +269,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SolverClass -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#SolverClass -->
 
     <owl:DatatypeProperty rdf:about="#SolverClass">
         <rdfs:domain rdf:resource="#SolvingMethod"/>
@@ -269,7 +278,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#StringPresentationValue -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#StringPresentationValue -->
 
     <owl:DatatypeProperty rdf:about="#StringPresentationValue">
         <rdfs:domain rdf:resource="#StringPresentation"/>
@@ -278,7 +287,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TimeRowInterval -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#TimeRowInterval -->
 
     <owl:DatatypeProperty rdf:about="#TimeRowInterval">
         <rdfs:domain rdf:resource="#ElectroConsumptionImportingMethod"/>
@@ -287,7 +296,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TimeRowLength -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#TimeRowLength -->
 
     <owl:DatatypeProperty rdf:about="#TimeRowLength">
         <rdfs:domain rdf:resource="#ElectroConsumptionImportingMethod"/>
@@ -307,7 +316,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#ElectroConsumptionImportingMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#ElectroConsumptionImportingMethod -->
 
     <owl:Class rdf:about="#ElectroConsumptionImportingMethod">
         <rdfs:subClassOf rdf:resource="#ImportingMethod"/>
@@ -329,7 +338,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#ElectroConsumptionTimeRow -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#ElectroConsumptionTimeRow -->
 
     <owl:Class rdf:about="#ElectroConsumptionTimeRow">
         <rdfs:subClassOf rdf:resource="#TimeRow"/>
@@ -337,7 +346,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Equipment -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Equipment -->
 
     <owl:Class rdf:about="#Equipment">
         <rdfs:subClassOf rdf:resource="#SubjectArea"/>
@@ -345,13 +354,13 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#ImportingMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#ImportingMethod -->
 
     <owl:Class rdf:about="#ImportingMethod"/>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Organization -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Organization -->
 
     <owl:Class rdf:about="#Organization">
         <rdfs:subClassOf rdf:resource="#SubjectArea"/>
@@ -359,7 +368,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#OrganizationAnalysisResult -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisResult -->
 
     <owl:Class rdf:about="#OrganizationAnalysisResult">
         <rdfs:subClassOf rdf:resource="#TaskResult"/>
@@ -367,7 +376,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#OrganizationAnalysisSolvingMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisSolvingMethod -->
 
     <owl:Class rdf:about="#OrganizationAnalysisSolvingMethod">
         <rdfs:subClassOf rdf:resource="#SolvingMethod"/>
@@ -382,15 +391,14 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#OrganizationAnalysisTask -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisTask -->
 
     <owl:Class rdf:about="#OrganizationAnalysisTask">
         <rdfs:subClassOf rdf:resource="#Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#HasResult"/>
-                <owl:onClass rdf:resource="#OrganizationAnalysisResult"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="#SolvedBy"/>
+                <owl:hasValue rdf:resource="#OrganizationAnalysisBestMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -402,8 +410,9 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#SolvedBy"/>
-                <owl:hasValue rdf:resource="#OrganizationAnalysisBestMethod"/>
+                <owl:onProperty rdf:resource="#HasResult"/>
+                <owl:onClass rdf:resource="#OrganizationAnalysisResult"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <owl:disjointWith rdf:resource="#PumpAnalysisTask"/>
@@ -411,7 +420,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Presentation -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Presentation -->
 
     <owl:Class rdf:about="#Presentation">
         <owl:disjointWith rdf:resource="#SubjectArea"/>
@@ -419,7 +428,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PresentationMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PresentationMethod -->
 
     <owl:Class rdf:about="#PresentationMethod">
         <rdfs:subClassOf>
@@ -433,7 +442,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Pump -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Pump -->
 
     <owl:Class rdf:about="#Pump">
         <rdfs:subClassOf rdf:resource="#Equipment"/>
@@ -441,7 +450,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisResult -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisResult -->
 
     <owl:Class rdf:about="#PumpAnalysisResult">
         <rdfs:subClassOf rdf:resource="#TaskResult"/>
@@ -449,7 +458,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSempSolvingMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSempSolvingMethod -->
 
     <owl:Class rdf:about="#PumpAnalysisSempSolvingMethod">
         <rdfs:subClassOf rdf:resource="#PumpAnalysisSolvingMethod"/>
@@ -458,7 +467,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSolvingMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSolvingMethod -->
 
     <owl:Class rdf:about="#PumpAnalysisSolvingMethod">
         <rdfs:subClassOf rdf:resource="#SolvingMethod"/>
@@ -472,10 +481,17 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisTask -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisTask -->
 
     <owl:Class rdf:about="#PumpAnalysisTask">
         <rdfs:subClassOf rdf:resource="#Task"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#HasPump"/>
+                <owl:onClass rdf:resource="#Pump"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="#SolvedBy"/>
@@ -491,13 +507,6 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="#HasPump"/>
-                <owl:onClass rdf:resource="#Pump"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="#HasResult"/>
                 <owl:onClass rdf:resource="#PumpAnalysisResult"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -507,7 +516,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SempSolvingMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#SempSolvingMethod -->
 
     <owl:Class rdf:about="#SempSolvingMethod">
         <rdfs:subClassOf rdf:resource="#SolvingMethod"/>
@@ -521,7 +530,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SolvingMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#SolvingMethod -->
 
     <owl:Class rdf:about="#SolvingMethod">
         <owl:disjointWith rdf:resource="#SubjectArea"/>
@@ -529,7 +538,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#StringPresentation -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#StringPresentation -->
 
     <owl:Class rdf:about="#StringPresentation">
         <rdfs:subClassOf rdf:resource="#Presentation"/>
@@ -543,7 +552,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#StringPresentationMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#StringPresentationMethod -->
 
     <owl:Class rdf:about="#StringPresentationMethod">
         <rdfs:subClassOf rdf:resource="#PresentationMethod"/>
@@ -551,7 +560,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#SubjectArea -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#SubjectArea -->
 
     <owl:Class rdf:about="#SubjectArea">
         <rdfs:subClassOf rdf:resource="#TaskInput"/>
@@ -561,7 +570,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TablePresentation -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#TablePresentation -->
 
     <owl:Class rdf:about="#TablePresentation">
         <rdfs:subClassOf rdf:resource="#Presentation"/>
@@ -569,7 +578,7 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TablePresentationMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#TablePresentationMethod -->
 
     <owl:Class rdf:about="#TablePresentationMethod">
         <rdfs:subClassOf rdf:resource="#PresentationMethod"/>
@@ -577,25 +586,25 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Task -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Task -->
 
     <owl:Class rdf:about="#Task"/>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TaskInput -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#TaskInput -->
 
     <owl:Class rdf:about="#TaskInput"/>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TaskResult -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#TaskResult -->
 
     <owl:Class rdf:about="#TaskResult"/>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#TimeRow -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#TimeRow -->
 
     <owl:Class rdf:about="#TimeRow">
         <rdfs:subClassOf rdf:resource="#SubjectArea"/>
@@ -620,25 +629,27 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#ConsoleOutputMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#ConsoleOutputMethod -->
 
-    <PresentationMethod rdf:about="#ConsoleOutputMethod">
-        <rdf:type rdf:resource="&owl;Thing"/>
-    </PresentationMethod>
-    
-
-
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Last24HoursElectroConsumptionImporingMethod -->
-
-    <owl:Thing rdf:about="#Last24HoursElectroConsumptionImporingMethod">
-        <rdf:type rdf:resource="#ElectroConsumptionImportingMethod"/>
-        <TimeRowInterval rdf:datatype="&xsd;string">1 hour</TimeRowInterval>
-        <TimeRowLength rdf:datatype="&xsd;string">24 hours</TimeRowLength>
+    <owl:Thing rdf:about="#ConsoleOutputMethod">
+        <rdf:type rdf:resource="#PresentationMethod"/>
+        <RendererClass
+            >ConsoleOutputRenderer</RendererClass>
     </owl:Thing>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#OrganizationAnalysisBestMethod -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Last24HoursElectroConsumptionImporingMethod -->
+
+    <ElectroConsumptionImportingMethod rdf:about="#Last24HoursElectroConsumptionImporingMethod">
+        <rdf:type rdf:resource="&owl;Thing"/>
+        <TimeRowInterval rdf:datatype="&xsd;string">1 hour</TimeRowInterval>
+        <TimeRowLength rdf:datatype="&xsd;string">24 hours</TimeRowLength>
+    </ElectroConsumptionImportingMethod>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisBestMethod -->
 
     <owl:Thing rdf:about="#OrganizationAnalysisBestMethod">
         <rdf:type rdf:resource="#OrganizationAnalysisSolvingMethod"/>
@@ -646,78 +657,78 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#OrganizationAnalysisResult_2 -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisResult_Sample -->
 
-    <OrganizationAnalysisResult rdf:about="#OrganizationAnalysisResult_2">
-        <rdf:type rdf:resource="&owl;Thing"/>
-        <HasPresentation rdf:resource="#OrganizationAnalysisResult_2_StringPresentation"/>
-    </OrganizationAnalysisResult>
-    
-
-
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#OrganizationAnalysisResult_2_StringPresentation -->
-
-    <owl:Thing rdf:about="#OrganizationAnalysisResult_2_StringPresentation">
-        <rdf:type rdf:resource="#StringPresentation"/>
-        <StringPresentationValue rdf:datatype="&xsd;string"
-            >Organization is quite corrupted.</StringPresentationValue>
+    <owl:Thing rdf:about="#OrganizationAnalysisResult_Sample">
+        <rdf:type rdf:resource="#OrganizationAnalysisResult"/>
+        <HasPresentation rdf:resource="#OrganizationAnalysisResult_Sample_StringPresentation"/>
     </owl:Thing>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#OrganizationAnalysisTask_1 -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisResult_Sample_StringPresentation -->
 
-    <OrganizationAnalysisTask rdf:about="#OrganizationAnalysisTask_1">
+    <StringPresentation rdf:about="#OrganizationAnalysisResult_Sample_StringPresentation">
         <rdf:type rdf:resource="&owl;Thing"/>
-        <HasResult rdf:resource="#OrganizationAnalysisResult_2"/>
-        <HasOrganization rdf:resource="#Organization_1"/>
+        <StringPresentationValue rdf:datatype="&xsd;string"
+            >Organization is quite corrupted.</StringPresentationValue>
+    </StringPresentation>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisTask_Sample -->
+
+    <OrganizationAnalysisTask rdf:about="#OrganizationAnalysisTask_Sample">
+        <rdf:type rdf:resource="&owl;Thing"/>
+        <HasResult rdf:resource="#OrganizationAnalysisResult_Sample"/>
+        <HasOrganization rdf:resource="#Organization_Sample"/>
     </OrganizationAnalysisTask>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Organization_1 -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Organization_Sample -->
 
-    <Organization rdf:about="#Organization_1">
-        <rdf:type rdf:resource="&owl;Thing"/>
+    <owl:Thing rdf:about="#Organization_Sample">
+        <rdf:type rdf:resource="#Organization"/>
         <Id rdf:datatype="&xsd;integer">22</Id>
-    </Organization>
+    </owl:Thing>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisResult_1 -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisResult_Sample -->
 
-    <PumpAnalysisResult rdf:about="#PumpAnalysisResult_1">
+    <PumpAnalysisResult rdf:about="#PumpAnalysisResult_Sample">
         <rdf:type rdf:resource="&owl;Thing"/>
-        <HasPresentation rdf:resource="#PumpAnalysis_1_StringPresentation"/>
+        <HasPresentation rdf:resource="#PumpAnalysis_Sample_StringPresentation"/>
     </PumpAnalysisResult>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisSolvingMethodStandard -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSolvingMethodStandard -->
 
-    <PumpAnalysisSempSolvingMethod rdf:about="#PumpAnalysisSolvingMethodStandard">
-        <rdf:type rdf:resource="&owl;Thing"/>
+    <owl:Thing rdf:about="#PumpAnalysisSolvingMethodStandard">
+        <rdf:type rdf:resource="#PumpAnalysisSempSolvingMethod"/>
         <MethodName
             >PumpAnalysisStandardSolver</MethodName>
         <UsesImporter rdf:resource="#Last24HoursElectroConsumptionImporingMethod"/>
-    </PumpAnalysisSempSolvingMethod>
+    </owl:Thing>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysisTask_1 -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisTask_Sample -->
 
-    <PumpAnalysisTask rdf:about="#PumpAnalysisTask_1">
+    <PumpAnalysisTask rdf:about="#PumpAnalysisTask_Sample">
         <rdf:type rdf:resource="&owl;Thing"/>
-        <HasOrganization rdf:resource="#Organization_1"/>
-        <HasResult rdf:resource="#PumpAnalysisResult_1"/>
-        <HasPump rdf:resource="#Pump_1"/>
+        <HasOrganization rdf:resource="#Organization_Sample"/>
+        <HasResult rdf:resource="#PumpAnalysisResult_Sample"/>
+        <HasPump rdf:resource="#Pump_Sample"/>
     </PumpAnalysisTask>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#PumpAnalysis_1_StringPresentation -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysis_Sample_StringPresentation -->
 
-    <StringPresentation rdf:about="#PumpAnalysis_1_StringPresentation">
+    <StringPresentation rdf:about="#PumpAnalysis_Sample_StringPresentation">
         <rdf:type rdf:resource="&owl;Thing"/>
         <StringPresentationValue rdf:datatype="&xsd;string"
             >Pump is ok! It\&#39;s broken!</StringPresentationValue>
@@ -725,18 +736,18 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#Pump_1 -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Pump_Sample -->
 
-    <owl:Thing rdf:about="#Pump_1">
-        <rdf:type rdf:resource="#Pump"/>
+    <Pump rdf:about="#Pump_Sample">
+        <rdf:type rdf:resource="&owl;Thing"/>
         <Id rdf:datatype="&xsd;integer">5</Id>
-    </owl:Thing>
+    </Pump>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/2011/3/Ontology1301989440157.owl#StringPresentationMethod_1 -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#StringPresentationMethod_Sample -->
 
-    <owl:Thing rdf:about="#StringPresentationMethod_1"/>
+    <owl:Thing rdf:about="#StringPresentationMethod_Sample"/>
 </rdf:RDF>
 
 
