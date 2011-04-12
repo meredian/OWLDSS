@@ -78,6 +78,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	}
 	
 	public OWLReasoner getReasoner() {
+		this.reasoner.flush();
 		return this.reasoner;
 	}
 	
@@ -122,17 +123,24 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 		
 		this.addAxiom( 
 			this.getDataFactory().getOWLClassAssertionAxiom( 
-				this.getOWLClass(this.getClassIRIByName(className)),
+				this.getOWLClass(IRI.create("http://www.w3.org/2002/07/owl#Thing")),
 				owlIndividual
 			)
 		);
 		
+		this.addAxiom( 
+			this.getDataFactory().getOWLClassAssertionAxiom( 
+				this.getOWLClass(this.getClassIRIByName(className)),
+				owlIndividual
+			)
+		);
+
 		return new OWLIndividualBuilder(owlIndividual, this);
 	}
 	
 	public Set<Task> getTasks() {
 		// false = all including indirect
-		Set<OWLNamedIndividual> individuals = this.reasoner.getInstances(
+		Set<OWLNamedIndividual> individuals = this.getReasoner().getInstances(
 				this.getOWLClass(this.getEntityIRIByName(Task.CLASS_NAME)), false
 		).getFlattened();
 		
@@ -167,11 +175,11 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 		return new PresentationMethod(this.getReader(iri));
 	}
 	
-	private OWLIndividualBuilder getBuilder(IRI iri) {
+	public OWLIndividualBuilder getBuilder(IRI iri) {
 		return new OWLIndividualBuilder(this.getOWLNamedIndividual(iri), this);
 	}
 	
-	private OWLIndividualReader getReader(IRI iri) {
+	public OWLIndividualReader getReader(IRI iri) {
 		return new OWLIndividualReader(this.getOWLNamedIndividual(iri), this);
 	}
 
@@ -237,7 +245,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 				this.getOWLNamedIndividual(individualIRI),
 				value 
 			)
-		);		
+		);
 	}
 
 	public OWLNamedIndividual getOWLNamedIndividual(IRI individualIRI) {

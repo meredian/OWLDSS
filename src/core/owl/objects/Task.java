@@ -40,11 +40,12 @@ public class Task {
 	}
 	
 	public Task getSuperTask() {
-		IRI taskIRI = this.individualReader.getSingleObjectValue(ATTRIBUTE_HAS_SUPERTASK);
-		if( taskIRI == null )
+		Set<IRI> taskIRIs = this.individualReader.getObjectValues(ATTRIBUTE_HAS_SUPERTASK);
+		if( taskIRIs.isEmpty() )
 			return null;
 		else
-			return ontologyShell.getTask(taskIRI);
+			// let somebody else take care of uniqueness of the super-task
+			return ontologyShell.getTask(taskIRIs.iterator().next()); 
 	}
 	
 	public Set<Task> getSubTasks() {
@@ -72,7 +73,14 @@ public class Task {
 	}
 	
 	public TaskResult getResult() {
-		return this.ontologyShell.getTaskResult(individualReader.getSingleObjectValue(ATTRIBUTE_HAS_RESULT));
+		Set<IRI> resultIRIs = individualReader.getObjectValues(ATTRIBUTE_HAS_RESULT);
+		if (resultIRIs.isEmpty())
+			return null;
+		
+		if (resultIRIs.size() > 1)
+			System.err.println("Task has " + String.valueOf(resultIRIs.size()) + " results! Random one will be chosen.");
+		
+		return this.ontologyShell.getTaskResult(resultIRIs.iterator().next());
 	}
 	
 	public Set<Task> getOutputTasks() {
@@ -96,7 +104,7 @@ public class Task {
 	}
 	
 	public Status getStatus() {
-		return this.individualReader.getBooleanValue(ATTRIBUTE_IS_SOLVED) == null ? Status.QUEUED : Status.SOLVED;
+		return this.individualReader.checkDataValueExists(ATTRIBUTE_IS_SOLVED) ? Status.SOLVED : Status.QUEUED;
 	}
 	
 	public OWLIndividualReader getReader() {

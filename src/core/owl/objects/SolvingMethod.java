@@ -16,7 +16,7 @@ public class SolvingMethod {
 	
 	private static final String ATTRIBUTE_METHOD_NAME = "MethodName";
 	private static final String ATTRIBUTE_SOLVER_CLASS = "SolverClass";
-	private static final String ATTRIBUTE_USES_IMPORTERS = "UsesImporters";
+	private static final String ATTRIBUTE_USES_IMPORTER = "UsesImporter";
 	
 	public SolvingMethod(OWLIndividualReader individualReader, OWLOntologyObjectShell ontologyShell) {
 		this.individualReader = individualReader;
@@ -32,7 +32,7 @@ public class SolvingMethod {
 	}
 	
 	public Set<ImportingMethod> getImportingMethods() {
-		Set<IRI> taskIRIs = this.individualReader.getObjectValues(ATTRIBUTE_USES_IMPORTERS);
+		Set<IRI> taskIRIs = this.individualReader.getObjectValues(ATTRIBUTE_USES_IMPORTER);
 		Set<ImportingMethod> result = new TreeSet<ImportingMethod>();
 		for (IRI iri: taskIRIs)
 			result.add(ontologyShell.getImportingMethod(iri));

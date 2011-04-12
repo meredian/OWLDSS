@@ -17,8 +17,9 @@ public class OWLIndividualIRIFactory {
 	public IRI getNewIRI(String className) {
 		if (!newClassIdentifiers.containsKey(className))
 			newClassIdentifiers.put(className, Integer.valueOf(0));
-		Integer value = newClassIdentifiers.get(className);
-		return IRI.create(ontologyAddress + "#" + className + "_" + String.valueOf(value.intValue()));
+		int newNumber = newClassIdentifiers.get(className).intValue();
+		newClassIdentifiers.put(className, new Integer(newNumber+1));
+		return IRI.create(ontologyAddress + "#" + className + "_" + String.valueOf(newNumber));
 	}
 	
 }

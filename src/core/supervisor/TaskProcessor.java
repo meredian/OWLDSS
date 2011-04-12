@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
@@ -38,7 +37,7 @@ public class TaskProcessor implements TaskListener {
 	
 	public void process() {
 		String taskXML;
-		while( ! this.canceled ) {
+		do {
 			// Obtain initial task from the outside 
 			taskXML = taskQueue.poll();
 			if( taskXML == null ) {
@@ -61,7 +60,6 @@ public class TaskProcessor implements TaskListener {
 
 				// Put the initial task into the task context
 				taskContext.createIndividualsFromXML(taskXML);
-				taskContext.dumpOntology();
 				Task currentTask = this.selectNextTaskObject(taskContext);
 				while (true) {
 					// Import the data needed for the chosen solving method
@@ -82,12 +80,17 @@ public class TaskProcessor implements TaskListener {
 				}
 				
 				renderManager.process( currentTask.getResult() );
+				taskContext.dumpOntology();
 			} catch( Exception e ) {
 				System.err.println( "Task solution failed! Stack trace follows..." );
 				e.printStackTrace();
 			}
 			
-		}
+		} while (!this.canceled);
+	}
+	
+	public void cancel() {
+		this.canceled = true;
 	}
 	
 	private void bindNewSubtasksToTree(Task task) throws Exception {

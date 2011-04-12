@@ -45,6 +45,14 @@ public class OWLIndividualReader {
 		return this.owlIndividual.getIRI();
 	}
 	
+	public boolean checkDataValueExists(String attribute) {
+		return ! this.ontologyShell.getReasoner().getDataPropertyValues(owlIndividual, 
+			this.ontologyShell.getOWLDataProperty( 
+				this.ontologyShell.getEntityIRIByName(attribute)
+			)
+		).isEmpty();
+	}
+	
 	public OWLLiteral getSingleDataValue( String attribute ) {
 		Set<OWLLiteral> values = this.ontologyShell.getReasoner().getDataPropertyValues(owlIndividual, 
 			this.ontologyShell.getOWLDataProperty( 

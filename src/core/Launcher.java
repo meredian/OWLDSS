@@ -1,6 +1,5 @@
 package core;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +40,6 @@ import core.repository.ConfigStorage;
 import core.repository.SolverRepository;
 import core.supervisor.TaskProcessor;
 
-
 public class Launcher {
 
 	public static void main(String[] args) {  
@@ -50,8 +48,7 @@ public class Launcher {
 		//repositoryTests();
 		try {
 			testRowInvertTask();
-		} catch (OWLOntologyCreationException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -85,12 +82,6 @@ public class Launcher {
 	}
 	
 	private static void testRowInvertTask() throws OWLOntologyCreationException {
-		/*String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
-		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-		File file = new File("ontologies/Ontology1.owl");
-		ontologyManager.loadOntologyFromOntologyDocument(IRI.create("file:"+file.getAbsolutePath()));
-		
-		OWLOntologyObjectShell ontologyShell = new OWLOntologyObjectShell(ontologyManager, ontologyAddress);*/
 		String testXML = "<individual class='RowInvertTask'>" +
 				"<attr name='HasInput' type='object'>" +
 					"<individual class='Row'>" +
@@ -104,17 +95,15 @@ public class Launcher {
 			"http://www.iis.nsk.su/ontologies/main.owl"
 		);
 		processor.onTaskReceived(testXML);
+		processor.cancel(); // process just one iteration
 		processor.process();
-		//ontologyShell.dumpOntology();
 	}
 	
 	private static void testTaskContextCreation() throws OWLOntologyCreationException {
 		String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
 		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
 		ontologyManager.loadOntologyFromOntologyDocument(new File("ontologies/Ontology1.owl"));
-		//OWLOntology ontology = ontologyManager.getOntology(IRI.create(base));
-		//Set<OWLOntology> set = ontologyManager.getOntologies();
-		
+
 		OWLOntologyObjectShell ontologyShell = new OWLOntologyObjectShell(ontologyManager, ontologyAddress);
 		String testXML = "<individual class='PumpAnalysisTask'>" +
 				"<attr name='HasPump' type='object'>" +

@@ -23,7 +23,6 @@ public class SolverManager {
 		this.ontologyShell = ontologyShell;
 	}
 
-
 	public void process(Task task) {
 		Set<SolvingMethod> solvingMethods = task.getSolvingMethods();
 		// TODO: choose solving method
