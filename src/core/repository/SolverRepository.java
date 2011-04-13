@@ -62,7 +62,7 @@ public class SolverRepository {
 			solver = (updatedSolver == null) ? solver : updatedSolver;
 		}
 	}
-	
+
 	public List<String> getSolverListFromStorage() {
 		return storage.getStorageList();
 	}

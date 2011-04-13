@@ -20,7 +20,7 @@ import core.owl.OWLOntologyObjectShell;
 public class IndividualXMLParser {
 
 	/**
-	 * Expected format: 
+	 * Expected format:
 	 * <individual id='234' class='OntologyClassName'> 			// creates new individual
 	 * 	<attr name='IntValue' type='int' value='15'/>
 	 *  <attr name='Reference' type='object' id='456'/>
@@ -35,35 +35,35 @@ public class IndividualXMLParser {
 	private OWLOntologyObjectShell taskContext;
 	private Map<Integer, IRI> individualsMap = new HashMap<Integer, IRI>();
 	private IRI resultIndividual = null;
-	
+
 	public IndividualXMLParser(OWLOntologyObjectShell taskContext, String taskXML) {
 		this.taskContext = taskContext;
 		this.parse(taskXML);
 	}
-	
+
 	public Collection<IRI> getAllIndividuals() {
 		return this.individualsMap.values();
 	}
-	
+
 	public IRI getResultIndividual() {
 		return this.resultIndividual;
 	}
-	
+
 	private void parseIndividualAttributes(Element individualElement) throws Exception {
 		NodeList childNodes = individualElement.getChildNodes();
-		
+
 		String individualId = individualElement.getAttribute("id");
 		IRI individualIRI = this.individualsMap.get(Integer.parseInt(individualId));
 		OWLIndividualBuilder builder = this.taskContext.getBuilder(individualIRI);
-		
+
 		for (int i = 0; i < childNodes.getLength(); ++i) {
 			// get the attribute element
 			Element attrElement = (Element) childNodes.item(i);
 			assert(attrElement.getTagName().equals("attr"));
-			
+
 			String attrType = attrElement.getAttribute("type");
 			String attrName = attrElement.getAttribute("name");
-			
+
 			if (attrType.equals("object")) {
 				String iri = attrElement.getAttribute("iri");
 				if (iri.isEmpty()) {
@@ -71,7 +71,7 @@ public class IndividualXMLParser {
 					builder.addObjectAxiom(attrName, this.individualsMap.get(objectId));
 				} else
 					builder.addObjectAxiom(attrName, IRI.create(iri));
-			} else { 
+			} else {
 				String attrValue = attrElement.getAttribute("value");
 				if (attrType.equals("string"))
 					builder.addAxiom(attrName, attrValue);
@@ -86,7 +86,7 @@ public class IndividualXMLParser {
 			}
 		}
 	}
-	
+
 	private void parseIndividuals(Document xml) throws Exception {
 		NodeList individualNodes = xml.getElementsByTagName("individual");
 		for (int i = 0; i < individualNodes.getLength(); ++i) {
@@ -94,7 +94,7 @@ public class IndividualXMLParser {
 			String individualClass = individualElement.getAttribute("class");
 			String individualIRI = individualElement.getAttribute("iri");
 			String individualId = individualElement.getAttribute("id");
-			
+
 			if (individualIRI.isEmpty()) {
 				IRI newIRI = this.taskContext.createIndividual(individualClass).getIRI();
 				this.individualsMap.put(Integer.parseInt(individualId), newIRI);
@@ -102,43 +102,43 @@ public class IndividualXMLParser {
 				this.individualsMap.put(Integer.parseInt(individualId), IRI.create(individualIRI));
 		}
 	}
-	
+
 	private void parseResult(Element resultElement) throws Exception {
 		String individualIRI = resultElement.getAttribute("iri");
 		String individualId = resultElement.getAttribute("id");
-			
+
 		if (individualIRI.isEmpty())
 			this.resultIndividual = this.individualsMap.get(Integer.parseInt(individualId));
 		else
 			this.resultIndividual = IRI.create(individualIRI);
 	}
-	
+
 	private void parse(String taskXML) {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			InputStream stream = new ByteArrayInputStream(taskXML.getBytes());
 			Document xml = db.parse(stream);
-			
+
 			this.parseIndividuals(xml);
-			
+
 			NodeList individualNodes = xml.getElementsByTagName("individual");
 			for (int i = 0; i < individualNodes.getLength(); ++i) {
 				Element individualElement = (Element) individualNodes.item(i);
 				this.parseIndividualAttributes(individualElement);
 			}
-			
+
 			NodeList resultNodes = xml.getElementsByTagName("result");
 			if (resultNodes.getLength() > 0) {
 				if (individualNodes.getLength() > 1)
 					System.err.println("IndividualXMLParser: obtained more than one result object! " +
 						"Random one will be used.");
-				this.parseResult((Element) individualNodes.item(0)); 
+				this.parseResult((Element) individualNodes.item(0));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	
+
 }

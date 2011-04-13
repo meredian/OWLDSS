@@ -68,7 +68,7 @@ public class ConfigStorage {
 			throw new AssertionError("Failed to write configuration file " + expectedFile.getAbsolutePath());
 		}
 	}
-	
+
 	public List<String> getStorageList() {
 		List<String> files = new LinkedList<String>();
 		for (File file : storagePath.listFiles()) {

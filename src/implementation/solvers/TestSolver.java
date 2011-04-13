@@ -26,16 +26,16 @@ public class TestSolver extends AbstractSolver {
 		for (int i = 0; i < inputRow.length; ++i)
 			output += inputRow[inputRow.length-1 - i] + " ";
 		output = output.substring(0, output.length() - 1); // cut last space
-		
+
 		OWLIndividualBuilder resultBuilder = ontologyShell.createIndividual("Row");
 		resultBuilder.addAxiom("RowValue", output);
-		
+
 		OWLIndividualBuilder presentationBuilder = ontologyShell.createIndividual("StringPresentation");
 		presentationBuilder.addAxiom("Value", "Here is the row: " + output);
-		
+
 		resultBuilder.addObjectAxiom("HasPresentation", presentationBuilder.getIRI());
 		task.getBuilder().addObjectAxiom("HasResult", resultBuilder.getIRI());
-		
+
 		return true;
 	}
 

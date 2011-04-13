@@ -19,7 +19,7 @@ public abstract class AbstractSolver implements Solver {
 		mandatoryParams = new ArrayList<String>();
 		options = new HashMap<String, String>();
 	}
-	
+
 	@Override
 	public List<MethodSignature> getMethods() {
 		return methods;

@@ -14,11 +14,11 @@ public class Presentation {
 	private OWLIndividualReader individualReader;
 	//private OWLIndividualBuilder individualBuilder;
 	private OWLOntologyObjectShell ontologyShell;
-	
+
 	private static final String ATTRIBUTE_SUPPORTED_BY_PRESENTATION_METHOD = "SupportedByPresentationMethod";
 	private static final String ATTRIBUTE_VALUE = "Value";
-	
-	public Presentation(/*OWLIndividualBuilder individualBuilder, */OWLIndividualReader individualReader, 
+
+	public Presentation(/*OWLIndividualBuilder individualBuilder, */OWLIndividualReader individualReader,
 			OWLOntologyObjectShell ontologyShell) {
 		//this.individualBuilder = individualBuilder;
 		this.individualReader = individualReader;
@@ -28,11 +28,11 @@ public class Presentation {
 	public String getType() {
 		return this.individualReader.tryGetClassName();
 	}
-	
+
 	public OWLLiteral getLiteralValue() {
 		return this.individualReader.getSingleDataValue(ATTRIBUTE_VALUE);
 	}
-	
+
 	public Set<IRI> getObjectValue() {
 		return this.individualReader.getObjectValues(ATTRIBUTE_VALUE);
 	}

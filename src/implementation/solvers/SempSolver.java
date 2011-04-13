@@ -29,17 +29,17 @@ public class SempSolver extends AbstractSolver {
 
 	private void createData(MethodSignature method) {
 		System.out.println("CREATING DATA");
-		
-		String data = "uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\n" + 
+
+		String data = "uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\n" +
 		"uses Global_Ontology;\n"+
 		"rule Создание_данных\n"+
 		"=>\n" +
 		"new\n" +
 		"	nsngdu: ReferenceData_OAGA(fd : 20.0, errkpdmax: 20.0),\n" +
-		"	ns_nu1: ReferenceData_PumpingUnit(name:\"Марка1\"),\n" + 
+		"	ns_nu1: ReferenceData_PumpingUnit(name:\"Марка1\"),\n" +
 		"	pu1:  PumpingUnit(name: \"pu1\",  errkpd: real[0.19,0.19,0.18,0.18,0.20,0.19,0.20,0.19,0.20,0.19,0.19,0.20], ns: ns_nu1);\n" +
 		"end;";
-		
+
 		String createCommand = "cd " + method.getParam("MODULE_PATH") + " && echo '" + data + "' | iconv -f UTF8 -t CP1251 > "
 		+ method.getParam("MODULE_DATA_INPUT");
 		executeCommandAndReadOutput(createCommand);
