@@ -1,6 +1,7 @@
 package core.owl;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,7 +53,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	
 	public void dumpOntology() {
 		try {
-			this.manager.saveOntology( this.ontology, IRI.create( "file:/home/where-is-s/src/OWLDSS/dump.owl" ) );
+			this.manager.saveOntology( this.ontology, IRI.create( "file:" + new File("dump.owl").getAbsoluteFile() ));
 		} catch (OWLOntologyStorageException e) {
 			e.printStackTrace();
 		}
