@@ -2,6 +2,7 @@ package core.repository;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
@@ -18,15 +19,14 @@ public class SolverRepository {
 	private final XStream xstream = new XStream(new DomDriver());
 	private Map<String, Solver> solvers = new HashMap<String, Solver>();
 
-
 	public Solver getSolver(SolvingMethod solvingMethod) {
 		String solverClassName = solvingMethod.getSolverClassName();
-		if( solvers.containsKey(solverClassName)) {
+		if (solvers.containsKey(solverClassName)) {
 			return solvers.get(solverClassName);
 		} else {
 			Solver newSolver;
 			newSolver = loadSolverFromStorage(solverClassName);
-			if(newSolver == null ) {
+			if (newSolver == null) {
 				newSolver = constructSolverByClassName(solverClassName);
 			}
 			solvers.put(solverClassName, newSolver);
@@ -62,6 +62,10 @@ public class SolverRepository {
 			solver = (updatedSolver == null) ? solver : updatedSolver;
 		}
 	}
+	
+	public List<String> getSolverListFromStorage() {
+		return storage.getStorageList();
+	}
 
 	private String extractSolverName(Solver solver) {
 		return solver.getClass().getName();
@@ -72,7 +76,7 @@ public class SolverRepository {
 			return (Solver) Class.forName(solverClassName).newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AssertionError("Failed to resolve Solver by SolverClassName \""+solverClassName+"\"");
+			throw new AssertionError("Failed to resolve Solver by SolverClassName \"" + solverClassName + "\"");
 		}
 	}
 
@@ -81,11 +85,10 @@ public class SolverRepository {
 	}
 
 	private Solver loadSolverFromStorage(String solverClassName) {
-		try
-		{
+		try {
 			String xmlSerializtion = storage.readConfig(solverClassName);
 			return (Solver) xstream.fromXML(xmlSerializtion);
-		} catch ( Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}

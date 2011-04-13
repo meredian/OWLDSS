@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.HermiT.Reasoner;
@@ -39,16 +40,17 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import core.interfaces.Solver;
 import core.owl.OWLOntologyObjectShell;
-import core.repository.ConfigStorage;
 import core.repository.MethodSignature;
 import core.repository.SolverRepository;
 import core.supervisor.TaskProcessor;
+import core.utils.ConfigStorage;
 import core.utils.IndividualXMLParser;
 
 public class Launcher {
 
 	public static void main(String[] args) {
 		try {
+			repositoryTests();
 			initSempSolver();
 			testSempTask();
 			//testRowInvertTask();
@@ -64,7 +66,7 @@ public class Launcher {
 		MethodSignature efficiencyTrendAnalysis = new MethodSignature("EfficiencyTrendAnalysis");
 		efficiencyTrendAnalysis.setParam("MODULE_PATH", "~/.wine/drive_c/semp/modules/XMLEfficiencyTrendAnalysis/");
 		efficiencyTrendAnalysis.setParam("MODULE_LAUNCHER", "EfficiencyTrendAnalysis_Launcher.pm");
-		efficiencyTrendAnalysis.setParam("MODULE_DATA_INPUT", "EfficiencyTrendAnalysis_Rules.pm");
+		efficiencyTrendAnalysis.setParam("MODULE_DATA_INPUT", "EfficiencyTrendAnalysis_CreateData.pm");
 		sempSolver.addMethod(efficiencyTrendAnalysis);
 		repo.addSolver(sempSolver);
 		repo.saveToStorage();
@@ -85,8 +87,7 @@ public class Launcher {
 	private static void repositoryTests() {
 		System.out.println("STARING REPOSITORY TEST");
 		SolverRepository repo = new SolverRepository();
-		//repo.getSolver(new SolvingMethod("implementation.solvers.SempEmptySolver", "methodName"));
-		//repo.saveToStorage();
+		List<String> list = repo.getSolverListFromStorage();
 		System.out.println("END REPOSITORY TEST");
 		
 	}

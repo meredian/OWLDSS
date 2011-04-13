@@ -1,7 +1,6 @@
 package implementation.solvers;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -21,8 +20,8 @@ public class SempSolver extends AbstractSolver {
 
 	@Override
 	public boolean solveTaskByMethod(OWLOntologyObjectShell ontologyShell, Task task, MethodSignature method) {
-		//createData(method);
-		//compileData(method);
+		createData(method);
+		compileData(method);
 		compileModule(method);
 		executeModule(method);
 		return true;
@@ -30,14 +29,26 @@ public class SempSolver extends AbstractSolver {
 
 	private void createData(MethodSignature method) {
 		System.out.println("CREATING DATA");
-		// TODO Auto-generated method stub
-
+		
+		String data = "uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\n" + 
+		"uses Global_Ontology;\n"+
+		"rule Создание_данных\n"+
+		"=>\n" +
+		"new\n" +
+		"	nsngdu: ReferenceData_OAGA(fd : 20.0, errkpdmax: 20.0),\n" +
+		"	ns_nu1: ReferenceData_PumpingUnit(name:\"Марка1\"),\n" + 
+		"	pu1:  PumpingUnit(name: \"pu1\",  errkpd: real[0.19,0.19,0.18,0.18,0.20,0.19,0.20,0.19,0.20,0.19,0.19,0.20], ns: ns_nu1);\n" +
+		"end;";
+		
+		String createCommand = "cd " + method.getParam("MODULE_PATH") + " && echo '" + data + "' | iconv -f UTF8 -t CP1251 > "
+		+ method.getParam("MODULE_DATA_INPUT");
+		executeCommandAndReadOutput(createCommand);
 	}
 
 	private void compileData(MethodSignature method) {
 		System.out.println("COMPILING DATA");
 		String compileCommand = "cd " + method.getParam("MODULE_PATH") + " && wine pmc "
-				+ method.getParam("MODULE_DATA_INPUT") + "-s -e -w";
+				+ method.getParam("MODULE_DATA_INPUT") + " -s -e -w";
 		executeCommandAndReadOutput(compileCommand);
 	}
 
@@ -51,12 +62,18 @@ public class SempSolver extends AbstractSolver {
 		System.out.println("EXECUTING MODULE");
 		String executeCommand = "cd " + method.getParam("MODULE_PATH") + " && wine pmc "
 				+ method.getParam("MODULE_LAUNCHER") + "| iconv -f CP1251 -t UTF8";
-		executeCommandAndReadOutput(executeCommand);
-		return null;
+		String result = executeCommandAndReadOutput(executeCommand);
+		try {
+			result = result.substring(result.lastIndexOf("<individuals>"), result.lastIndexOf("</individuals>"));
+			return result;
+		} catch (StringIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
-	private void executeCommandAndReadOutput(String command) {
+	private String executeCommandAndReadOutput(String command) {
 		try {
+			System.out.println("Command :: " + command);
 			ProcessBuilder procBuilder = new ProcessBuilder("/bin/sh", "-c", command);
 
 			Process process = procBuilder.start();
@@ -66,15 +83,16 @@ public class SempSolver extends AbstractSolver {
 			BufferedReader brStdout = new BufferedReader(isrStdout);
 
 			String line = null;
+			String result = null;
 			while ((line = brStdout.readLine()) != null) {
+				result += line;
 				System.out.println(line);
 			}
 			process.waitFor();
-
-		} catch (IOException e) {
+			return result;
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			return null;
 		}
 	}
 }
