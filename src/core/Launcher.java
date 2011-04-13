@@ -117,8 +117,7 @@ public class Launcher {
 					"<attr name='Id' type='int' value='5'/>" +
 				"</individual>" +
 			"</individuals>";
-		IndividualXMLParser parser = new IndividualXMLParser(ontologyShell); 
-		parser.parse(testXML);
+		IndividualXMLParser parser = new IndividualXMLParser(ontologyShell, testXML);
 		ontologyShell.dumpOntology();
 	}
 	

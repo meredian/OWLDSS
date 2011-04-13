@@ -2,8 +2,10 @@ package core.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,12 +30,24 @@ public class IndividualXMLParser {
 	 * 	<attr name='BackReference' type='object' id='234'/>
 	 *  <attr name='ExternalReference' type='object' iri='http://www.iis.nsk.su/...#ExternalObject'/>
 	 * </individual>
+	 * <result id='234'/>
+	 * <result iri='http://www.iis.nsk.su/...'/>
 	 */
-	OWLOntologyObjectShell taskContext;
-	Map<Integer, IRI> individualsMap = new HashMap<Integer, IRI>();
+	private OWLOntologyObjectShell taskContext;
+	private Map<Integer, IRI> individualsMap = new HashMap<Integer, IRI>();
+	private IRI resultIndividual = null;
 	
-	public IndividualXMLParser(OWLOntologyObjectShell taskContext) {
+	public IndividualXMLParser(OWLOntologyObjectShell taskContext, String taskXML) {
 		this.taskContext = taskContext;
+		this.parse(taskXML);
+	}
+	
+	public Collection<IRI> getAllIndividuals() {
+		return this.individualsMap.values();
+	}
+	
+	public IRI getResultIndividual() {
+		return this.resultIndividual;
 	}
 	
 	private void parseIndividualAttributes(Element individualElement) throws Exception {
@@ -90,7 +104,17 @@ public class IndividualXMLParser {
 		}
 	}
 	
-	public void parse(String taskXML) {
+	private void parseResult(Element resultElement) throws Exception {
+		String individualIRI = resultElement.getAttribute("iri");
+		String individualId = resultElement.getAttribute("id");
+			
+		if (individualIRI.isEmpty())
+			this.resultIndividual = this.individualsMap.get(Integer.parseInt(individualId));
+		else
+			this.resultIndividual = IRI.create(individualIRI);
+	}
+	
+	private void parse(String taskXML) {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -103,6 +127,14 @@ public class IndividualXMLParser {
 			for (int i = 0; i < individualNodes.getLength(); ++i) {
 				Element individualElement = (Element) individualNodes.item(i);
 				this.parseIndividualAttributes(individualElement);
+			}
+			
+			NodeList resultNodes = xml.getElementsByTagName("result");
+			if (resultNodes.getLength() > 0) {
+				if (individualNodes.getLength() > 1)
+					System.err.println("IndividualXMLParser: obtained more than one result object! " +
+						"Random one will be used.");
+				this.parseResult((Element) individualNodes.item(0)); 
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

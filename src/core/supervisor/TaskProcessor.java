@@ -58,10 +58,9 @@ public class TaskProcessor implements TaskListener {
 				ImportManager importManager = new ImportManager(taskContext);
 				SolverManager solverManager = new SolverManager(taskContext, importManager);
 				RenderManager renderManager = new RenderManager();
-				IndividualXMLParser individualXMLParser = new IndividualXMLParser(taskContext); 
 
 				// Put the initial task into the task context
-				individualXMLParser.parse(taskXML);
+				IndividualXMLParser taskParser = new IndividualXMLParser(taskContext, taskXML);
 				Task currentTask = this.selectNextTaskObject(taskContext);
 				while (true) {
 					// Import the data needed for the chosen solving method
