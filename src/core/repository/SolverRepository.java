@@ -21,6 +21,10 @@ public class SolverRepository {
 
 	public Solver getSolver(SolvingMethod solvingMethod) {
 		String solverClassName = solvingMethod.getSolverClassName();
+		return getSolver(solverClassName);
+	}
+
+	public Solver getSolver(String solverClassName) {
 		if (solvers.containsKey(solverClassName)) {
 			return solvers.get(solverClassName);
 		} else {

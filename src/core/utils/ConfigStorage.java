@@ -18,7 +18,7 @@ public class ConfigStorage {
 			throw new NullPointerException("storagePath is null");
 		this.storagePath = storagePath;
 		this.storagePath.mkdirs();
-		System.out.println("ConfigStorage::ConfigStorage.storagePath = " + this.storagePath.getAbsolutePath());
+		// System.out.println("ConfigStorage::ConfigStorage.storagePath = " + this.storagePath.getAbsolutePath());
 	}
 
 	public ConfigStorage(String storagePath) {
@@ -26,18 +26,18 @@ public class ConfigStorage {
 			throw new NullPointerException("storagePath is null");
 		this.storagePath = new File(storagePath);
 		this.storagePath.mkdirs();
-		System.out.println("ConfigStorage::ConfigStorage.storagePath = " + this.storagePath.getAbsolutePath());
+		// System.out.println("ConfigStorage::ConfigStorage.storagePath = " + this.storagePath.getAbsolutePath());
 	}
 
 	public boolean checkConfig(String name) {
 		File expectedFile = new File(storagePath, name + EXT);
-		System.out.println("ConfigStorage::checkConfig.expectedFile = " + expectedFile.getAbsolutePath());
+		// System.out.println("ConfigStorage::checkConfig.expectedFile = " + expectedFile.getAbsolutePath());
 		return expectedFile.exists();
 	}
 
 	public String readConfig(String name) {
 		File expectedFile = new File(storagePath, name + EXT);
-		System.out.println("ConfigStorage::readConfig.expectedFile = " + expectedFile.getAbsolutePath());
+		// System.out.println("ConfigStorage::readConfig.expectedFile = " + expectedFile.getAbsolutePath());
 		if (!expectedFile.exists()) {
 			return null;
 		}
@@ -55,7 +55,7 @@ public class ConfigStorage {
 
 	public void writeConfig(String name, String data) {
 		File expectedFile = new File(storagePath, name + EXT);
-		System.out.println("ConfigStorage::writeConfig.expectedFile = " + expectedFile.getAbsolutePath());
+		// System.out.println("ConfigStorage::writeConfig.expectedFile = " + expectedFile.getAbsolutePath());
 		try {
 			if (!expectedFile.exists()) {
 				expectedFile.createNewFile();

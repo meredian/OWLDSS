@@ -16,6 +16,7 @@ public class SempSolver extends AbstractSolver {
 		mandatoryParams.add("MODULE_PATH");
 		mandatoryParams.add("MODULE_LAUNCHER");
 		mandatoryParams.add("MODULE_DATA_INPUT");
+		options.put("some_param", "true");
 	}
 
 	@Override
