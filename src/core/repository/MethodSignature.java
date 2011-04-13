@@ -57,9 +57,9 @@ public class MethodSignature {
 		return params.get(key);
 	}
 
-	public boolean ensureParams( List<String> keys ) {
+	public boolean ensureParams(List<String> keys) {
 		for (String key : keys) {
-			if( !params.containsKey(key) ) {
+			if (!params.containsKey(key)) {
 				return false;
 			}
 		}
@@ -69,7 +69,7 @@ public class MethodSignature {
 	public Map<String, String> assertOptions(Map<String, String> curentOptions) {
 		HashMap<String, String> actualOptions = new HashMap<String, String>(this.options);
 		for (String key : this.options.keySet()) {
-			if( curentOptions.containsKey(key) ) {
+			if (curentOptions.containsKey(key)) {
 				actualOptions.put(key, curentOptions.get(key));
 			}
 		}
@@ -78,9 +78,13 @@ public class MethodSignature {
 
 	public MethodSignature cloneWithOptions(Map<String, String> curentOptions) {
 		MethodSignature asserted = new MethodSignature(this.name);
-		asserted.params = new HashMap<String, String>(this.options);
+		if( this.params != null) {
+			asserted.params = new HashMap<String, String>(this.params);
+		}
+		if (this.options != null) {
+			asserted.options = assertOptions(curentOptions);
+		}
 		asserted.status = this.status;
-		asserted.options = assertOptions(curentOptions);
 		return asserted;
 	}
 }

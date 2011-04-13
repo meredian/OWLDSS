@@ -1,5 +1,7 @@
 package core.repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,12 @@ public abstract class AbstractSolver implements Solver {
 	protected List<String> mandatoryParams;
 	protected Map<String, String> options;
 
+	protected void init() {
+		methods = new ArrayList<MethodSignature>();
+		mandatoryParams = new ArrayList<String>();
+		options = new HashMap<String, String>();
+	}
+	
 	@Override
 	public List<MethodSignature> getMethods() {
 		return methods;
@@ -29,14 +37,9 @@ public abstract class AbstractSolver implements Solver {
 
 	@Override
 	public MethodSignature getMethodBySolvingMethod(SolvingMethod solvingMethod) {
-		// TODO as soon as possible!!!
-		return null;
-		/*MethodSignature method = this.getMethodByName(solvingMethod.getMethodName());
-		Map<String, Set<?>> attributes = solvingMethod.getAllAttributes();
-		for (Entry<String, Set<?>> entry: attributes.entrySet())
-			
-		method = method.cloneWithOptions(new HashMap<String, String>());
-		return method;*/
+		// TODO: Use normal data-properties instead of new HashMap<>()
+		MethodSignature method = this.getMethodByName(solvingMethod.getMethodName());
+		return method.cloneWithOptions(new HashMap<String, String>());
 	}
 
 	@Override
@@ -82,5 +85,7 @@ public abstract class AbstractSolver implements Solver {
 		}
 	}
 
-	protected abstract MethodStatus callTest(MethodSignature method);
+	protected MethodStatus callTest(MethodSignature method) {
+		return MethodStatus.UNKNOWN;
+	}
 }
