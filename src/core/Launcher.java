@@ -1,5 +1,7 @@
 package core;
 
+import implementation.solvers.SempSolver;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -35,23 +37,38 @@ import org.semanticweb.owlapi.vocab.OWLFacet;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import core.interfaces.Solver;
 import core.owl.OWLOntologyObjectShell;
 import core.repository.ConfigStorage;
+import core.repository.MethodSignature;
 import core.repository.SolverRepository;
 import core.supervisor.TaskProcessor;
 import core.utils.IndividualXMLParser;
 
 public class Launcher {
 
-	public static void main(String[] args) {  
-		//storageTests();
-		//System.out.println(SempEmptySolver.class.getName());
-		//repositoryTests();
+	public static void main(String[] args) {
 		try {
-			testRowInvertTask();
+			initSempSolver();
+			testSempTask();
+			//testRowInvertTask();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static void initSempSolver(){
+		System.out.println("START SEMPSOLVER INIT");
+		SolverRepository repo = new SolverRepository();
+		Solver sempSolver = new SempSolver();
+		MethodSignature efficiencyTrendAnalysis = new MethodSignature("EfficiencyTrendAnalysis");
+		efficiencyTrendAnalysis.setParam("MODULE_PATH", "~/.wine/drive_c/semp/modules/XMLEfficiencyTrendAnalysis/");
+		efficiencyTrendAnalysis.setParam("MODULE_LAUNCHER", "EfficiencyTrendAnalysis_Launcher.pm");
+		efficiencyTrendAnalysis.setParam("MODULE_DATA_INPUT", "EfficiencyTrendAnalysis_Rules.pm");
+		sempSolver.addMethod(efficiencyTrendAnalysis);
+		repo.addSolver(sempSolver);
+		repo.saveToStorage();
+		System.out.println("FINISH SEMPSOLVER INIT");
 	}
 	
 	private static void storageTests() {
@@ -119,6 +136,28 @@ public class Launcher {
 			"</individuals>";
 		IndividualXMLParser parser = new IndividualXMLParser(ontologyShell, testXML);
 		ontologyShell.dumpOntology();
+	}
+	
+	private static void testSempTask() throws OWLOntologyCreationException {
+		System.out.println("STARING SEMP SOLVER TEST");
+		String testXML =
+			"<individuals>" +
+				"<individual class='RowAnalysisTask' id='0'>" +
+					"<attr name='HasPump' type='object' id='1'/>" +
+				"</individual>" +
+				"<individual class='Pump' id='1'>" +
+					"<attr name='Id' type='int' value='6'/>" +
+				"</individual>" +
+			"</individuals>";
+		
+		TaskProcessor processor = new TaskProcessor(
+			new File("ontologies/Ontology1.owl").getAbsolutePath(),
+			"http://www.iis.nsk.su/ontologies/main.owl"
+		);
+		processor.onTaskReceived(testXML);
+		processor.cancel(); // process just one iteration
+		processor.process();
+		System.out.println("END SEMP SOLVER TEST");
 	}
 	
 	private static void simpleReasonerTest() throws OWLOntologyCreationException {
