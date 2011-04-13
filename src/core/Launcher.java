@@ -39,6 +39,7 @@ import core.owl.OWLOntologyObjectShell;
 import core.repository.ConfigStorage;
 import core.repository.SolverRepository;
 import core.supervisor.TaskProcessor;
+import core.utils.IndividualXMLParser;
 
 public class Launcher {
 
@@ -82,13 +83,15 @@ public class Launcher {
 	}
 	
 	private static void testRowInvertTask() throws OWLOntologyCreationException {
-		String testXML = "<individual class='RowInvertTask'>" +
-				"<attr name='HasInput' type='object'>" +
-					"<individual class='Row'>" +
-						"<attr name='RowValue' type='string' value='1 2 63 123 3 9'/>" +
-					"</individual>" +
-				"</attr>" +
-			"</individual>";
+		String testXML =
+			"<individuals>" +
+				"<individual class='RowInvertTask' id='0'>" +
+					"<attr name='HasInput' type='object' id='1'/>" +
+				"</individual>" +
+				"<individual class='Row' id='1'>" +
+					"<attr name='RowValue' type='string' value='1 2 63 123 3 9'/>" +
+				"</individual>" +
+			"</individuals>";
 		
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
@@ -105,14 +108,17 @@ public class Launcher {
 		ontologyManager.loadOntologyFromOntologyDocument(new File("ontologies/Ontology1.owl"));
 
 		OWLOntologyObjectShell ontologyShell = new OWLOntologyObjectShell(ontologyManager, ontologyAddress);
-		String testXML = "<individual class='PumpAnalysisTask'>" +
-				"<attr name='HasPump' type='object'>" +
-					"<individual class='Pump'>" +
-						"<attr name='Id' type='int' value='5'/>" +
-					"</individual>" +
-				"</attr>" +
-			"</individual>";
-		ontologyShell.createIndividualsFromXML(testXML);
+		String testXML =
+			"<individuals>" +
+				"<individual class='PumpAnalysisTask' id='0'>" +
+					"<attr name='HasPump' type='object' id='1'/>" +
+				"</individual>" +
+				"<individual class='Pump' id='1'>" +
+					"<attr name='Id' type='int' value='5'/>" +
+				"</individual>" +
+			"</individuals>";
+		IndividualXMLParser parser = new IndividualXMLParser(ontologyShell); 
+		parser.parse(testXML);
 		ontologyShell.dumpOntology();
 	}
 	

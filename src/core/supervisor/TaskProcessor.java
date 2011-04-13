@@ -13,6 +13,7 @@ import core.managers.RenderManager;
 import core.managers.SolverManager;
 import core.owl.OWLOntologyObjectShell;
 import core.owl.objects.Task;
+import core.utils.IndividualXMLParser;
 
 public class TaskProcessor implements TaskListener {
 
@@ -57,9 +58,10 @@ public class TaskProcessor implements TaskListener {
 				ImportManager importManager = new ImportManager(taskContext);
 				SolverManager solverManager = new SolverManager(taskContext, importManager);
 				RenderManager renderManager = new RenderManager();
+				IndividualXMLParser individualXMLParser = new IndividualXMLParser(taskContext); 
 
 				// Put the initial task into the task context
-				taskContext.createIndividualsFromXML(taskXML);
+				individualXMLParser.parse(taskXML);
 				Task currentTask = this.selectNextTaskObject(taskContext);
 				while (true) {
 					// Import the data needed for the chosen solving method

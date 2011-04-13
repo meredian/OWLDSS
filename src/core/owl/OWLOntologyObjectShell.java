@@ -182,61 +182,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 	public OWLIndividualReader getReader(IRI iri) {
 		return new OWLIndividualReader(this.getOWLNamedIndividual(iri), this);
 	}
-
-	private OWLIndividualBuilder createIndividualFromXML(Element individualElement) throws Exception {
-		NodeList childNodes = individualElement.getChildNodes();
-		
-		String individualClass = individualElement.getAttribute("class");
-		OWLIndividualBuilder builder = this.createIndividual(individualClass);
-		
-		for (int i = 0; i < childNodes.getLength(); ++i) {
-			// get the attribute element
-			Element attrElement = (Element) childNodes.item(i);
-			assert(attrElement.getTagName().equals("attr"));
-			
-			String attrType = attrElement.getAttribute("type");
-			String attrName = attrElement.getAttribute("name");
-			
-			if (attrType.equals("object")) {
-				NodeList attrObjects = attrElement.getChildNodes();
-				for (int j = 0; j < attrObjects.getLength(); ++j) {
-					// get the attribute element
-					Element subIndividual = (Element) attrObjects.item(j);
-					IRI subIndividualIRI = this.createIndividualFromXML(subIndividual).getIRI();
-					builder.addObjectAxiom(attrName, subIndividualIRI);
-				}
-			} else { 
-				String attrValue = attrElement.getAttribute("value");
-				if (attrType.equals("string"))
-					builder.addAxiom(attrName, attrValue);
-				else if (attrType.equals("int"))
-					builder.addAxiom(attrName, Integer.parseInt(attrValue));
-				else if (attrType.equals("double"))
-					builder.addAxiom(attrName, Double.parseDouble(attrValue));
-				else if (attrType.equals("boolean"))
-					builder.addAxiom(attrName, Boolean.parseBoolean(attrValue));
-				else
-					throw new Exception("Wrong attribute type met (" + attrType + ")!");
-			}
-			
-		}
-		
-		return builder;
-	}
 	
-	public void createIndividualsFromXML(String taskXML) {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		try {
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			InputStream stream = new ByteArrayInputStream(taskXML.getBytes());
-			Document xml = db.parse(stream);
-			Element rootElement = xml.getDocumentElement();
-			this.createIndividualFromXML(rootElement);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void addDataPropertyAssertionAxiom(IRI individualIRI, String propertyName, OWLLiteral value) {
 		this.manager.addAxiom( 
 			this.ontology,
