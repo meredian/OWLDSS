@@ -9,6 +9,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import core.interfaces.Solver;
 import core.owl.objects.SolvingMethod;
+import core.utils.ConfigStorage;
 
 public class SolverRepository {
 
