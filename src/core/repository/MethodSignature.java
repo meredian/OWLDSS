@@ -57,6 +57,14 @@ public class MethodSignature {
 		return params.get(key);
 	}
 
+	public Map<String,String> getOptions() {
+		return options;
+	}
+
+	public Map<String,String> getParams() {
+		return params;
+	}
+
 	public boolean ensureParams(List<String> keys) {
 		for (String key : keys) {
 			if (!params.containsKey(key)) {

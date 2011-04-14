@@ -17,9 +17,11 @@ java_import "core.repository.SolverRepository"
 Repository = Java::CoreRepository::SolverRepository
 Repo = Repository.new
 
+require 'pp'
 require 'rubygems'
-require 'manager/lib'
 require 'commander/import'
+require 'ruby/solver_manipulator'
+require 'ruby/method_manipulator'
 
 global_option '--verbose'
 
@@ -29,23 +31,11 @@ program :description, 'Simple CLI tool to manage Solvers and their methods.'
 
 command :solvers do |c|
   c.syntax = 'solvers [options]'
-  c.option '--name STRING', String, 'Filters solvers by name'
-  c.description = 'Shows list of available solvers'
+  c.description = 'Shows list of available solvers, uses args[0] as name-filter'
   c.action do |args, options|
-    solvers = ::Repo.get_solver_list_from_storage
-    msg = "Following solvers are registered in repositary"
-    if options.name
-      msg << " (filter: *#{options.name}*)"
-      solvers = solvers.reject{ |t| t !~ /#{options.name}/i }
-    end
-    puts msg
-    puts ""
-    if solvers.size == 0
-      puts " NONE"
-    else
-      solvers.each_with_index { |t,i| puts sprintf " %2d) %s", i, t }
-    end
-    
+    filter = args[0]
+    manipulator = ::OWLDSS::SolverManipulator.new ::Repo
+    manipulator.list_solvers filter
   end
 end
 
@@ -54,26 +44,10 @@ command :'solver describe' do |c|
   c.syntax = 'solver describe [options] [args]'
   c.description = 'Describes single solver'
   c.action do |args, options|
-    puts "Searching by value *#{args.first}*"
-    solvers = ::Repo.get_solver_list_from_storage
-    solvers = solvers.reject{ |t| t !~ /#{args.first}/i }
-    if solvers.size == 0
-      puts "NONE"
-    elsif solvers.size > 1
-      puts "Ambiguity:"
-      solvers.each_with_index { |t,i| puts sprintf " %2d) %s", i, t }
-    else
-    solverName = solvers.first
-    solver_obj = Repo.get_solver solverName
-    
-    puts "SolverClass #{solverName}"
-    puts ""
-    puts "Mandatory parameters:"
-    solver_obj.get_mandatory_params.each{ |t| puts t }
-    puts ""
-    puts "Options and default values:"
-    solver_obj.get_options.each{ |k| puts "#{k[0]} = #{k[1]}" }
-    end
+    filter = args[0]
+    manipulator = ::OWLDSS::SolverManipulator.new ::Repo
+    solver = manipulator.select_solver filter
+    manipulator.describe_solver solver if solver
   end
 end
 
