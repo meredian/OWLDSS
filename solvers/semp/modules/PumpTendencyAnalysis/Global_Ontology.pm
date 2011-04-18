@@ -74,6 +74,11 @@ class PumpEfficiencyTrend
 	explanation:	string;  
 end;
 
+class RowTendency (BaseObject)
+	HasRow :	TimeRow;
+	TendencyCode :	int;
+end;
+
 class PumpEfficiencyWarning
 	pump :		Pump;
 	text:			string;  
