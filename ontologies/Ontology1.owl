@@ -63,23 +63,6 @@
     
 
 
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasInputOrganization -->
-
-    <owl:ObjectProperty rdf:about="&main;HasInputOrganization">
-        <rdfs:subPropertyOf rdf:resource="&main;HasInput"/>
-        <rdfs:range rdf:resource="&main;Organization"/>
-        <rdfs:domain>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&main;OrganizationAnalysisTask"/>
-                    <rdf:Description rdf:about="&main;PumpAnalysisTask"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:domain>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://www.iis.nsk.su/ontologies/main.owl#HasInputPump -->
 
     <owl:ObjectProperty rdf:about="&main;HasInputPump">
@@ -148,6 +131,15 @@
     <owl:ObjectProperty rdf:about="&main;HasResult">
         <rdfs:domain rdf:resource="&main;Task"/>
         <rdfs:range rdf:resource="&main;TaskResult"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#HasRow -->
+
+    <owl:ObjectProperty rdf:about="&main;HasRow">
+        <rdfs:domain rdf:resource="&main;RowTendency"/>
+        <rdfs:range rdf:resource="&main;TimeRow"/>
     </owl:ObjectProperty>
     
 
@@ -338,9 +330,7 @@
 
     <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSempOptimizationModifier -->
 
-    <owl:DatatypeProperty rdf:about="&main;PumpAnalysisSempOptimizationModifier">
-        <rdfs:domain rdf:resource="&main;PumpAnalysisSempSolvingMethod"/>
-    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="&main;PumpAnalysisSempOptimizationModifier"/>
     
 
 
@@ -389,6 +379,15 @@
     
 
 
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#TendencyCode -->
+
+    <owl:DatatypeProperty rdf:about="&main;TendencyCode">
+        <rdfs:domain rdf:resource="&main;RowTendency"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.iis.nsk.su/ontologies/main.owl#TimeRowInterval -->
 
     <owl:DatatypeProperty rdf:about="&main;TimeRowInterval">
@@ -433,15 +432,15 @@
         <rdfs:subClassOf rdf:resource="&main;ImportingMethod"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;Imports"/>
-                <owl:onClass rdf:resource="&main;ElectroConsumptionTimeRow"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&main;ImporterClass"/>
+                <owl:hasValue rdf:datatype="&xsd;string">ElectroConsumptionImporter</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;ImporterClass"/>
-                <owl:hasValue rdf:datatype="&xsd;string">ElectroConsumptionImporter</owl:hasValue>
+                <owl:onProperty rdf:resource="&main;Imports"/>
+                <owl:onClass rdf:resource="&main;ElectroConsumptionTimeRow"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -502,58 +501,6 @@
     
 
 
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisResult -->
-
-    <owl:Class rdf:about="&main;OrganizationAnalysisResult">
-        <rdfs:subClassOf rdf:resource="&main;TaskResult"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisSolvingMethod -->
-
-    <owl:Class rdf:about="&main;OrganizationAnalysisSolvingMethod">
-        <rdfs:subClassOf rdf:resource="&main;SolvingMethod"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;Solves"/>
-                <owl:allValuesFrom rdf:resource="&main;OrganizationAnalysisTask"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="&main;PumpAnalysisSolvingMethod"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisTask -->
-
-    <owl:Class rdf:about="&main;OrganizationAnalysisTask">
-        <rdfs:subClassOf rdf:resource="&main;Task"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasInputOrganization"/>
-                <owl:onClass rdf:resource="&main;Organization"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasResult"/>
-                <owl:onClass rdf:resource="&main;OrganizationAnalysisResult"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;SolvedBy"/>
-                <owl:hasValue rdf:resource="&main;OrganizationAnalysisBestMethod"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="&main;PumpAnalysisTask"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.iis.nsk.su/ontologies/main.owl#Presentation -->
 
     <owl:Class rdf:about="&main;Presentation">
@@ -592,15 +539,6 @@
     
 
 
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSempSolvingMethod -->
-
-    <owl:Class rdf:about="&main;PumpAnalysisSempSolvingMethod">
-        <rdfs:subClassOf rdf:resource="&main;PumpAnalysisSolvingMethod"/>
-        <rdfs:subClassOf rdf:resource="&main;SempSolvingMethod"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSolvingMethod -->
 
     <owl:Class rdf:about="&main;PumpAnalysisSolvingMethod">
@@ -621,6 +559,12 @@
         <rdfs:subClassOf rdf:resource="&main;Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;SolvedBy"/>
+                <owl:hasValue rdf:resource="&main;PumpAnalysisComplexSolvingMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;HasResult"/>
                 <owl:onClass rdf:resource="&main;PumpAnalysisResult"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -628,15 +572,8 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasInputOrganization"/>
-                <owl:onClass rdf:resource="&main;Organization"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;SolvedBy"/>
-                <owl:hasValue rdf:resource="&main;PumpAnalysisSolvingMethodStandard"/>
+                <owl:hasValue rdf:resource="&main;PumpAnalysisSempSolvingMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -682,6 +619,42 @@
     
 
 
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpTendencyAnalysisSolvingMethod -->
+
+    <owl:Class rdf:about="&main;PumpTendencyAnalysisSolvingMethod">
+        <rdfs:subClassOf rdf:resource="&main;SolvingMethod"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpTendencyAnalysisTask -->
+
+    <owl:Class rdf:about="&main;PumpTendencyAnalysisTask">
+        <rdfs:subClassOf rdf:resource="&main;Task"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;HasResult"/>
+                <owl:onClass rdf:resource="&main;PumpAnalysisResult"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;SolvedBy"/>
+                <owl:hasValue rdf:resource="&main;PumpTendencyAnalysisSempSolvingMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;HasInput"/>
+                <owl:onClass rdf:resource="&main;RowTendency"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
     <!-- http://www.iis.nsk.su/ontologies/main.owl#ReferenceData -->
 
     <owl:Class rdf:about="&main;ReferenceData">
@@ -718,6 +691,13 @@
         <rdfs:subClassOf rdf:resource="&main;Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;HasResult"/>
+                <owl:onClass rdf:resource="&main;Row"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;SolvedBy"/>
                 <owl:hasValue rdf:resource="&main;RowInvertStandardSolvingMethod"/>
             </owl:Restriction>
@@ -729,10 +709,47 @@
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#RowTendency -->
+
+    <owl:Class rdf:about="&main;RowTendency">
+        <rdfs:subClassOf rdf:resource="&main;Tendency"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#RowTendencyAnalysisSolvingMethod -->
+
+    <owl:Class rdf:about="&main;RowTendencyAnalysisSolvingMethod">
+        <rdfs:subClassOf rdf:resource="&main;SolvingMethod"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#RowTendencyAnalysisTask -->
+
+    <owl:Class rdf:about="&main;RowTendencyAnalysisTask">
+        <rdfs:subClassOf rdf:resource="&main;Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;HasResult"/>
-                <owl:onClass rdf:resource="&main;Row"/>
+                <owl:onClass rdf:resource="&main;RowTendency"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;SolvedBy"/>
+                <owl:hasValue rdf:resource="&main;RowTendencyAnalysisSempSolvingMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;HasInput"/>
+                <owl:onClass rdf:resource="&main;TimeRow"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -747,7 +764,7 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;SolverClass"/>
-                <owl:hasValue>SempSolver</owl:hasValue>
+                <owl:hasValue>implementation.solvers.SempSolver</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -789,6 +806,7 @@
     <owl:Class rdf:about="&main;SubjectArea">
         <rdfs:subClassOf rdf:resource="&main;TaskInput"/>
         <rdfs:subClassOf rdf:resource="&main;TaskResult"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
         <owl:disjointWith rdf:resource="&main;Task"/>
     </owl:Class>
     
@@ -825,6 +843,14 @@
     <!-- http://www.iis.nsk.su/ontologies/main.owl#TaskResult -->
 
     <owl:Class rdf:about="&main;TaskResult"/>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#Tendency -->
+
+    <owl:Class rdf:about="&main;Tendency">
+        <rdfs:subClassOf rdf:resource="&main;SubjectArea"/>
+    </owl:Class>
     
 
 
@@ -898,47 +924,6 @@
     
 
 
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisBestMethod -->
-
-    <owl:Thing rdf:about="&main;OrganizationAnalysisBestMethod">
-        <rdf:type rdf:resource="&main;OrganizationAnalysisSolvingMethod"/>
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
-    </owl:Thing>
-    
-
-
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisResult_Sample -->
-
-    <owl:Thing rdf:about="&main;OrganizationAnalysisResult_Sample">
-        <rdf:type rdf:resource="&main;OrganizationAnalysisResult"/>
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
-        <HasPresentation rdf:resource="&main;OrganizationAnalysisResult_Sample_StringPresentation"/>
-    </owl:Thing>
-    
-
-
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisResult_Sample_StringPresentation -->
-
-    <owl:Thing rdf:about="&main;OrganizationAnalysisResult_Sample_StringPresentation">
-        <rdf:type rdf:resource="&main;StringPresentation"/>
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
-        <StringPresentationValue rdf:datatype="&xsd;string">Organization is quite corrupted.</StringPresentationValue>
-    </owl:Thing>
-    
-
-
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#OrganizationAnalysisTask_Sample -->
-
-    <owl:Thing rdf:about="&main;OrganizationAnalysisTask_Sample">
-        <rdf:type rdf:resource="&main;OrganizationAnalysisTask"/>
-        <rdf:type rdf:resource="&owl;NamedIndividual"/>
-        <IsSolved rdf:datatype="&xsd;boolean">true</IsSolved>
-        <HasResult rdf:resource="&main;OrganizationAnalysisResult_Sample"/>
-        <HasInputOrganization rdf:resource="&main;Organization_Sample"/>
-    </owl:Thing>
-    
-
-
     <!-- http://www.iis.nsk.su/ontologies/main.owl#Organization_Sample -->
 
     <owl:Thing rdf:about="&main;Organization_Sample">
@@ -946,6 +931,16 @@
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <Id rdf:datatype="&xsd;integer">22</Id>
     </owl:Thing>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisComplexSolvingMethod -->
+
+    <owl:NamedIndividual rdf:about="&main;PumpAnalysisComplexSolvingMethod">
+        <rdf:type rdf:resource="&main;PumpAnalysisSolvingMethod"/>
+        <MethodName>Standard</MethodName>
+        <SolverClass>implementation.solvers.PumpAnalysisComplexSolver</SolverClass>
+    </owl:NamedIndividual>
     
 
 
@@ -959,13 +954,14 @@
     
 
 
-    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSolvingMethodStandard -->
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSempSolvingMethod -->
 
-    <owl:Thing rdf:about="&main;PumpAnalysisSolvingMethodStandard">
-        <rdf:type rdf:resource="&main;PumpAnalysisSempSolvingMethod"/>
+    <owl:Thing rdf:about="&main;PumpAnalysisSempSolvingMethod">
+        <rdf:type rdf:resource="&main;PumpAnalysisSolvingMethod"/>
+        <rdf:type rdf:resource="&main;SempSolvingMethod"/>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
-        <SolverClass>implementation.solvers.SempSolver</SolverClass>
         <MethodName>EfficiencyTrendAnalysis</MethodName>
+        <SolverClass>implementation.solvers.SempSolver</SolverClass>
     </owl:Thing>
     
 
@@ -976,7 +972,6 @@
         <rdf:type rdf:resource="&main;PumpAnalysisTask"/>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <IsSolved rdf:datatype="&xsd;boolean">true</IsSolved>
-        <HasInputOrganization rdf:resource="&main;Organization_Sample"/>
         <HasResult rdf:resource="&main;PumpAnalysisResult_Sample"/>
         <HasInputPump rdf:resource="&main;Pump_Sample"/>
     </owl:Thing>
@@ -990,6 +985,17 @@
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
         <StringPresentationValue rdf:datatype="&xsd;string">Pump is ok! It\&#39;s broken!</StringPresentationValue>
     </owl:Thing>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpTendencyAnalysisSempSolvingMethod -->
+
+    <owl:NamedIndividual rdf:about="&main;PumpTendencyAnalysisSempSolvingMethod">
+        <rdf:type rdf:resource="&main;PumpTendencyAnalysisSolvingMethod"/>
+        <rdf:type rdf:resource="&main;SempSolvingMethod"/>
+        <MethodName>PumpTendencyAnalysis</MethodName>
+        <SolverClass>implementation.solvers.SempSolver</SolverClass>
+    </owl:NamedIndividual>
     
 
 
@@ -1022,6 +1028,17 @@
         <MethodName>RowInvertMethod</MethodName>
         <SolverClass>implementation.solvers.TestSolver</SolverClass>
     </owl:Thing>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#RowTendencyAnalysisSempSolvingMethod -->
+
+    <owl:NamedIndividual rdf:about="&main;RowTendencyAnalysisSempSolvingMethod">
+        <rdf:type rdf:resource="&main;RowTendencyAnalysisSolvingMethod"/>
+        <rdf:type rdf:resource="&main;SempSolvingMethod"/>
+        <SolverClass>implementation.solvers.SempSolver</SolverClass>
+        <MethodName>RowTendencyAnalysis</MethodName>
+    </owl:NamedIndividual>
     
 
 
