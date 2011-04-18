@@ -73,6 +73,11 @@ public class Task {
 		return this.individualReader.getObjectValues(ATTRIBUTE_HAS_IMPORT);
 	}
 	
+	public Set<IRI> getImportedObjectsByClass(String className) {
+		return this.individualReader.getObjectValuesByClass(ATTRIBUTE_HAS_IMPORT, className);
+	}
+	
+	
 	public TaskResult getResult() {
 		Set<IRI> resultIRIs = individualReader.getObjectValues(ATTRIBUTE_HAS_RESULT);
 		if (resultIRIs.isEmpty())
@@ -130,9 +135,24 @@ public class Task {
 			this.addInput(subTask.getResult().getIRI());
 	}
 
-	private void addInput(IRI iri) {
-		// TODO Auto-generated method stub
+	public void addInput(IRI iri) {
 		this.individualBuilder.addObjectAxiom(ATTRIBUTE_HAS_INPUT, iri);
+	}
+	
+	public void addInput(Set<IRI> iris) {
+		for (IRI iri : iris) {
+			this.addInput(iri);			
+		}
+	}
+	
+	public void addImport(IRI iri) {
+		this.individualBuilder.addObjectAxiom(ATTRIBUTE_HAS_IMPORT, iri);
+	}
+	
+	public void addImport(Set<IRI> iris) {
+		for (IRI iri : iris) {
+			this.addImport(iri);			
+		}
 	}
 
 }

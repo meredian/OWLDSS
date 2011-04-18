@@ -432,15 +432,15 @@
         <rdfs:subClassOf rdf:resource="&main;ImportingMethod"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;ImporterClass"/>
-                <owl:hasValue rdf:datatype="&xsd;string">ElectroConsumptionImporter</owl:hasValue>
+                <owl:onProperty rdf:resource="&main;Imports"/>
+                <owl:onClass rdf:resource="&main;ElectroConsumptionTimeRow"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;Imports"/>
-                <owl:onClass rdf:resource="&main;ElectroConsumptionTimeRow"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&main;ImporterClass"/>
+                <owl:hasValue>ElectroConsumptionImporter</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -595,6 +595,27 @@
     
 
 
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpEfficiencyDeviationRowImportingMethod -->
+
+    <owl:Class rdf:about="&main;PumpEfficiencyDeviationRowImportingMethod">
+        <rdfs:subClassOf rdf:resource="&main;ImportingMethod"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;Imports"/>
+                <owl:onClass rdf:resource="&main;PumpEfficiencyDeviationRow"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;ImporterClass"/>
+                <owl:hasValue>PumpEfficiencyDeviationRowImporter</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
     <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpEfficiencyTrend -->
 
     <owl:Class rdf:about="&main;PumpEfficiencyTrend">
@@ -633,13 +654,6 @@
         <rdfs:subClassOf rdf:resource="&main;Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasResult"/>
-                <owl:onClass rdf:resource="&main;PumpAnalysisResult"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;SolvedBy"/>
                 <owl:hasValue rdf:resource="&main;PumpTendencyAnalysisSempSolvingMethod"/>
             </owl:Restriction>
@@ -648,6 +662,13 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;HasInput"/>
                 <owl:onClass rdf:resource="&main;RowTendency"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;HasResult"/>
+                <owl:onClass rdf:resource="&main;PumpAnalysisResult"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -735,15 +756,15 @@
         <rdfs:subClassOf rdf:resource="&main;Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasResult"/>
-                <owl:onClass rdf:resource="&main;RowTendency"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&main;SolvedBy"/>
+                <owl:hasValue rdf:resource="&main;RowTendencyAnalysisSempSolvingMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;SolvedBy"/>
-                <owl:hasValue rdf:resource="&main;RowTendencyAnalysisSempSolvingMethod"/>
+                <owl:onProperty rdf:resource="&main;HasResult"/>
+                <owl:onClass rdf:resource="&main;RowTendency"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -905,6 +926,14 @@
     
 
 
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#DefaultPumpEfficiencyDeviationRowImportingMethod -->
+
+    <owl:NamedIndividual rdf:about="&main;DefaultPumpEfficiencyDeviationRowImportingMethod">
+        <rdf:type rdf:resource="&main;PumpEfficiencyDeviationRowImportingMethod"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.iis.nsk.su/ontologies/main.owl#Last24HoursElectroConsumptionImporingMethod -->
 
     <owl:Thing rdf:about="&main;Last24HoursElectroConsumptionImporingMethod">
@@ -1051,5 +1080,5 @@
 
 
 
-<!-- Generated by the OWL API (version 3.2.2.1789) http://owlapi.sourceforge.net -->
+<!-- Generated by the OWL API (version 3.2.2.1785) http://owlapi.sourceforge.net -->
 
