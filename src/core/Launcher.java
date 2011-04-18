@@ -53,7 +53,6 @@ public class Launcher {
 		try {
 			repositoryTests();
 			//initMySqlConnection();
-			initSempSolver();
 			testSempTask();
 		} catch (Exception e) {
 			e.printStackTrace();

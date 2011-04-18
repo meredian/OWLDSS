@@ -1,5 +1,6 @@
 package core.owl.objects;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -50,7 +51,7 @@ public class Task {
 	
 	public Set<Task> getSubTasks() {
 		Set<IRI> taskIRIs = this.individualReader.getObjectValues(ATTRIBUTE_HAS_SUBTASK);
-		Set<Task> result = new TreeSet<Task>();
+		Set<Task> result = new HashSet<Task>();
 		for (IRI iri: taskIRIs)
 			result.add(ontologyShell.getTask(iri));
 		return result;
@@ -58,7 +59,7 @@ public class Task {
 
 	public Set<SolvingMethod> getSolvingMethods() {
 		Set<IRI> taskIRIs = this.individualReader.getObjectValues(ATTRIBUTE_SOLVED_BY);
-		Set<SolvingMethod> result = new TreeSet<SolvingMethod>();
+		Set<SolvingMethod> result = new HashSet<SolvingMethod>();
 		for (IRI iri: taskIRIs)
 			result.add(ontologyShell.getSolvingMethod(iri));
 		return result;
@@ -122,4 +123,16 @@ public class Task {
 	public void addOutputObject(IRI iri) {
 		this.individualBuilder.addObjectAxiom(ATTRIBUTE_HAS_OUTPUT, iri);
 	}
+	
+	public void collectSubtasksResults() {
+		Set<Task> subTasks = this.getSubTasks();
+		for (Task subTask : subTasks)
+			this.addInput(subTask.getResult().getIRI());
+	}
+
+	private void addInput(IRI iri) {
+		// TODO Auto-generated method stub
+		this.individualBuilder.addObjectAxiom(ATTRIBUTE_HAS_INPUT, iri);
+	}
+
 }

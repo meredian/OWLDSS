@@ -21,6 +21,10 @@ public class TaskResult {
 		this.ontologyShell = ontologyShell;
 	}
 
+	public IRI getIRI() {
+		return this.individualReader.getIRI();
+	}
+	
 	public Map<String, Set<?>> getAllAttributes() {
 		return this.individualReader.getAllAttributes();
 	}

@@ -61,7 +61,7 @@ public class TaskProcessor implements TaskListener {
 
 				// Put the initial task into the task context
 				IndividualXMLParser taskParser = new IndividualXMLParser(taskContext, taskXML);
-				Task currentTask = this.selectNextTaskObject(taskContext);
+				Task currentTask = this.getNextTask(taskContext);
 				while (true) {
 					// Import the data needed for the chosen solving method
 					// ...and run the chosen solving method
@@ -73,7 +73,7 @@ public class TaskProcessor implements TaskListener {
 					this.bindNewSubtasksToTree(currentTask);
 
 					// Select next subtask
-					Task nextTask = this.selectNextTaskObject(taskContext);
+					Task nextTask = this.getNextTask(taskContext);
 					if (nextTask != null)
 						currentTask = nextTask;
 					else
@@ -111,7 +111,7 @@ public class TaskProcessor implements TaskListener {
 			throw new Exception("Could not bind new subtasks to existing tree");
 	}
 	
-	private Task selectNextTaskObject(OWLOntologyObjectShell taskContext) throws Exception {
+	private Task getNextTask(OWLOntologyObjectShell taskContext) throws Exception {
 		Set<Task> allTasks = taskContext.getTasks();
 
 		for (Task task : allTasks) {
@@ -126,8 +126,10 @@ public class TaskProcessor implements TaskListener {
 					break;
 				}
 
-			if (subtasksSolved)
+			if (subtasksSolved) {
+				task.collectSubtasksResults();
 				return task;
+			}
 		}
 
 		return null;
