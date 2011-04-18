@@ -25,9 +25,12 @@ public class ImportManager {
 	}
 
 	public void process(SolvingMethod solvingMethod, Task task) {
+		System.out.println("ImportManager: starting data import");
 		Set<ImportingMethod> importingMethods = solvingMethod.getImportingMethods();
+		System.out.println("ImportManager: " + String.valueOf(importingMethods.size()) + " methods will be ran");
 		for( ImportingMethod importingMethod: importingMethods )
 			this.getImporter(importingMethod).run(task);
+		System.out.println("ImportManager: finished data import");
 	}
 
 }

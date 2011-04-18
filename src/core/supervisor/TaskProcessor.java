@@ -78,6 +78,8 @@ public class TaskProcessor implements TaskListener {
 						currentTask = nextTask;
 					else
 						break;
+					
+					taskContext.dumpOntology();
 				}
 				
 				renderManager.process( currentTask.getResult() );

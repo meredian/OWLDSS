@@ -114,4 +114,12 @@ public class Task {
 	public OWLIndividualBuilder getBuilder() {
 		return this.individualBuilder;
 	}
+	
+	public void setResult(IRI resultIRI) {
+		this.individualBuilder.addObjectAxiom(ATTRIBUTE_HAS_RESULT, resultIRI);
+	}
+	
+	public void addOutputObject(IRI iri) {
+		this.individualBuilder.addObjectAxiom(ATTRIBUTE_HAS_OUTPUT, iri);
+	}
 }

@@ -50,7 +50,7 @@ public class Launcher {
 
 	public static void main(String[] args) {
 		try {
-			repositoryTests();
+			//repositoryTests();
 			initSempSolver();
 			testSempTask();
 			//testRowInvertTask();
@@ -64,9 +64,17 @@ public class Launcher {
 		SolverRepository repo = new SolverRepository();
 		Solver sempSolver = new SempSolver();
 		MethodSignature efficiencyTrendAnalysis = new MethodSignature("EfficiencyTrendAnalysis");
-		efficiencyTrendAnalysis.setParam("MODULE_PATH", "~/.wine/drive_c/semp/modules/XMLEfficiencyTrendAnalysis/");
+		efficiencyTrendAnalysis.setParam("MODULE_PATH", "~/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/");
 		efficiencyTrendAnalysis.setParam("MODULE_LAUNCHER", "EfficiencyTrendAnalysis_Launcher.pm");
-		efficiencyTrendAnalysis.setParam("MODULE_DATA_INPUT", "EfficiencyTrendAnalysis_CreateData.pm");
+		efficiencyTrendAnalysis.setParam("MODULE_DATA_INPUT", "/home/where-is-s/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/EfficiencyTrendAnalysis_CreateData.pm");
+		efficiencyTrendAnalysis.setParam("MODULE_CREATE_DATA_HEADER",
+			"uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\r\n" +
+			"uses Global_Ontology;\r\n" +
+			"rule CreateData\r\n" +
+			"=>\r\n" +
+			"new\r\n"
+		);
+		efficiencyTrendAnalysis.setParam("MODULE_CREATE_DATA_TAIL","end;\r\n");
 		sempSolver.addMethod(efficiencyTrendAnalysis);
 		repo.addSolver(sempSolver);
 		repo.saveToStorage();
@@ -89,7 +97,6 @@ public class Launcher {
 		SolverRepository repo = new SolverRepository();
 		List<String> list = repo.getSolverListFromStorage();
 		System.out.println("END REPOSITORY TEST");
-		
 	}
 	
 	private static void XStreamStartup() {
@@ -143,11 +150,26 @@ public class Launcher {
 		System.out.println("STARING SEMP SOLVER TEST");
 		String testXML =
 			"<individuals>" +
-				"<individual class='RowAnalysisTask' id='0'>" +
-					"<attr name='HasPump' type='object' id='1'/>" +
+				"<individual class='PumpAnalysisTask' id='0'>" +
+					"<attr name='HasInputPump' type='object' id='4'/>" +
+					"<attr name='HasImport' type='object' id='1'/>" +
+					"<attr name='HasImport' type='object' id='2'/>" +
+					"<attr name='HasImport' type='object' id='3'/>" +
 				"</individual>" +
-				"<individual class='Pump' id='1'>" +
-					"<attr name='Id' type='int' value='6'/>" +
+				"<individual class='PumpReferenceData' id='1'>" +
+				"</individual>" +
+				"<individual class='OAGAReferenceData' id='2'>" +
+					"<attr name='MaxEfficiencyDeviation' type='double' value='20'/>" +
+				"</individual>" +
+				"<individual class='PumpEfficiencyDeviationRow' id='3'>" +
+					//"<attr name='RowValue' type='string' value='real[0.19,0.19,0.18,0.18,0.20,0.19,0.20,0.19,0.20,0.19,0.19,0.20]'/>" + // OK
+					//"<attr name='RowValue' type='string' value='real[0.27,0.26,0.25,0.25,0.25,0.23,0.22,0.20,0.19,0.18,0.16,0.15]'/>" + // big problem!
+					//"<attr name='RowValue' type='string' value='real[0.05,0.06,0.08,0.09,0.10,0.12,0.13,0.15,0.15,0.15,0.16,0.17]'/>" + // OK!
+					"<attr name='RowValue' type='string' value='real[0.12,0.11,0.10,0.10,0.10,0.08,0.07,0.05,0.04,0.03,0.01,0.00]'/>" + // warning in 7 hours
+				"</individual>" +
+				"<individual class='Pump' id='4'>" +
+					"<attr name='HasPumpEfficiencyDeviationRow' type='object' id='3'/>" +
+					"<attr name='HasPumpReferenceData' type='object' id='1'/>" +
 				"</individual>" +
 			"</individuals>";
 		

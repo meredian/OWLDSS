@@ -24,14 +24,20 @@ public class SolverManager {
 	}
 
 	public void process(Task task) {
+		System.out.println("SolverManager: processing task " + task.getReader().getIRI().toString());
 		Set<SolvingMethod> solvingMethods = task.getSolvingMethods();
+		System.out.println("SolverManager: " + String.valueOf(solvingMethods.size()) + " solving methods found; " +
+				"random one will be chosen");
 		// TODO: choose solving method
 		SolvingMethod solvingMethod = solvingMethods.iterator().next();
+		System.out.println("SolverManager: method '" + solvingMethod.getMethodName() + "' of solver '" + 
+				solvingMethod.getSolverClassName() + "' will be ran");
 
 		importManager.process(solvingMethod, task);
 		Solver solver = this.repository.getSolver(solvingMethod);
 		MethodSignature method = solver.getMethodBySolvingMethod(solvingMethod);
 
 		solver.solveTaskByMethod(this.ontologyShell, task, method);
+		System.out.println("SolverManager: method finished");
 	}
 }

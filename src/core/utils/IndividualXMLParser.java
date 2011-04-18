@@ -130,10 +130,10 @@ public class IndividualXMLParser {
 
 			NodeList resultNodes = xml.getElementsByTagName("result");
 			if (resultNodes.getLength() > 0) {
-				if (individualNodes.getLength() > 1)
+				if (resultNodes.getLength() > 1)
 					System.err.println("IndividualXMLParser: obtained more than one result object! " +
 						"Random one will be used.");
-				this.parseResult((Element) individualNodes.item(0));
+				this.parseResult((Element) resultNodes.item(0));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

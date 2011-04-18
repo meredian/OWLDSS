@@ -21,6 +21,7 @@ public class RenderManager {
 	}
 
 	public void process(TaskResult taskResult) throws Exception {
+		System.out.println("RenderManager: processing task result");
 		if (taskResult == null) {
 			System.err.println("RenderManager: nothing to render because no task result is present");
 			return;
@@ -28,10 +29,16 @@ public class RenderManager {
 		Set<Presentation> presentations = taskResult.getPresentations();
 		Map<Presentation, Renderer> renderings = new HashMap<Presentation, Renderer>();
 
+		System.out.println("RenderManager: listing all available renderings...");
+		int counter = 0;
 		for (Presentation presentation : presentations)
-			for (PresentationMethod method : presentation.getPresentationMethods())
+			for (PresentationMethod method : presentation.getPresentationMethods()) {
+				System.out.println("RenderManager: " + String.valueOf(++counter) + ") presentation " 
+						+ presentation.getType() + ", renderer " + method.getRendererName());
 				renderings.put(presentation, this.getRenderer(method));
+			}
 
+		System.out.println("RenderManager: random rendering will be chosen");
 		// TODO choose rendering!
 
 		if (renderings.isEmpty())
@@ -41,5 +48,6 @@ public class RenderManager {
 		Renderer chosenRenderer = renderings.get(chosenPresentation);
 
 		chosenRenderer.run(chosenPresentation);
+		System.out.println("RenderManager: rendering finished");
 	}
 }
