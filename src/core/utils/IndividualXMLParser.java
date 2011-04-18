@@ -75,7 +75,7 @@ public class IndividualXMLParser {
 				String attrValue = attrElement.getAttribute("value");
 				if (attrType.equals("string"))
 					builder.addAxiom(attrName, attrValue);
-				else if (attrType.equals("int"))
+				else if (attrType.equals("int") || attrType.equals("integer"))
 					builder.addAxiom(attrName, Integer.parseInt(attrValue));
 				else if (attrType.equals("double"))
 					builder.addAxiom(attrName, Double.parseDouble(attrValue));
