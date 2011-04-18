@@ -1,5 +1,6 @@
 package core;
 
+import implementation.importers.MySqlBaseImporter;
 import implementation.solvers.SempSolver;
 
 import java.io.BufferedReader;
@@ -50,13 +51,19 @@ public class Launcher {
 
 	public static void main(String[] args) {
 		try {
-			//repositoryTests();
+			repositoryTests();
+			//initMySqlConnection();
 			initSempSolver();
 			testSempTask();
-			//testRowInvertTask();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static void initMySqlConnection(){
+		System.out.println("START MYSQL INIT");
+		MySqlBaseImporter.connect();
+		System.out.println("FINISH MYSQL INIT");
 	}
 	
 	private static void initSempSolver(){
@@ -66,7 +73,7 @@ public class Launcher {
 		MethodSignature efficiencyTrendAnalysis = new MethodSignature("EfficiencyTrendAnalysis");
 		efficiencyTrendAnalysis.setParam("MODULE_PATH", "~/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/");
 		efficiencyTrendAnalysis.setParam("MODULE_LAUNCHER", "EfficiencyTrendAnalysis_Launcher.pm");
-		efficiencyTrendAnalysis.setParam("MODULE_DATA_INPUT", "/home/where-is-s/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/EfficiencyTrendAnalysis_CreateData.pm");
+		efficiencyTrendAnalysis.setParam("MODULE_DATA_INPUT", "/home/meredian/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/EfficiencyTrendAnalysis_CreateData.pm");
 		efficiencyTrendAnalysis.setParam("MODULE_CREATE_DATA_HEADER",
 			"uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\r\n" +
 			"uses Global_Ontology;\r\n" +
