@@ -328,6 +328,15 @@
     
 
 
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#OutputFilePath -->
+
+    <owl:DatatypeProperty rdf:about="&main;OutputFilePath">
+        <rdfs:domain rdf:resource="&main;PresentationMethod"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.iis.nsk.su/ontologies/main.owl#PumpAnalysisSempOptimizationModifier -->
 
     <owl:DatatypeProperty rdf:about="&main;PumpAnalysisSempOptimizationModifier"/>
@@ -560,7 +569,7 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;SolvedBy"/>
-                <owl:hasValue rdf:resource="&main;PumpAnalysisComplexSolvingMethod"/>
+                <owl:hasValue rdf:resource="&main;PumpAnalysisSempSolvingMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -572,15 +581,15 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;SolvedBy"/>
-                <owl:hasValue rdf:resource="&main;PumpAnalysisSempSolvingMethod"/>
+                <owl:onProperty rdf:resource="&main;HasInputPump"/>
+                <owl:onClass rdf:resource="&main;Pump"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasInputPump"/>
-                <owl:onClass rdf:resource="&main;Pump"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&main;SolvedBy"/>
+                <owl:hasValue rdf:resource="&main;PumpAnalysisComplexSolvingMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -601,15 +610,15 @@
         <rdfs:subClassOf rdf:resource="&main;ImportingMethod"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;Imports"/>
-                <owl:onClass rdf:resource="&main;PumpEfficiencyDeviationRow"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&main;ImporterClass"/>
+                <owl:hasValue>PumpEfficiencyDeviationRowImporter</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;ImporterClass"/>
-                <owl:hasValue>PumpEfficiencyDeviationRowImporter</owl:hasValue>
+                <owl:onProperty rdf:resource="&main;Imports"/>
+                <owl:onClass rdf:resource="&main;PumpEfficiencyDeviationRow"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -660,15 +669,15 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasInput"/>
-                <owl:onClass rdf:resource="&main;RowTendency"/>
+                <owl:onProperty rdf:resource="&main;HasResult"/>
+                <owl:onClass rdf:resource="&main;PumpAnalysisResult"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasResult"/>
-                <owl:onClass rdf:resource="&main;PumpAnalysisResult"/>
+                <owl:onProperty rdf:resource="&main;HasInput"/>
+                <owl:onClass rdf:resource="&main;RowTendency"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -712,6 +721,13 @@
         <rdfs:subClassOf rdf:resource="&main;Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;HasInput"/>
+                <owl:onClass rdf:resource="&main;Row"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;HasResult"/>
                 <owl:onClass rdf:resource="&main;Row"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -721,13 +737,6 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;SolvedBy"/>
                 <owl:hasValue rdf:resource="&main;RowInvertStandardSolvingMethod"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasInput"/>
-                <owl:onClass rdf:resource="&main;Row"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -762,15 +771,15 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasResult"/>
-                <owl:onClass rdf:resource="&main;RowTendency"/>
+                <owl:onProperty rdf:resource="&main;HasInput"/>
+                <owl:onClass rdf:resource="&main;TimeRow"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasInput"/>
-                <owl:onClass rdf:resource="&main;TimeRow"/>
+                <owl:onProperty rdf:resource="&main;HasResult"/>
+                <owl:onClass rdf:resource="&main;RowTendency"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -808,6 +817,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;SupportedByPresentationMethod"/>
                 <owl:hasValue rdf:resource="&main;ConsoleOutputMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;SupportedByPresentationMethod"/>
+                <owl:hasValue rdf:resource="&main;FileOutputMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -921,7 +936,7 @@
     <owl:Thing rdf:about="&main;ConsoleOutputMethod">
         <rdf:type rdf:resource="&main;PresentationMethod"/>
         <rdf:type rdf:resource="&owl;NamedIndividual"/>
-        <RendererClass>ConsoleOutputRenderer</RendererClass>
+        <RendererClass>implementation.renderers.ConsoleOutputRenderer</RendererClass>
     </owl:Thing>
     
 
@@ -930,6 +945,16 @@
 
     <owl:NamedIndividual rdf:about="&main;DefaultPumpEfficiencyDeviationRowImportingMethod">
         <rdf:type rdf:resource="&main;PumpEfficiencyDeviationRowImportingMethod"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#FileOutputMethod -->
+
+    <owl:NamedIndividual rdf:about="&main;FileOutputMethod">
+        <rdf:type rdf:resource="&main;PresentationMethod"/>
+        <RendererClass>implementation.renderers.FileOutputRenderer</RendererClass>
+        <OutputFilePath>/tmp/OWLDSS.log</OutputFilePath>
     </owl:NamedIndividual>
     
 
@@ -1080,5 +1105,5 @@
 
 
 
-<!-- Generated by the OWL API (version 3.2.2.1785) http://owlapi.sourceforge.net -->
+<!-- Generated by the OWL API (version 3.2.2.1789) http://owlapi.sourceforge.net -->
 

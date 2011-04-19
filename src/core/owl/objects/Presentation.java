@@ -1,5 +1,6 @@
 package core.owl.objects;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -39,7 +40,7 @@ public class Presentation {
 
 	public Set<PresentationMethod> getPresentationMethods() {
 		Set<IRI> iris = this.individualReader.getObjectValues(ATTRIBUTE_SUPPORTED_BY_PRESENTATION_METHOD);
-		Set<PresentationMethod> result = new TreeSet<PresentationMethod>();
+		Set<PresentationMethod> result = new HashSet<PresentationMethod>();
 		for (IRI iri: iris)
 			result.add(ontologyShell.getPresentationMethod(iri));
 		return result;

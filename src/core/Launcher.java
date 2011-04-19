@@ -46,6 +46,7 @@ import core.repository.SolverRepository;
 import core.supervisor.TaskProcessor;
 import core.utils.ConfigStorage;
 import core.utils.IndividualXMLParser;
+import core.utils.MethodSelectionMode;
 
 public class Launcher {
 
@@ -153,7 +154,8 @@ public class Launcher {
 		
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
-			"http://www.iis.nsk.su/ontologies/main.owl"
+			"http://www.iis.nsk.su/ontologies/main.owl",
+			new MethodSelectionMode()
 		);
 		processor.onTaskReceived(testXML);
 		processor.cancel(); // process just one iteration
@@ -208,7 +210,8 @@ public class Launcher {
 		
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
-			"http://www.iis.nsk.su/ontologies/main.owl"
+			"http://www.iis.nsk.su/ontologies/main.owl",
+			new MethodSelectionMode(false, true, true)
 		);
 		processor.onTaskReceived(testXML);
 		processor.cancel(); // process just one iteration

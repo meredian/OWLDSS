@@ -14,6 +14,7 @@ import core.managers.SolverManager;
 import core.owl.OWLOntologyShell;
 import core.owl.objects.Task;
 import core.utils.IndividualXMLParser;
+import core.utils.MethodSelectionMode;
 
 public class TaskProcessor implements TaskListener {
 
@@ -22,12 +23,14 @@ public class TaskProcessor implements TaskListener {
 	
 	private final String ontologyPath;
 	private final String ontologyIRI;
-	
-	public TaskProcessor(String ontologyPath, String ontologyIRI) {
+	private final MethodSelectionMode methodSelectionMode;
+
+	public TaskProcessor(String ontologyPath, String ontologyIRI, MethodSelectionMode methodSelectionMode) {
 		this.ontologyPath = ontologyPath;
 		this.ontologyIRI = ontologyIRI;
+		this.methodSelectionMode = methodSelectionMode; 
 	}
-	
+
 	@Override
 	/**
 	 * Inserts a new task into queue.
@@ -56,8 +59,8 @@ public class TaskProcessor implements TaskListener {
 				// Initialize some services
 				OWLOntologyShell taskContext = new OWLOntologyShell(ontologyManager, this.ontologyIRI);
 				ImportManager importManager = new ImportManager(taskContext);
-				SolverManager solverManager = new SolverManager(taskContext, importManager);
-				RenderManager renderManager = new RenderManager();
+				SolverManager solverManager = new SolverManager(taskContext, importManager, methodSelectionMode);
+				RenderManager renderManager = new RenderManager(methodSelectionMode);
 
 				// Put the initial task into the task context
 				IndividualXMLParser taskParser = new IndividualXMLParser(taskContext, taskXML);
