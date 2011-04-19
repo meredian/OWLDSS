@@ -1,6 +1,7 @@
 package core.repository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,29 +11,24 @@ import core.owl.objects.SolvingMethod;
 
 public abstract class AbstractSolver implements Solver {
 
-	protected List<MethodSignature> methods;
+	protected Map<String, MethodSignature> methods;
 	protected List<String> mandatoryParams;
 	protected Map<String, String> options;
 
 	protected void init() {
-		methods = new ArrayList<MethodSignature>();
+		methods = new HashMap<String, MethodSignature>();
 		mandatoryParams = new ArrayList<String>();
 		options = new HashMap<String, String>();
 	}
 
 	@Override
-	public List<MethodSignature> getMethods() {
-		return methods;
+	public Collection<MethodSignature> getMethods() {
+		return methods.values();
 	}
 
 	@Override
 	public MethodSignature getMethodByName(String name) {
-		for (MethodSignature method : methods) {
-			if (method.getName().equals(name)) {
-				return method;
-			}
-		}
-		return null;
+		return methods.get(name);
 	}
 
 	@Override
@@ -54,8 +50,8 @@ public abstract class AbstractSolver implements Solver {
 
 	@Override
 	public boolean addMethod(MethodSignature method) {
-		if (method.ensureParams(mandatoryParams) && !methods.contains(method)) {
-			methods.add(method);
+		if (method.ensureParams(mandatoryParams)) {
+			methods.put(method.getName(), method);
 			return true;
 		} else {
 			return false;
@@ -64,12 +60,12 @@ public abstract class AbstractSolver implements Solver {
 
 	@Override
 	public boolean removeMethod(MethodSignature method) {
-		return methods.remove(method);
+		return methods.remove(method.getName()) != null;
 	}
 
 	@Override
-	public List<MethodSignature> testMethods() {
-		for (MethodSignature method : methods) {
+	public Collection<MethodSignature> testMethods() {
+		for (MethodSignature method : methods.values()) {
 			testMethod(method);
 		}
 		return this.getMethods();

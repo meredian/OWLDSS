@@ -1,5 +1,6 @@
 package core.interfaces;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import core.repository.MethodSignature;
 
 public interface Solver {
 
-	public List<MethodSignature> getMethods();
+	public Collection<MethodSignature> getMethods();
 	public MethodSignature getMethodByName(String name);
 	public MethodSignature getMethodBySolvingMethod(SolvingMethod solvingMethod);
 
@@ -27,7 +28,7 @@ public interface Solver {
 	public boolean addMethod(MethodSignature method);
 	public boolean removeMethod(MethodSignature method);
 
-	public List<MethodSignature> testMethods();
+	public Collection<MethodSignature> testMethods();
 	public MethodSignature testMethod(MethodSignature method);
 
 }
