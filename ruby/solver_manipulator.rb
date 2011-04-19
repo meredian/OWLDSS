@@ -14,6 +14,7 @@ module OWLDSS
     end
 
     def method method_name, &block
+      puts "Method : #{method_name}"
       manipulator = MethodManipulator.new Java::CoreRepository::MethodSignature.new method_name
       manipulator.instance_eval &block if block_given?
       @solver.addMethod manipulator.method

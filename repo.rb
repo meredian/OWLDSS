@@ -35,8 +35,10 @@ command :init do |c|
   c.description = 'Inits repository with preconfigured settings'
   c.option '--with-config STRING', String, 'Selects which config should be applied'
   c.action do |args, options|
-    raise "Empty config name" if options.with_config.nil? || options.with_config.empty?
-    require "ruby/config/#{options.with_config.to_s}"
+    if options.with_config
+      puts "Using ruby/config/#{options.with_config.to_s} to init repository"
+      require "ruby/config/#{options.with_config.to_s}"
+    end
   end
 end
 

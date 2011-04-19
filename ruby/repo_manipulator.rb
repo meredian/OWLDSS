@@ -76,6 +76,8 @@ module OWLDSS
     end
 
     def solver solver_name, &block
+      puts 
+      puts "Solver : #{solver_name}"
       manipulator = SolverManipulator.new get_solver solver_name
       manipulator.instance_eval &block if block_given?
       @repo.add_solver manipulator.solver
