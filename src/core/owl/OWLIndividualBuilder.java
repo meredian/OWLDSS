@@ -6,8 +6,8 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 public class OWLIndividualBuilder {
 
-	private OWLNamedIndividual owlIndividual;
-	private OWLOntologyShell ontologyShell;
+	private final OWLNamedIndividual owlIndividual;
+	private final OWLOntologyShell ontologyShell;
 
 	public OWLIndividualBuilder(OWLNamedIndividual owlIndividual, OWLOntologyShell ontologyShell) {
 		this.owlIndividual = owlIndividual;

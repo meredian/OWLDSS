@@ -7,7 +7,7 @@ import core.owl.OWLIndividualReader;
 
 public class ImportingMethod {
 
-	private OWLIndividualReader individualReader;
+	private final OWLIndividualReader individualReader;
 
 	private static final String ATTRIBUTE_IMPORTER_CLASS = "ImporterClass";
 

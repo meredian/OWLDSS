@@ -32,8 +32,8 @@ public class IndividualXMLParser {
 	 * <result id='234'/>
 	 * <result iri='http://www.iis.nsk.su/...'/>
 	 */
-	private OWLOntologyShell taskContext;
-	private Map<Integer, IRI> individualsMap = new HashMap<Integer, IRI>();
+	private final OWLOntologyShell taskContext;
+	private final Map<Integer, IRI> individualsMap = new HashMap<Integer, IRI>();
 	private IRI resultIndividual = null;
 
 	public IndividualXMLParser(OWLOntologyShell taskContext, String taskXML) {

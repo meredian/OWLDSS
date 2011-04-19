@@ -11,8 +11,8 @@ import core.owl.OWLOntologyShell;
 
 public class TaskResult {
 
-	private OWLIndividualReader individualReader;
-	private OWLOntologyShell ontologyShell;
+	private final OWLIndividualReader individualReader;
+	private final OWLOntologyShell ontologyShell;
 
 	private static final String ATTRIBUTE_HAS_PRESENTATION = "HasPresentation";
 

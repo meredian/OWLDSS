@@ -7,7 +7,7 @@ import core.owl.OWLIndividualReader;
 
 public class PresentationMethod {
 
-	private OWLIndividualReader individualReader;
+	private final OWLIndividualReader individualReader;
 
 	private static final String ATTRIBUTE_RENDERER_CLASS = "RendererClass";
 

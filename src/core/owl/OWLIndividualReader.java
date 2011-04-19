@@ -15,8 +15,8 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 public class OWLIndividualReader {
 
-	private OWLNamedIndividual owlIndividual;
-	private OWLOntologyShell ontologyShell;
+	private final OWLNamedIndividual owlIndividual;
+	private final OWLOntologyShell ontologyShell;
 
 	public OWLIndividualReader(OWLNamedIndividual owlIndividual, OWLOntologyShell ontologyShell) {
 		this.owlIndividual = owlIndividual;
@@ -64,7 +64,6 @@ public class OWLIndividualReader {
 			System.err.println("Cannot get data value because no value can be inferred");
 			return null;
 		}
-
 
 		if (values.size() > 1) {
 			System.err.println("Cannot get data value due to relation ambiguity");

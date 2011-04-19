@@ -2,7 +2,6 @@ package core.owl.objects;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -12,14 +11,14 @@ import core.owl.OWLOntologyShell;
 
 public class Presentation {
 
-	private OWLIndividualReader individualReader;
+	private final OWLIndividualReader individualReader;
 	//private OWLIndividualBuilder individualBuilder;
-	private OWLOntologyShell ontologyShell;
+	private final OWLOntologyShell ontologyShell;
 
 	private static final String ATTRIBUTE_SUPPORTED_BY_PRESENTATION_METHOD = "SupportedByPresentationMethod";
 	private static final String ATTRIBUTE_VALUE = "PresentationStringValue"; // TODO
 
-	public Presentation(/*OWLIndividualBuilder individualBuilder, */OWLIndividualReader individualReader, 
+	public Presentation(/*OWLIndividualBuilder individualBuilder, */OWLIndividualReader individualReader,
 			OWLOntologyShell ontologyShell) {
 		//this.individualBuilder = individualBuilder;
 		this.individualReader = individualReader;

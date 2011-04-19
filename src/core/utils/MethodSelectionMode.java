@@ -1,23 +1,23 @@
 package core.utils;
 
 public class MethodSelectionMode {
-	
+
 	private boolean allowManualSelection = true;
 	private boolean avoidSubtasks = false;
 	private boolean tryToUseLessImporters = false;
 	private String preferredPresentation = null;
 	private String preferredRenderingMethod = null;
-	
+
 	public MethodSelectionMode() {
 	}
-	
-	public MethodSelectionMode(boolean allowManualSelection, boolean avoidSubtasks, 
+
+	public MethodSelectionMode(boolean allowManualSelection, boolean avoidSubtasks,
 			boolean tryToUseLessImporters) {
 		this.allowManualSelection = allowManualSelection;
 		this.avoidSubtasks = avoidSubtasks;
 		this.tryToUseLessImporters = tryToUseLessImporters;
 	}
-	
+
 	public void setPreferredRenderingMethod(String preferredRenderingMethod) {
 		this.preferredRenderingMethod = preferredRenderingMethod;
 	}
@@ -44,6 +44,6 @@ public class MethodSelectionMode {
 
 	public boolean isTryToUseLessImporters() {
 		return tryToUseLessImporters;
-	}	
-	
+	}
+
 }

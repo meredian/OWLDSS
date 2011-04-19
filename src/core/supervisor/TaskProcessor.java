@@ -18,9 +18,9 @@ import core.utils.MethodSelectionMode;
 
 public class TaskProcessor implements TaskListener {
 
-	private Queue< String > taskQueue = new LinkedList< String >();
+	private final Queue< String > taskQueue = new LinkedList< String >();
 	private boolean canceled = false;
-	
+
 	private final String ontologyPath;
 	private final String ontologyIRI;
 	private final MethodSelectionMode methodSelectionMode;
@@ -28,7 +28,7 @@ public class TaskProcessor implements TaskListener {
 	public TaskProcessor(String ontologyPath, String ontologyIRI, MethodSelectionMode methodSelectionMode) {
 		this.ontologyPath = ontologyPath;
 		this.ontologyIRI = ontologyIRI;
-		this.methodSelectionMode = methodSelectionMode; 
+		this.methodSelectionMode = methodSelectionMode;
 	}
 
 	@Override
@@ -38,19 +38,19 @@ public class TaskProcessor implements TaskListener {
 	public void onTaskReceived( String newTaskXML ) {
 		taskQueue.add( newTaskXML );
 	}
-	
+
 	public void process() {
 		String taskXML;
 		do {
-			// Obtain initial task from the outside 
+			// Obtain initial task from the outside
 			taskXML = taskQueue.poll();
 			if( taskXML == null ) {
 				try {
 					Thread.sleep( 50 ); // sleep portions of 50 ms until a task is obtained
-				} catch( InterruptedException ignored ) {} 
+				} catch( InterruptedException ignored ) {}
 				continue;
 			}
-			
+
 			try {
 				// Generate new task context
 				OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
@@ -81,24 +81,24 @@ public class TaskProcessor implements TaskListener {
 						currentTask = nextTask;
 					else
 						break;
-					
+
 					taskContext.dumpOntology();
 				}
-				
+
 				renderManager.process( currentTask.getResult() );
 				taskContext.dumpOntology();
 			} catch( Exception e ) {
 				System.err.println( "Task solution failed! Stack trace follows..." );
 				e.printStackTrace();
 			}
-			
+
 		} while (!this.canceled);
 	}
-	
+
 	public void cancel() {
 		this.canceled = true;
 	}
-	
+
 	private void bindNewSubtasksToTree(Task task) throws Exception {
 		Task superTask = task.getSuperTask();
 		if (superTask == null)
@@ -109,11 +109,11 @@ public class TaskProcessor implements TaskListener {
 				superTask.addSubTask( outputTask );
 				return;
 			}
-		
+
 		if (!outputTasks.isEmpty())
 			throw new Exception("Could not bind new subtasks to existing tree");
 	}
-	
+
 	private Task getNextTask(OWLOntologyShell taskContext) throws Exception {
 		Set<Task> allTasks = taskContext.getTasks();
 

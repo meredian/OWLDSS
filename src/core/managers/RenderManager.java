@@ -16,25 +16,25 @@ import core.utils.MethodSelectionMode;
 public class RenderManager {
 
 	MethodSelectionMode methodSelectionMode;
-	
+
 	private class Rendering {
-		private Presentation presentation;
-		private PresentationMethod presentationMethod;
-		
+		private final Presentation presentation;
+		private final PresentationMethod presentationMethod;
+
 		public Rendering(Presentation presentation, PresentationMethod presentationMethod) {
 			this.presentation = presentation;
 			this.presentationMethod = presentationMethod;
 		}
-		
+
 		public Presentation getPresentation() {
 			return this.presentation;
 		}
-		
+
 		public PresentationMethod getPresentationMethod() {
 			return this.presentationMethod;
 		}
 	};
-	
+
 	public RenderManager(MethodSelectionMode methodSelectionMode) {
 		this.methodSelectionMode = methodSelectionMode;
 	}
@@ -49,12 +49,12 @@ public class RenderManager {
 		}
 		return null;
 	}
-	
+
 	private Rendering selectRendering(Set<Rendering> renderings) {
 		Rendering selectedRendering = null;
 		// 1. Select by preferred presentation TODO
 		// 2. Select by preferred renderer TODO
-		
+
 		// 3. Choose manually if available
 		if (this.methodSelectionMode.isAllowManualSelection() && selectedRendering == null) {
 			System.out.println("SolverManager: Manual selection mode is available. Please select a number from list:");
@@ -62,8 +62,8 @@ public class RenderManager {
 			int i = 0;
 			for (Rendering rendering: renderings) {
 				methodMap.put(Integer.valueOf(++i), rendering);
-				System.out.println(String.valueOf(i) + ") " + rendering.getPresentation().getType() + 
-						" using renderer " + rendering.getPresentationMethod().getRendererName());				
+				System.out.println(String.valueOf(i) + ") " + rendering.getPresentation().getType() +
+						" using renderer " + rendering.getPresentationMethod().getRendererName());
 			}
 			Integer selectedNum = null;
 			while (selectedNum == null) {
@@ -80,7 +80,7 @@ public class RenderManager {
 
 			selectedRendering = methodMap.get(selectedNum);
 		}
-		
+
 		// 4. If still no method
 		if (selectedRendering == null)
 			return renderings.iterator().next();
@@ -103,7 +103,7 @@ public class RenderManager {
 
 		if (renderings.isEmpty())
 			throw new Exception("No renderings available!");
-		
+
 		Rendering selectedRendering;
 		if (renderings.size() > 1)
 			selectedRendering = this.selectRendering(renderings);
@@ -115,7 +115,7 @@ public class RenderManager {
 
 		if (selectedRenderer == null)
 			return;
-		System.out.println("RenderManager: Processing presentation of type " + selectedPresentation.getType() + 
+		System.out.println("RenderManager: Processing presentation of type " + selectedPresentation.getType() +
 				" using renderer " + selectedRendering.getPresentationMethod().getRendererName());
 
 		selectedRenderer.run(selectedPresentation, selectedRendering.getPresentationMethod());

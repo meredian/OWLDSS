@@ -31,18 +31,18 @@ import core.owl.objects.Task;
 import core.owl.objects.TaskResult;
 
 public class OWLOntologyShell implements OWLIndividualFactory {
-	
+
 	private OWLOntology ontology;
-	private OWLOntologyManager manager;
-	private OWLReasonerFactory reasonerFactory;
-	private OWLReasonerConfiguration config;
-	private OWLReasoner reasoner;
-	private OWLIndividualIRIFactory individualIRIFactory;
-	
-	private String ontologyAddress;
-	
+	private final OWLOntologyManager manager;
+	private final OWLReasonerFactory reasonerFactory;
+	private final OWLReasonerConfiguration config;
+	private final OWLReasoner reasoner;
+	private final OWLIndividualIRIFactory individualIRIFactory;
+
+	private final String ontologyAddress;
+
 	private final String DELIMITER = "#";
-	
+
 	public void dumpOntology() {
 		try {
 			this.manager.saveOntology( this.ontology, IRI.create( "file:" + new File("dump.owl").getAbsoluteFile() ));
@@ -50,36 +50,36 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public IRI getClassIRIByName( String className ) {
 		return this.getEntityIRIByName( className );
 	}
-	
+
 	public IRI getEntityIRIByName( String entityName ) {
 		return IRI.create( this.getOntologyAddress() + DELIMITER + entityName );
 	}
-	
+
 	public String getOntologyAddress() {
 		return this.ontologyAddress;
 	}
-	
+
 	public String getEntityNameByIRI( IRI iri ) {
 		String[] split = iri.toString().split( DELIMITER );
 		if( split.length == 0 )
 			return null;
 		return split[ split.length - 1 ];
 	}
-	
+
 	public OWLReasoner getReasoner() {
 		this.reasoner.flush();
 		return this.reasoner;
 	}
-	
+
 	public OWLOntology getOwlOntology() {
 		return ontology;
 	}
 
-	public OWLOntologyShell(OWLOntologyManager manager, String ontologyAddress) 
+	public OWLOntologyShell(OWLOntologyManager manager, String ontologyAddress)
 			throws OWLOntologyCreationException {
 		this.manager = manager;
 		this.ontologyAddress = ontologyAddress;
@@ -100,7 +100,7 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 	public void addAxiom( OWLAxiom axiom ) {
 		this.manager.addAxiom( this.ontology, axiom );
 	}
-	
+
 	public OWLDataFactory getDataFactory() {
 		return manager.getOWLDataFactory();
 	}
@@ -108,21 +108,21 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 	public void removeAxiom( OWLAxiom axiom ) {
 		this.manager.removeAxiom( this.ontology, axiom );
 	}
-	
+
 	public OWLIndividualBuilder createIndividual(String className) {
 		IRI individualIRI = this.individualIRIFactory.getNewIRI(className);
-		
+
 		OWLNamedIndividual owlIndividual = this.getDataFactory().getOWLNamedIndividual(individualIRI);
-		
-		this.addAxiom( 
-			this.getDataFactory().getOWLClassAssertionAxiom( 
+
+		this.addAxiom(
+			this.getDataFactory().getOWLClassAssertionAxiom(
 				this.getOWLClass(IRI.create("http://www.w3.org/2002/07/owl#Thing")),
 				owlIndividual
 			)
 		);
-		
-		this.addAxiom( 
-			this.getDataFactory().getOWLClassAssertionAxiom( 
+
+		this.addAxiom(
+			this.getDataFactory().getOWLClassAssertionAxiom(
 				this.getOWLClass(this.getClassIRIByName(className)),
 				owlIndividual
 			)
@@ -130,13 +130,13 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 
 		return new OWLIndividualBuilder(owlIndividual, this);
 	}
-	
+
 	public Set<Task> getTasks() {
 		// false = all including indirect
 		Set<OWLNamedIndividual> individuals = this.getReasoner().getInstances(
 				this.getOWLClass(this.getEntityIRIByName(Task.CLASS_NAME)), false
 		).getFlattened();
-		
+
 		Set<Task> tasks = new HashSet<Task>();
 		for (OWLNamedIndividual individual: individuals)
 			tasks.add(this.getTask(individual.getIRI()));
@@ -155,7 +155,7 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 	public TaskResult getTaskResult(IRI taskResultIRI) {
 		return new TaskResult(this.getReader(taskResultIRI), this);
 	}
-	
+
 	public ImportingMethod getImportingMethod(IRI iri) {
 		return new ImportingMethod(this.getReader(iri));
 	}
@@ -167,22 +167,22 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 	public PresentationMethod getPresentationMethod(IRI iri) {
 		return new PresentationMethod(this.getReader(iri));
 	}
-	
+
 	public OWLIndividualBuilder getBuilder(IRI iri) {
 		return new OWLIndividualBuilder(this.getOWLNamedIndividual(iri), this);
 	}
-	
+
 	public OWLIndividualReader getReader(IRI iri) {
 		return new OWLIndividualReader(this.getOWLNamedIndividual(iri), this);
 	}
-	
+
 	public void addDataPropertyAssertionAxiom(IRI individualIRI, String propertyName, OWLLiteral value) {
-		this.manager.addAxiom( 
+		this.manager.addAxiom(
 			this.ontology,
-			this.getDataFactory().getOWLDataPropertyAssertionAxiom( 
-				this.getOWLDataProperty(this.getEntityIRIByName(propertyName)), 
+			this.getDataFactory().getOWLDataPropertyAssertionAxiom(
+				this.getOWLDataProperty(this.getEntityIRIByName(propertyName)),
 				this.getOWLNamedIndividual(individualIRI),
-				value 
+				value
 			)
 		);
 	}
@@ -202,7 +202,7 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 				return dataProperty;
 		return this.getDataFactory().getOWLDataProperty(dataPropertyIRI);
 	}
-	
+
 	public OWLObjectProperty getOWLObjectProperty(IRI objectPropertyIRI) {
 		Set<OWLObjectProperty> objectProperties = this.ontology.getObjectPropertiesInSignature(true); // include imports closure
 		for (OWLObjectProperty objectProperty: objectProperties)
@@ -220,14 +220,14 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 	}
 
 	public void addObjectPropertyAssertionAxiom(IRI individualIRI, String propertyName, IRI objectIRI) {
-		this.manager.addAxiom( 
+		this.manager.addAxiom(
 				this.ontology,
-				this.getDataFactory().getOWLObjectPropertyAssertionAxiom( 
-					this.getOWLObjectProperty(this.getEntityIRIByName(propertyName)), 
+				this.getDataFactory().getOWLObjectPropertyAssertionAxiom(
+					this.getOWLObjectProperty(this.getEntityIRIByName(propertyName)),
 					this.getOWLNamedIndividual(individualIRI),
 					this.getOWLNamedIndividual(objectIRI)
 				)
-			);		
+			);
 	}
-	
+
 }

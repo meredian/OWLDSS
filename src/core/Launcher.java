@@ -60,13 +60,13 @@ public class Launcher {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void initMySqlConnection(){
 		System.out.println("START MYSQL INIT");
 		MySqlBaseImporter.connect();
 		System.out.println("FINISH MYSQL INIT");
 	}
-	
+
 	private static void initSolvers(){
 		System.out.println("START SEMPSOLVER INIT");
 		SolverRepository repo = new SolverRepository();
@@ -114,7 +114,7 @@ public class Launcher {
 		repo.saveToStorage();
 		System.out.println("FINISH SEMPSOLVER INIT");
 	}
-	
+
 	private static void storageTests() {
 		System.out.println("STARING STORAGE TEST");
 		ConfigStorage storage = new ConfigStorage("storage");
@@ -125,14 +125,14 @@ public class Launcher {
 		System.out.println(storage.readConfig("SomeSolver"));
 		System.out.println("END STORAGE TEST");
 	}
-	
+
 	private static void repositoryTests() {
 		System.out.println("STARING REPOSITORY TEST");
 		SolverRepository repo = new SolverRepository();
 		List<String> list = repo.getSolverListFromStorage();
 		System.out.println("END REPOSITORY TEST");
 	}
-	
+
 	private static void XStreamStartup() {
 		XStream xstream = new XStream(new DomDriver());
 		String xmlStatus = xstream.toXML("Some Crappy String");
@@ -140,7 +140,7 @@ public class Launcher {
 		System.out.println("We got new status: ");
 		System.out.println(newOne);
 	}
-	
+
 	private static void testRowInvertTask() throws OWLOntologyCreationException {
 		String testXML =
 			"<individuals>" +
@@ -151,7 +151,7 @@ public class Launcher {
 					"<attr name='RowValue' type='string' value='1 2 63 123 3 9'/>" +
 				"</individual>" +
 			"</individuals>";
-		
+
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
 			"http://www.iis.nsk.su/ontologies/main.owl",
@@ -161,7 +161,7 @@ public class Launcher {
 		processor.cancel(); // process just one iteration
 		processor.process();
 	}
-	
+
 	private static void testTaskContextCreation() throws OWLOntologyCreationException {
 		String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
 		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
@@ -180,7 +180,7 @@ public class Launcher {
 		IndividualXMLParser parser = new IndividualXMLParser(ontologyShell, testXML);
 		ontologyShell.dumpOntology();
 	}
-	
+
 	private static void testSempTask() throws OWLOntologyCreationException {
 		System.out.println("STARING SEMP SOLVER TEST");
 		String testXML =
@@ -207,7 +207,7 @@ public class Launcher {
 					"<attr name='HasPumpReferenceData' type='object' id='1'/>" +
 				"</individual>" +
 			"</individuals>";
-		
+
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
 			"http://www.iis.nsk.su/ontologies/main.owl",
@@ -218,75 +218,75 @@ public class Launcher {
 		processor.process();
 		System.out.println("END SEMP SOLVER TEST");
 	}
-	
+
 	private static void simpleReasonerTest() throws OWLOntologyCreationException {
 		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
 		String ontologyAddress = "http://www.iis.nsk.su/ontologies/main.owl";
 		OWLOntology ont = man.createOntology(IRI.create(ontologyAddress));
-		
+
 		OWLDataFactory dataFactory = man.getOWLDataFactory();
-		
+
 		OWLClass taskClass = dataFactory.getOWLClass(IRI.create(ontologyAddress + "#Task"));
 		OWLClass subtaskClass = dataFactory.getOWLClass(IRI.create(ontologyAddress + "#SubTask"));
 		man.addAxiom(ont, dataFactory.getOWLSubClassOfAxiom(subtaskClass, taskClass));
-		
+
 		OWLNamedIndividual individual = dataFactory.getOWLNamedIndividual(IRI.create(ontologyAddress + "#SubTask_0"));
 		man.addAxiom(ont, dataFactory.getOWLClassAssertionAxiom(subtaskClass, individual));
-		
+
 		OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
 		ConsoleProgressMonitor progressMonitor = new ConsoleProgressMonitor();
 		OWLReasonerConfiguration config = new SimpleConfiguration( progressMonitor );
 		OWLReasoner reasoner = reasonerFactory.createReasoner( ont, config );
-		
+
 		NodeSet<OWLNamedIndividual> individuals = reasoner.getInstances(taskClass, false);
 		assert(!individuals.isEmpty());
 	}
-	
+
 	private static void OWLStartup() {
 		try {
 			OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-			
+
 			String base = "http://www.iis.nsk.su/ontologies/main";
-			
+
 			OWLOntology ont = man.createOntology(IRI.create(base));
-			
+
 			OWLDataFactory dataFactory = man.getOWLDataFactory();
-			
+
 			OWLClass abstractTaskClass = dataFactory.getOWLClass( IRI.create(base + "#AbstractTask" ) );
 			OWLClass concreteTaskClass = dataFactory.getOWLClass( IRI.create(base + "#ConcreteTask" ) );
-			
+
 			man.addAxiom(ont, dataFactory.getOWLSubClassOfAxiom( concreteTaskClass, abstractTaskClass ) );
-			
+
 			OWLDataProperty taskName = dataFactory.getOWLDataProperty( IRI.create(base + "#TaskName" ) );
 			OWLDataProperty taskPriority = dataFactory.getOWLDataProperty( IRI.create(base + "#TaskPriority" ) );
-			
+
 			man.addAxiom( ont, dataFactory.getOWLDataPropertyDomainAxiom( taskName, abstractTaskClass ) );
 			man.addAxiom( ont, dataFactory.getOWLDataPropertyRangeAxiom( taskName, dataFactory.getRDFPlainLiteral() ) );
 			//man.addAxiom( ont, dataFactory.getOWLSubClassOfAxiom( abstractTaskClass, dataFactory.getOWLDataExactCardinality( 1, taskName ) ) );
-			
+
 			man.addAxiom( ont, dataFactory.getOWLDataPropertyDomainAxiom( taskPriority, abstractTaskClass ) );
-			
+
 			OWLLiteral oneLiteral = dataFactory.getOWLLiteral(1);
 			OWLDatatype integer = dataFactory.getIntegerOWLDatatype();
 			OWLDatatypeRestriction integerMin1 = dataFactory.getOWLDatatypeRestriction( integer, OWLFacet.MIN_INCLUSIVE, oneLiteral );
 			man.addAxiom( ont, dataFactory.getOWLDataPropertyRangeAxiom( taskPriority, integerMin1 ) );
-			
+
 			OWLNamedIndividual concreteTask = dataFactory.getOWLNamedIndividual( IRI.create(base + "#FirstTask" ) );
 			man.addAxiom( ont, dataFactory.getOWLClassAssertionAxiom( concreteTaskClass, concreteTask ) );
 			man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskName, concreteTask, "First task" ) );
-			
-			man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskPriority, concreteTask, 5 ) ); 
-			
+
+			man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskPriority, concreteTask, 5 ) );
+
 			OWLOntologyShell objectOntology = new OWLOntologyShell( man, "http://www.iis.nsk.su/ontologies/main" );
 			/*try {
 				OWLClassObject classObject = objectOntology.getClassObject( "ConcreteTask" );
 				OWLIndividualObject individualObject = objectOntology.createIndividual( classObject );
 				individualObject.getPropertyByName( "TaskPriority" ).setIntegerValue( 19 );
 				System.out.println( individualObject.getPropertyByName( "TaskPriority" ).getIntegerValue() );
-				
+
 				OWLClassObject abstractClassObject = objectOntology.getClassObject( "AbstractTask" );
 				Collection< OWLIndividualObject > inds = abstractClassObject.getIndividuals( false );
-				for( OWLIndividualObject ind: inds ) {	            	
+				for( OWLIndividualObject ind: inds ) {
 					System.out.println( "Priority: " + ind.getPropertyByName( "TaskPriority" ).getIntegerValue() );
 				}
 				//classObject.getDirectParent();
@@ -294,19 +294,19 @@ public class Launcher {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
-			
+
 			// Save our ontology
 			man.saveOntology( ont, IRI.create( "file:/home/where-is-s/workspace/temp/example.owl" ) );
-			
+
 			OWLReasonerFactory reasonerFactory = new Reasoner.ReasonerFactory();
 			ConsoleProgressMonitor progressMonitor = new ConsoleProgressMonitor();
 			OWLReasonerConfiguration config = new SimpleConfiguration( progressMonitor );
 			OWLReasoner reasoner = reasonerFactory.createReasoner( ont, config );
 			reasoner.precomputeInferences();
-			
+
 			boolean consistent = reasoner.isConsistent();
 			System.out.println( "Consistent: " + consistent + "\n" );
-			
+
 			NodeSet<OWLNamedIndividual> set = reasoner.getInstances( abstractTaskClass, false );
 			System.out.println( "Count of tasks: " + set.getNodes().size() + "\n" );
 			for( Node<OWLNamedIndividual> node: set.getNodes() ) {
@@ -319,13 +319,13 @@ public class Launcher {
 					System.out.println( "Priority: " + literal.parseInteger() );
 				}
 			}
-			
+
 			ShortFormProvider shortFormProvider = new SimpleShortFormProvider();
-			
+
 			/*            DLQueryPrinter dlQueryPrinter = new DLQueryPrinter( reasoner, shortFormProvider );
 
             doQueryLoop( dlQueryPrinter );*/
-			
+
 		}
 		catch ( OWLOntologyCreationException e ) {
 			System.out.println( "Could not create ontology: " + e.getMessage() );

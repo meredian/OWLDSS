@@ -17,7 +17,7 @@ public class SolverRepository {
 	private static final String SOLVER_REPO_CONFIG_PATH = "config/repositary/solver";
 	private final ConfigStorage storage = new ConfigStorage(SOLVER_REPO_CONFIG_PATH);
 	private final XStream xstream = new XStream(new DomDriver());
-	private Map<String, Solver> solvers = new HashMap<String, Solver>();
+	private final Map<String, Solver> solvers = new HashMap<String, Solver>();
 
 	public Solver getSolver(SolvingMethod solvingMethod) {
 		String solverClassName = solvingMethod.getSolverClassName();

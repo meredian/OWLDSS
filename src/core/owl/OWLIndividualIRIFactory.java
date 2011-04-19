@@ -7,8 +7,8 @@ import org.semanticweb.owlapi.model.IRI;
 
 public class OWLIndividualIRIFactory {
 
-	private Map<String, Integer> newClassIdentifiers = new TreeMap<String, Integer>();
-	private String ontologyAddress;
+	private final Map<String, Integer> newClassIdentifiers = new TreeMap<String, Integer>();
+	private final String ontologyAddress;
 
 	public OWLIndividualIRIFactory(String ontologyAddress) {
 		this.ontologyAddress = ontologyAddress;
