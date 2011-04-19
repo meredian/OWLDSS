@@ -52,8 +52,6 @@ public class Launcher {
 
 	public static void main(String[] args) {
 		try {
-			repositoryTests();
-			initSolvers();
 			//initMySqlConnection();
 			testSempTask();
 		} catch (Exception e) {
@@ -67,54 +65,6 @@ public class Launcher {
 		System.out.println("FINISH MYSQL INIT");
 	}
 
-	private static void initSolvers(){
-		System.out.println("START SEMPSOLVER INIT");
-		SolverRepository repo = new SolverRepository();
-		Solver sempSolver = new SempSolver();
-		MethodSignature efficiencyTrendAnalysis = new MethodSignature("EfficiencyTrendAnalysis");
-		efficiencyTrendAnalysis.setParam("MODULE_PATH", "~/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/");
-		efficiencyTrendAnalysis.setParam("MODULE_LAUNCHER", "EfficiencyTrendAnalysis_Launcher.pm");
-		efficiencyTrendAnalysis.setParam("MODULE_DATA_INPUT", "/home/where-is-s/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/EfficiencyTrendAnalysis_CreateData.pm");
-		efficiencyTrendAnalysis.setParam("MODULE_CREATE_DATA_HEADER",
-			"uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\r\n" +
-			"uses Global_Ontology;\r\n" +
-			"rule CreateData\r\n" +
-			"=>\r\n" +
-			"new\r\n"
-		);
-		efficiencyTrendAnalysis.setParam("MODULE_CREATE_DATA_TAIL","end;\r\n");
-		sempSolver.addMethod(efficiencyTrendAnalysis);
-		MethodSignature rowTendencyAnalysis = new MethodSignature("RowTendencyAnalysis");
-		rowTendencyAnalysis.setParam("MODULE_PATH", "~/.wine/drive_c/semp/modules/RowTendencyAnalysis/");
-		rowTendencyAnalysis.setParam("MODULE_LAUNCHER", "RowTendencyAnalysis_Launcher.pm");
-		rowTendencyAnalysis.setParam("MODULE_DATA_INPUT", "/home/where-is-s/.wine/drive_c/semp/modules/RowTendencyAnalysis/RowTendencyAnalysis_CreateData.pm");
-		rowTendencyAnalysis.setParam("MODULE_CREATE_DATA_HEADER",
-			"uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\r\n" +
-			"uses Global_Ontology;\r\n" +
-			"rule CreateData\r\n" +
-			"=>\r\n" +
-			"new\r\n"
-		);
-		rowTendencyAnalysis.setParam("MODULE_CREATE_DATA_TAIL","end;\r\n");
-		sempSolver.addMethod(rowTendencyAnalysis);
-		MethodSignature pumpTendencyAnalysis = new MethodSignature("PumpTendencyAnalysis");
-		pumpTendencyAnalysis.setParam("MODULE_PATH", "~/.wine/drive_c/semp/modules/PumpTendencyAnalysis/");
-		pumpTendencyAnalysis.setParam("MODULE_LAUNCHER", "PumpTendencyAnalysis_Launcher.pm");
-		pumpTendencyAnalysis.setParam("MODULE_DATA_INPUT", "/home/where-is-s/.wine/drive_c/semp/modules/PumpTendencyAnalysis/PumpTendencyAnalysis_CreateData.pm");
-		pumpTendencyAnalysis.setParam("MODULE_CREATE_DATA_HEADER",
-			"uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\r\n" +
-			"uses Global_Ontology;\r\n" +
-			"rule CreateData\r\n" +
-			"=>\r\n" +
-			"new\r\n"
-		);
-		pumpTendencyAnalysis.setParam("MODULE_CREATE_DATA_TAIL","end;\r\n");
-		sempSolver.addMethod(pumpTendencyAnalysis);
-		repo.addSolver(sempSolver);
-		repo.saveToStorage();
-		System.out.println("FINISH SEMPSOLVER INIT");
-	}
-
 	private static void storageTests() {
 		System.out.println("STARING STORAGE TEST");
 		ConfigStorage storage = new ConfigStorage("storage");
@@ -124,13 +74,6 @@ public class Launcher {
 		storage.writeConfig("SomeSolver", "This is initial config string");
 		System.out.println(storage.readConfig("SomeSolver"));
 		System.out.println("END STORAGE TEST");
-	}
-
-	private static void repositoryTests() {
-		System.out.println("STARING REPOSITORY TEST");
-		SolverRepository repo = new SolverRepository();
-		List<String> list = repo.getSolverListFromStorage();
-		System.out.println("END REPOSITORY TEST");
 	}
 
 	private static void XStreamStartup() {

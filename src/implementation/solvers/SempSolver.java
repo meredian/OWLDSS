@@ -35,8 +35,6 @@ public class SempSolver extends AbstractSolver {
 	@Override
 	public boolean solveTaskByMethod(OWLOntologyShell ontologyShell, Task task, MethodSignature method) {
 		createData(ontologyShell, task, method);
-		//compileData(method);
-		//compileModule(method);
 		String result = compileAndExecuteModule(method);
 		IndividualXMLParser parser = new IndividualXMLParser(ontologyShell, result);
 		for (IRI iri: parser.getAllIndividuals())

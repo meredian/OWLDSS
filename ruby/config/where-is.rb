@@ -20,7 +20,7 @@ OWLDSS::RepoManipulator.set do
       param "MODULE_PATH", "~/.wine/drive_c/semp/modules/RowTendencyAnalysis/"
       param "MODULE_LAUNCHER", "RowTendencyAnalysis_Launcher.pm"
       param "MODULE_DATA_INPUT",
-        "/home/where-is-s/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/RowTendencyAnalysis_CreateData.pm"
+        "/home/where-is-s/.wine/drive_c/semp/modules/RowTendencyAnalysis/RowTendencyAnalysis_CreateData.pm"
       param "MODULE_CREATE_DATA_HEADER",
        "uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\r\n" +
        "uses Global_Ontology;\r\n" +
@@ -34,7 +34,7 @@ OWLDSS::RepoManipulator.set do
       param "MODULE_PATH", "~/.wine/drive_c/semp/modules/PumpTendencyAnalysis/"
       param "MODULE_LAUNCHER", "PumpTendencyAnalysis_Launcher.pm"
       param "MODULE_DATA_INPUT",
-        "/home/where-is-s/.wine/drive_c/semp/modules/EfficiencyTrendAnalysis/PumpTendencyAnalysis_CreateData.pm"
+        "/home/where-is-s/.wine/drive_c/semp/modules/PumpTendencyAnalysis/PumpTendencyAnalysis_CreateData.pm"
       param "MODULE_CREATE_DATA_HEADER",
         "uses CATNemNumbers, CATSempTypes, CATSempProductions, CATSempContainers;\r\n" +
         "uses Global_Ontology;\r\n" +
