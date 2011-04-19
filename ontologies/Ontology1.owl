@@ -441,15 +441,15 @@
         <rdfs:subClassOf rdf:resource="&main;ImportingMethod"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;Imports"/>
-                <owl:onClass rdf:resource="&main;ElectroConsumptionTimeRow"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&main;ImporterClass"/>
+                <owl:hasValue>ElectroConsumptionImporter</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;ImporterClass"/>
-                <owl:hasValue>ElectroConsumptionImporter</owl:hasValue>
+                <owl:onProperty rdf:resource="&main;Imports"/>
+                <owl:onClass rdf:resource="&main;ElectroConsumptionTimeRow"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -569,6 +569,12 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&main;SolvedBy"/>
+                <owl:hasValue rdf:resource="&main;PumpAnalysisComplexSolvingMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;SolvedBy"/>
                 <owl:hasValue rdf:resource="&main;PumpAnalysisSempSolvingMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -584,12 +590,6 @@
                 <owl:onProperty rdf:resource="&main;HasInputPump"/>
                 <owl:onClass rdf:resource="&main;Pump"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;SolvedBy"/>
-                <owl:hasValue rdf:resource="&main;PumpAnalysisComplexSolvingMethod"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -610,15 +610,15 @@
         <rdfs:subClassOf rdf:resource="&main;ImportingMethod"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;ImporterClass"/>
-                <owl:hasValue>PumpEfficiencyDeviationRowImporter</owl:hasValue>
+                <owl:onProperty rdf:resource="&main;Imports"/>
+                <owl:onClass rdf:resource="&main;PumpEfficiencyDeviationRow"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;Imports"/>
-                <owl:onClass rdf:resource="&main;PumpEfficiencyDeviationRow"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&main;ImporterClass"/>
+                <owl:hasValue>PumpEfficiencyDeviationRowImporter</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -721,14 +721,14 @@
         <rdfs:subClassOf rdf:resource="&main;Task"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasInput"/>
+                <owl:onProperty rdf:resource="&main;HasResult"/>
                 <owl:onClass rdf:resource="&main;Row"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasResult"/>
+                <owl:onProperty rdf:resource="&main;HasInput"/>
                 <owl:onClass rdf:resource="&main;Row"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
@@ -771,15 +771,21 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasInput"/>
-                <owl:onClass rdf:resource="&main;TimeRow"/>
+                <owl:onProperty rdf:resource="&main;HasResult"/>
+                <owl:onClass rdf:resource="&main;RowTendency"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&main;HasResult"/>
-                <owl:onClass rdf:resource="&main;RowTendency"/>
+                <owl:onProperty rdf:resource="&main;SolvedBy"/>
+                <owl:hasValue rdf:resource="&main;RowTendencyAnalysisJavaSolvingMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&main;HasInput"/>
+                <owl:onClass rdf:resource="&main;TimeRow"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -1082,6 +1088,16 @@
         <MethodName>RowInvertMethod</MethodName>
         <SolverClass>implementation.solvers.TestSolver</SolverClass>
     </owl:Thing>
+    
+
+
+    <!-- http://www.iis.nsk.su/ontologies/main.owl#RowTendencyAnalysisJavaSolvingMethod -->
+
+    <owl:NamedIndividual rdf:about="&main;RowTendencyAnalysisJavaSolvingMethod">
+        <rdf:type rdf:resource="&main;RowTendencyAnalysisSolvingMethod"/>
+        <MethodName>Standard</MethodName>
+        <SolverClass>implementation.solvers.RowTendencySimpleAnalyser</SolverClass>
+    </owl:NamedIndividual>
     
 
 

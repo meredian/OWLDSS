@@ -15,7 +15,7 @@ public abstract class AbstractSolver implements Solver {
 	protected List<String> mandatoryParams;
 	protected Map<String, String> options;
 
-	protected void init() {
+	protected AbstractSolver() {
 		methods = new HashMap<String, MethodSignature>();
 		mandatoryParams = new ArrayList<String>();
 		options = new HashMap<String, String>();
@@ -35,6 +35,10 @@ public abstract class AbstractSolver implements Solver {
 	public MethodSignature getMethodBySolvingMethod(SolvingMethod solvingMethod) {
 		// TODO: Use normal data-properties instead of new HashMap<>()
 		MethodSignature method = this.getMethodByName(solvingMethod.getMethodName());
+		if (method == null) {
+			System.err.println("Solving method " + solvingMethod.getMethodName() + " was not found");
+			return null;
+		}
 		return method.cloneWithOptions(new HashMap<String, String>());
 	}
 

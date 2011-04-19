@@ -1,14 +1,12 @@
 package core;
 
 import implementation.importers.MySqlBaseImporter;
-import implementation.solvers.SempSolver;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.HermiT.Reasoner;
@@ -39,10 +37,7 @@ import org.semanticweb.owlapi.vocab.OWLFacet;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-import core.interfaces.Solver;
 import core.owl.OWLOntologyShell;
-import core.repository.MethodSignature;
-import core.repository.SolverRepository;
 import core.supervisor.TaskProcessor;
 import core.utils.ConfigStorage;
 import core.utils.IndividualXMLParser;
@@ -150,11 +145,23 @@ public class Launcher {
 					"<attr name='HasPumpReferenceData' type='object' id='1'/>" +
 				"</individual>" +
 			"</individuals>";
+		/*String testXML =
+			"<individuals>" +
+				"<individual class='RowTendencyAnalysisTask' id='0'>" +
+					"<attr name='HasInput' type='object' id='1'/>" +
+				"</individual>" +
+				"<individual class='PumpEfficiencyDeviationRow' id='1'>" +
+					//"<attr name='RowValue' type='string' value='real[0.19,0.19,0.18,0.18,0.20,0.19,0.20,0.19,0.20,0.19,0.19,0.20]'/>" + // OK
+					//"<attr name='RowValue' type='string' value='real[0.27,0.26,0.25,0.25,0.25,0.23,0.22,0.20,0.19,0.18,0.16,0.15]'/>" + // big problem!
+					//"<attr name='RowValue' type='string' value='real[0.05,0.06,0.08,0.09,0.10,0.12,0.13,0.15,0.15,0.15,0.16,0.17]'/>" + // OK!
+					"<attr name='RowValue' type='string' value='real[0.12,0.11,0.10,0.10,0.10,0.08,0.07,0.05,0.04,0.03,0.01,0.00]'/>" + // 11
+				"</individual>" +
+			"</individuals>";*/
 
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
 			"http://www.iis.nsk.su/ontologies/main.owl",
-			new MethodSelectionMode(false, true, true)
+			new MethodSelectionMode(true, true, true)
 		);
 		processor.onTaskReceived(testXML);
 		processor.cancel(); // process just one iteration

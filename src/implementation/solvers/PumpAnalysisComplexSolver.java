@@ -16,9 +16,7 @@ public class PumpAnalysisComplexSolver extends AbstractSolver {
 	private static final String FIRST_INPUT = "PumpEfficiencyDeviationRow";
 
 	public PumpAnalysisComplexSolver() {
-		init();
-		MethodSignature efficiencyTrendAnalysis = new MethodSignature(METHOD_NAME);
-		this.addMethod(efficiencyTrendAnalysis);
+		this.addMethod(new MethodSignature(METHOD_NAME));
 	}
 
 	@Override

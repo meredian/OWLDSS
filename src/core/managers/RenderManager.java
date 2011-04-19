@@ -101,8 +101,10 @@ public class RenderManager {
 			for (PresentationMethod method : presentation.getPresentationMethods())
 				renderings.add(new Rendering(presentation, method));
 
-		if (renderings.isEmpty())
-			throw new Exception("No renderings available!");
+		if (renderings.isEmpty()) {
+			System.err.println("RenderManager: no renderings available!");
+			return;
+		}
 
 		Rendering selectedRendering;
 		if (renderings.size() > 1)

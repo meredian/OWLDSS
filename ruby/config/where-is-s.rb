@@ -46,4 +46,14 @@ OWLDSS::RepoManipulator.set do
 
   }
 
+  solver("implementation.solvers.PumpAnalysisComplexSolver") {
+    method("Standard"){
+    }
+  }
+
+  solver("implementation.solvers.RowTendencySimpleAnalyser") {
+    method("Standard"){
+    }
+  }
+
 end

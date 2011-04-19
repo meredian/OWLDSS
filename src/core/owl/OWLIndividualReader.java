@@ -93,7 +93,8 @@ public class OWLIndividualReader {
 
 		for (OWLNamedIndividual individual: values)
 			if (owlClass == null ||
-				ontologyShell.getReasoner().getTypes(individual, true).containsEntity(owlClass)
+				// false means ALL types (not just direct ones)
+				ontologyShell.getReasoner().getTypes(individual, false).containsEntity(owlClass)
 			)
 				result.add(individual.getIRI());
 

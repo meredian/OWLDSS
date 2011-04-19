@@ -69,6 +69,10 @@ public class Task {
 		return this.individualReader.getObjectValues(ATTRIBUTE_HAS_INPUT);
 	}
 
+	public Set<IRI> getInputObjectsByClass(String className) {
+		return this.individualReader.getObjectValuesByClass(ATTRIBUTE_HAS_INPUT, className);
+	}
+
 	public Set<IRI> getImportedObjects() {
 		return this.individualReader.getObjectValues(ATTRIBUTE_HAS_IMPORT);
 	}

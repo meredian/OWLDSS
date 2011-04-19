@@ -23,7 +23,6 @@ import core.utils.IndividualXMLParser;
 public class SempSolver extends AbstractSolver {
 
 	public SempSolver() {
-		init();
 		mandatoryParams.add("MODULE_PATH");
 		mandatoryParams.add("MODULE_LAUNCHER");
 		mandatoryParams.add("MODULE_DATA_INPUT");

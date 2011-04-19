@@ -12,7 +12,6 @@ import core.repository.MethodSignature;
 public class TestSolver extends AbstractSolver {
 
 	public TestSolver() {
-		this.init();
 		this.addMethod(new MethodSignature("RowInvertMethod"));
 	}
 
