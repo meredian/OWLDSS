@@ -20,21 +20,31 @@ Repo = Repository.new
 require 'pp'
 require 'rubygems'
 require 'commander/import'
+require 'ruby/repo_manipulator'
 require 'ruby/solver_manipulator'
 require 'ruby/method_manipulator'
 
-global_option '--verbose'
+global_option '--verbose', "Verbose information about all performed operations"
 
 program :name, 'OWLDSS Repository Console Manager'
 program :version, '0.1'
 program :description, 'Simple CLI tool to manage Solvers and their methods.'
+
+command :init do |c|
+  c.syntax = 'init [options]'
+  c.description = 'Inits repository with preconfigured settings'
+  c.option '--with-config STRING', String, 'Selects which config should be applied'
+  c.action do |args, options|
+    require "ruby/config/#{options.with_config.to_s}"
+  end
+end
 
 command :solvers do |c|
   c.syntax = 'solvers [options]'
   c.description = 'Shows list of available solvers, uses args[0] as name-filter'
   c.action do |args, options|
     filter = args[0]
-    manipulator = ::OWLDSS::SolverManipulator.new ::Repo
+    manipulator = ::OWLDSS::RepoManipulator.new ::Repo
     manipulator.list_solvers filter
   end
 end
@@ -45,7 +55,7 @@ command :'solver describe' do |c|
   c.description = 'Describes single solver'
   c.action do |args, options|
     filter = args[0]
-    manipulator = ::OWLDSS::SolverManipulator.new ::Repo
+    manipulator = ::OWLDSS::RepoManipulator.new ::Repo
     solver = manipulator.select_solver filter
     manipulator.describe_solver solver if solver
   end

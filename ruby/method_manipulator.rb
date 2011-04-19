@@ -1,17 +1,18 @@
 module OWLDSS
   class MethodManipulator
 
-    attr_accessor :solver_obj
-    
-    def initialize solver_obj
-      @solver_obj = solver_obj
-      @methods = solver_obj.get_methods
-    end
-    
-    def print_methods
-      puts "Methods:"
-      @methods.each{ |t| puts t.get_name }
+    attr_accessor :method
+
+    def initialize method
+      @method = method
     end
 
+    def param name, value
+      @method.set_param name.to_s, value.to_s
+    end
+
+    def option name, value
+      @method.setOption name.to_s, value.to_s
+    end
   end
 end
