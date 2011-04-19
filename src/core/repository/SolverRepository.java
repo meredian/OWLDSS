@@ -14,7 +14,7 @@ import core.utils.ConfigStorage;
 
 public class SolverRepository {
 
-	private static final String SOLVER_REPO_CONFIG_PATH = "config/repositary/solver";
+	private static final String SOLVER_REPO_CONFIG_PATH = "config/repository/solver";
 	private final ConfigStorage storage = new ConfigStorage(SOLVER_REPO_CONFIG_PATH);
 	private final XStream xstream = new XStream(new DomDriver());
 	private final Map<String, Solver> solvers = new HashMap<String, Solver>();

@@ -1,5 +1,5 @@
 #! /usr/bin/jruby
-# Simple console tool to manage SolverRepositary for OWLDSS Project
+# Simple console tool to manage SolverRepository for OWLDSS Project
 # It uses Java ObjectApi for this purpose and requires JRuby
 
 if RUBY_PLATFORM !~ /java/
@@ -35,6 +35,7 @@ command :init do |c|
   c.description = 'Inits repository with preconfigured settings'
   c.option '--with-config STRING', String, 'Selects which config should be applied'
   c.action do |args, options|
+    raise "Empty config name" if options.with_config.nil? || options.with_config.empty?
     require "ruby/config/#{options.with_config.to_s}"
   end
 end
