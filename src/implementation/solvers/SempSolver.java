@@ -51,24 +51,24 @@ public class SempSolver extends AbstractSolver {
 		System.out.println("SempSolver: creating data file");
 		Set<IRI> objects = task.getInputObjects();
 		objects.addAll(task.getImportedObjects());
-		
+
 		String content = method.getParam("MODULE_CREATE_DATA_HEADER");
-		
+
 		boolean firstTime = true;
-		
+
 		Map<IRI, Integer> enumerator = new HashMap<IRI, Integer>();
 		int counter = 0;
 		for (IRI iri: objects) {
 			OWLIndividualReader reader = ontologyShell.getReader(iri);
 			String className = reader.tryGetClassName();
-			
+
 			if (!firstTime)
 				content += ",\r\n";
 			firstTime = false;
-			
+
 			enumerator.put(iri, ++counter);
 			content += "object" + String.valueOf(counter) + ": " + className + "( iri: \"" + iri.toString() + "\"";
-			
+
 			Map<String, Set<?>> attributes = reader.getAllAttributes();
 			for (Entry<String, Set<?>> attribute: attributes.entrySet()) {
 				if (attribute.getKey().equals("topObjectProperty")) // a small hack to get rid of some warnings
@@ -81,11 +81,11 @@ public class SempSolver extends AbstractSolver {
 							"Attribute " + attribute.getKey() + " will be dumped.");
 					continue;
 				}
-				
+
 				Object value = valueSet.iterator().next();
-				
+
 				String strValue = null;
-				
+
 				try {
 					strValue = ((OWLLiteral) value).getLiteral();
 				} catch (Exception e) {
@@ -99,12 +99,12 @@ public class SempSolver extends AbstractSolver {
 
 				content += ", " + attribute.getKey() + ": " + strValue;
 			}
-			
+
 			content += " )";
 		}
-		
+
 		content += ";\r\n" + method.getParam("MODULE_CREATE_DATA_TAIL");
-		
+
 		File createDataFile = new File(method.getParam("MODULE_DATA_INPUT"));
 		FileOutputStream stream;
 		try {

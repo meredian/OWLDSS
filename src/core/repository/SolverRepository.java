@@ -93,7 +93,7 @@ public class SolverRepository {
 			String xmlSerializtion = storage.readConfig(solverClassName);
 			return (Solver) xstream.fromXML(xmlSerializtion);
 		} catch (Exception e) {
-			System.err.println("SolverRepository: No config file found for solver " + solverClassName);
+			System.err.println("SolverRepository: No config file found for solver " + solverClassName + " in storage");
 			return null;
 		}
 	}

@@ -24,7 +24,7 @@ public class TaskResult {
 	public IRI getIRI() {
 		return this.individualReader.getIRI();
 	}
-	
+
 	public Map<String, Set<?>> getAllAttributes() {
 		return this.individualReader.getAllAttributes();
 	}

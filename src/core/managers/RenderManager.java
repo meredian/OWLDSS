@@ -33,7 +33,7 @@ public class RenderManager {
 		int counter = 0;
 		for (Presentation presentation : presentations)
 			for (PresentationMethod method : presentation.getPresentationMethods()) {
-				System.out.println("RenderManager: " + String.valueOf(++counter) + ") presentation " 
+				System.out.println("RenderManager: " + String.valueOf(++counter) + ") presentation "
 						+ presentation.getType() + ", renderer " + method.getRendererName());
 				renderings.put(presentation, this.getRenderer(method));
 			}

@@ -18,7 +18,7 @@ public class Presentation {
 	private static final String ATTRIBUTE_SUPPORTED_BY_PRESENTATION_METHOD = "SupportedByPresentationMethod";
 	private static final String ATTRIBUTE_VALUE = "PresentationStringValue"; // TODO
 
-	public Presentation(/*OWLIndividualBuilder individualBuilder, */OWLIndividualReader individualReader, 
+	public Presentation(/*OWLIndividualBuilder individualBuilder, */OWLIndividualReader individualReader,
 			OWLOntologyObjectShell ontologyShell) {
 		//this.individualBuilder = individualBuilder;
 		this.individualReader = individualReader;

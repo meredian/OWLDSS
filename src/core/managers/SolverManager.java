@@ -30,7 +30,7 @@ public class SolverManager {
 				"random one will be chosen");
 		// TODO: choose solving method
 		SolvingMethod solvingMethod = solvingMethods.iterator().next();
-		System.out.println("SolverManager: method '" + solvingMethod.getMethodName() + "' of solver '" + 
+		System.out.println("SolverManager: method '" + solvingMethod.getMethodName() + "' of solver '" +
 				solvingMethod.getSolverClassName() + "' will be ran");
 
 		importManager.process(solvingMethod, task);
