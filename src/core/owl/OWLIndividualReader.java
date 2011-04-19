@@ -16,9 +16,9 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 public class OWLIndividualReader {
 
 	private OWLNamedIndividual owlIndividual;
-	private OWLOntologyObjectShell ontologyShell;
+	private OWLOntologyShell ontologyShell;
 
-	public OWLIndividualReader(OWLNamedIndividual owlIndividual, OWLOntologyObjectShell ontologyShell) {
+	public OWLIndividualReader(OWLNamedIndividual owlIndividual, OWLOntologyShell ontologyShell) {
 		this.owlIndividual = owlIndividual;
 		this.ontologyShell = ontologyShell;
 	}

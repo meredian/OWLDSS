@@ -4,7 +4,7 @@ import org.semanticweb.owlapi.model.IRI;
 
 import core.owl.OWLIndividualBuilder;
 import core.owl.OWLIndividualReader;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 import core.owl.objects.Task;
 import core.repository.AbstractSolver;
 import core.repository.MethodSignature;
@@ -17,7 +17,7 @@ public class TestSolver extends AbstractSolver {
 	}
 
 	@Override
-	public boolean solveTaskByMethod(OWLOntologyObjectShell ontologyShell, Task task, MethodSignature method) {
+	public boolean solveTaskByMethod(OWLOntologyShell ontologyShell, Task task, MethodSignature method) {
 		IRI inputIRI = task.getInputObjects().iterator().next();
 		OWLIndividualReader inputReader = ontologyShell.getReader(inputIRI);
 		String input = inputReader.getStringValue("RowValue");

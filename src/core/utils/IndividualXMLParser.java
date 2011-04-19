@@ -15,7 +15,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import core.owl.OWLIndividualBuilder;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 
 public class IndividualXMLParser {
 
@@ -32,11 +32,11 @@ public class IndividualXMLParser {
 	 * <result id='234'/>
 	 * <result iri='http://www.iis.nsk.su/...'/>
 	 */
-	private OWLOntologyObjectShell taskContext;
+	private OWLOntologyShell taskContext;
 	private Map<Integer, IRI> individualsMap = new HashMap<Integer, IRI>();
 	private IRI resultIndividual = null;
 
-	public IndividualXMLParser(OWLOntologyObjectShell taskContext, String taskXML) {
+	public IndividualXMLParser(OWLOntologyShell taskContext, String taskXML) {
 		this.taskContext = taskContext;
 		this.parse(taskXML);
 	}

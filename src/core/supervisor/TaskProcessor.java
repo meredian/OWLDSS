@@ -11,7 +11,7 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import core.managers.ImportManager;
 import core.managers.RenderManager;
 import core.managers.SolverManager;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 import core.owl.objects.Task;
 import core.utils.IndividualXMLParser;
 
@@ -54,7 +54,7 @@ public class TaskProcessor implements TaskListener {
 				ontologyManager.loadOntologyFromOntologyDocument(new File(ontologyPath));
 
 				// Initialize some services
-				OWLOntologyObjectShell taskContext = new OWLOntologyObjectShell(ontologyManager, this.ontologyIRI);
+				OWLOntologyShell taskContext = new OWLOntologyShell(ontologyManager, this.ontologyIRI);
 				ImportManager importManager = new ImportManager(taskContext);
 				SolverManager solverManager = new SolverManager(taskContext, importManager);
 				RenderManager renderManager = new RenderManager();
@@ -111,7 +111,7 @@ public class TaskProcessor implements TaskListener {
 			throw new Exception("Could not bind new subtasks to existing tree");
 	}
 	
-	private Task getNextTask(OWLOntologyObjectShell taskContext) throws Exception {
+	private Task getNextTask(OWLOntologyShell taskContext) throws Exception {
 		Set<Task> allTasks = taskContext.getTasks();
 
 		for (Task task : allTasks) {

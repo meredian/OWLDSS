@@ -7,18 +7,18 @@ import java.util.TreeSet;
 import org.semanticweb.owlapi.model.IRI;
 
 import core.owl.OWLIndividualReader;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 
 public class SolvingMethod {
 
 	OWLIndividualReader individualReader;
-	OWLOntologyObjectShell ontologyShell;
+	OWLOntologyShell ontologyShell;
 
 	private static final String ATTRIBUTE_METHOD_NAME = "MethodName";
 	private static final String ATTRIBUTE_SOLVER_CLASS = "SolverClass";
 	private static final String ATTRIBUTE_USES_IMPORTER = "UsesImporter";
 
-	public SolvingMethod(OWLIndividualReader individualReader, OWLOntologyObjectShell ontologyShell) {
+	public SolvingMethod(OWLIndividualReader individualReader, OWLOntologyShell ontologyShell) {
 		this.individualReader = individualReader;
 		this.ontologyShell = ontologyShell;
 	}

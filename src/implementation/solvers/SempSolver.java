@@ -14,7 +14,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 import core.owl.OWLIndividualReader;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 import core.owl.objects.Task;
 import core.repository.AbstractSolver;
 import core.repository.MethodSignature;
@@ -33,7 +33,7 @@ public class SempSolver extends AbstractSolver {
 	}
 
 	@Override
-	public boolean solveTaskByMethod(OWLOntologyObjectShell ontologyShell, Task task, MethodSignature method) {
+	public boolean solveTaskByMethod(OWLOntologyShell ontologyShell, Task task, MethodSignature method) {
 		createData(ontologyShell, task, method);
 		//compileData(method);
 		//compileModule(method);
@@ -47,7 +47,7 @@ public class SempSolver extends AbstractSolver {
 		return parser.getResultIndividual() != null;
 	}
 
-	private void createData(OWLOntologyObjectShell ontologyShell, Task task, MethodSignature method) {
+	private void createData(OWLOntologyShell ontologyShell, Task task, MethodSignature method) {
 		System.out.println("SempSolver: creating data file");
 		Set<IRI> objects = task.getInputObjects();
 		objects.addAll(task.getImportedObjects());

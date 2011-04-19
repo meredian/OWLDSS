@@ -40,7 +40,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import core.interfaces.Solver;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 import core.repository.MethodSignature;
 import core.repository.SolverRepository;
 import core.supervisor.TaskProcessor;
@@ -165,7 +165,7 @@ public class Launcher {
 		OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
 		ontologyManager.loadOntologyFromOntologyDocument(new File("ontologies/Ontology1.owl"));
 
-		OWLOntologyObjectShell ontologyShell = new OWLOntologyObjectShell(ontologyManager, ontologyAddress);
+		OWLOntologyShell ontologyShell = new OWLOntologyShell(ontologyManager, ontologyAddress);
 		String testXML =
 			"<individuals>" +
 				"<individual class='PumpAnalysisTask' id='0'>" +
@@ -274,7 +274,7 @@ public class Launcher {
 			
 			man.addAxiom( ont, dataFactory.getOWLDataPropertyAssertionAxiom( taskPriority, concreteTask, 5 ) ); 
 			
-			OWLOntologyObjectShell objectOntology = new OWLOntologyObjectShell( man, "http://www.iis.nsk.su/ontologies/main" );
+			OWLOntologyShell objectOntology = new OWLOntologyShell( man, "http://www.iis.nsk.su/ontologies/main" );
 			/*try {
 				OWLClassObject classObject = objectOntology.getClassObject( "ConcreteTask" );
 				OWLIndividualObject individualObject = objectOntology.createIndividual( classObject );

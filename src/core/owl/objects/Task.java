@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import core.owl.OWLIndividualBuilder;
 import core.owl.OWLIndividualReader;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 
 public class Task {
 	
@@ -20,7 +20,7 @@ public class Task {
 	OWLNamedIndividual owlIndividual;
 	OWLIndividualBuilder individualBuilder;
 	OWLIndividualReader individualReader;
-	OWLOntologyObjectShell ontologyShell;
+	OWLOntologyShell ontologyShell;
 	
 	public static final String CLASS_NAME = "Task";
 	private static final String ATTRIBUTE_HAS_SUBTASK = "HasSubTask";
@@ -33,7 +33,7 @@ public class Task {
 	private static final String ATTRIBUTE_IS_SOLVED = "IsSolved";
 	
 	public Task(OWLNamedIndividual owlIndividual, OWLIndividualBuilder individualBuilder, 
-			OWLIndividualReader individualReader, OWLOntologyObjectShell ontologyShell) {
+			OWLIndividualReader individualReader, OWLOntologyShell ontologyShell) {
 		this.owlIndividual = owlIndividual;
 		this.individualBuilder = individualBuilder;
 		this.individualReader = individualReader;

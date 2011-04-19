@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 import core.owl.objects.SolvingMethod;
 import core.owl.objects.Task;
 import core.repository.MethodSignature;
@@ -15,7 +15,7 @@ public interface Solver {
 	public MethodSignature getMethodByName(String name);
 	public MethodSignature getMethodBySolvingMethod(SolvingMethod solvingMethod);
 
-	public boolean solveTaskByMethod(OWLOntologyObjectShell ontologyShell, Task task, MethodSignature method);
+	public boolean solveTaskByMethod(OWLOntologyShell ontologyShell, Task task, MethodSignature method);
 
 	/*
 	 * While adapters can be cross-language, each adapter can need different options for each

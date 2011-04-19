@@ -7,9 +7,9 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 public class OWLIndividualBuilder {
 
 	private OWLNamedIndividual owlIndividual;
-	private OWLOntologyObjectShell ontologyShell;
+	private OWLOntologyShell ontologyShell;
 
-	public OWLIndividualBuilder(OWLNamedIndividual owlIndividual, OWLOntologyObjectShell ontologyShell) {
+	public OWLIndividualBuilder(OWLNamedIndividual owlIndividual, OWLOntologyShell ontologyShell) {
 		this.owlIndividual = owlIndividual;
 		this.ontologyShell = ontologyShell;
 	}

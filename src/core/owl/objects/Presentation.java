@@ -7,19 +7,19 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 import core.owl.OWLIndividualReader;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 
 public class Presentation {
 
 	private OWLIndividualReader individualReader;
 	//private OWLIndividualBuilder individualBuilder;
-	private OWLOntologyObjectShell ontologyShell;
+	private OWLOntologyShell ontologyShell;
 
 	private static final String ATTRIBUTE_SUPPORTED_BY_PRESENTATION_METHOD = "SupportedByPresentationMethod";
 	private static final String ATTRIBUTE_VALUE = "PresentationStringValue"; // TODO
 
-	public Presentation(/*OWLIndividualBuilder individualBuilder, */OWLIndividualReader individualReader,
-			OWLOntologyObjectShell ontologyShell) {
+	public Presentation(/*OWLIndividualBuilder individualBuilder, */OWLIndividualReader individualReader, 
+			OWLOntologyShell ontologyShell) {
 		//this.individualBuilder = individualBuilder;
 		this.individualReader = individualReader;
 		this.ontologyShell = ontologyShell;

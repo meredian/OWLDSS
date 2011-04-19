@@ -30,7 +30,7 @@ import core.owl.objects.SolvingMethod;
 import core.owl.objects.Task;
 import core.owl.objects.TaskResult;
 
-public class OWLOntologyObjectShell implements OWLIndividualFactory {
+public class OWLOntologyShell implements OWLIndividualFactory {
 	
 	private OWLOntology ontology;
 	private OWLOntologyManager manager;
@@ -79,7 +79,7 @@ public class OWLOntologyObjectShell implements OWLIndividualFactory {
 		return ontology;
 	}
 
-	public OWLOntologyObjectShell(OWLOntologyManager manager, String ontologyAddress) 
+	public OWLOntologyShell(OWLOntologyManager manager, String ontologyAddress) 
 			throws OWLOntologyCreationException {
 		this.manager = manager;
 		this.ontologyAddress = ontologyAddress;

@@ -7,16 +7,16 @@ import java.util.TreeSet;
 import org.semanticweb.owlapi.model.IRI;
 
 import core.owl.OWLIndividualReader;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 
 public class TaskResult {
 
 	private OWLIndividualReader individualReader;
-	private OWLOntologyObjectShell ontologyShell;
+	private OWLOntologyShell ontologyShell;
 
 	private static final String ATTRIBUTE_HAS_PRESENTATION = "HasPresentation";
 
-	public TaskResult(OWLIndividualReader individualReader, OWLOntologyObjectShell ontologyShell) {
+	public TaskResult(OWLIndividualReader individualReader, OWLOntologyShell ontologyShell) {
 		this.individualReader = individualReader;
 		this.ontologyShell = ontologyShell;
 	}

@@ -3,7 +3,7 @@ package core.managers;
 import java.util.Set;
 
 import core.interfaces.Solver;
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 import core.owl.objects.SolvingMethod;
 import core.owl.objects.Task;
 import core.repository.MethodSignature;
@@ -13,9 +13,9 @@ public class SolverManager {
 
 	private ImportManager importManager;
 	private SolverRepository repository;
-	private OWLOntologyObjectShell ontologyShell;
+	private OWLOntologyShell ontologyShell;
 
-	public SolverManager(OWLOntologyObjectShell ontologyShell, ImportManager importManager) {
+	public SolverManager(OWLOntologyShell ontologyShell, ImportManager importManager) {
 		if (importManager == null)
 			throw new NullPointerException("importManager is null");
 		this.repository = new SolverRepository();

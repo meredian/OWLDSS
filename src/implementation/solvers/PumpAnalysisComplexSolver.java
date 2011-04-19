@@ -2,7 +2,7 @@ package implementation.solvers;
 
 import org.semanticweb.owlapi.model.IRI;
 
-import core.owl.OWLOntologyObjectShell;
+import core.owl.OWLOntologyShell;
 import core.owl.objects.Task;
 import core.repository.AbstractSolver;
 import core.repository.MethodSignature;
@@ -22,7 +22,7 @@ public class PumpAnalysisComplexSolver extends AbstractSolver {
 	}
 
 	@Override
-	public boolean solveTaskByMethod(OWLOntologyObjectShell ontologyShell, Task task, MethodSignature method) {
+	public boolean solveTaskByMethod(OWLOntologyShell ontologyShell, Task task, MethodSignature method) {
 
 		if (method.getName().equals(METHOD_NAME)) {
 			splitTask(ontologyShell, task);
@@ -31,7 +31,7 @@ public class PumpAnalysisComplexSolver extends AbstractSolver {
 		return false;
 	}
 
-	private void splitTask(OWLOntologyObjectShell ontologyShell, Task task) {
+	private void splitTask(OWLOntologyShell ontologyShell, Task task) {
 		IRI rowAnalysisTaskIRI = ontologyShell.createIndividual(FIRST_TASK_CLASS).getIRI();
 		IRI pumpAnalysisTaskIRI = ontologyShell.createIndividual(SECOND_TASK_CLASS).getIRI();
 
