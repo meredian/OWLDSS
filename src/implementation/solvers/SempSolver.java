@@ -19,6 +19,7 @@ import core.owl.objects.Task;
 import core.repository.AbstractSolver;
 import core.repository.MethodSignature;
 import core.utils.IndividualXMLParser;
+import core.utils.Platform;
 
 public class SempSolver extends AbstractSolver {
 
@@ -109,15 +110,20 @@ public class SempSolver extends AbstractSolver {
 			stream.write(content.getBytes());
 			stream.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private String compileAndExecuteModule(MethodSignature method) {
 		System.out.println("SempSolver: executing module");
-		String executeCommand = "cd " + method.getParam("MODULE_PATH") + " && wine pmc "
+		String executeCommand = null;
+		if( Platform.getOs() == Platform.UNIX ) {
+			executeCommand = "cd " + method.getParam("MODULE_PATH") + " && wine pmc "
 				+ method.getParam("MODULE_LAUNCHER") + " -w | iconv -f CP1251 -t UTF8";
+		} else if ( Platform.getOs() == Platform.WINDOWS ) {
+			executeCommand = "cd " + method.getParam("MODULE_PATH") + " && pmc "
+				+ method.getParam("MODULE_LAUNCHER") + " -w";
+		}
 		String result = executeCommandAndReadOutput(executeCommand);
 		try {
 			String opening = new String("<individuals>");
@@ -132,8 +138,12 @@ public class SempSolver extends AbstractSolver {
 	private String executeCommandAndReadOutput(String command) {
 		try {
 			System.out.println("SempSolver: executing command: " + command);
-			ProcessBuilder procBuilder = new ProcessBuilder("/bin/sh", "-c", command);
-
+			ProcessBuilder procBuilder = null;
+			if( Platform.getOs() == Platform.UNIX ) {
+				procBuilder = new ProcessBuilder("/bin/sh", "-c", command);
+			} else if ( Platform.getOs() == Platform.WINDOWS ) {
+				procBuilder = new ProcessBuilder("cmd", "/c", command);	
+			}
 			Process process = procBuilder.start();
 
 			InputStream stdout = process.getInputStream();
