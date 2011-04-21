@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ConfigStorage {
-
-	private static final String UTF8_ENCODING = "utf8";
 	private static final String EXT = ".config";
 	private final File storagePath;
 
@@ -46,7 +44,7 @@ public class ConfigStorage {
 			FileInputStream in = new FileInputStream(expectedFile);
 			in.read(readBuf);
 			in.close();
-			return new String(readBuf, UTF8_ENCODING);
+			return new String(readBuf, Platform.UTF8_ENCODING);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -61,7 +59,7 @@ public class ConfigStorage {
 				expectedFile.createNewFile();
 			}
 			FileOutputStream out = new FileOutputStream(expectedFile);
-			out.write(data.getBytes(UTF8_ENCODING));
+			out.write(data.getBytes(Platform.UTF8_ENCODING));
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();

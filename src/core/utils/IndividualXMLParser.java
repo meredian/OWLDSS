@@ -117,7 +117,7 @@ public class IndividualXMLParser {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			InputStream stream = new ByteArrayInputStream(taskXML.getBytes());
+			InputStream stream = new ByteArrayInputStream(taskXML.getBytes(Platform.UTF8_ENCODING));
 			Document xml = db.parse(stream);
 
 			this.parseIndividuals(xml);

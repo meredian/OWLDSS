@@ -142,7 +142,7 @@ public class SempSolver extends AbstractSolver {
 			if( Platform.getOs() == Platform.UNIX ) {
 				procBuilder = new ProcessBuilder("/bin/sh", "-c", command);
 			} else if ( Platform.getOs() == Platform.WINDOWS ) {
-				procBuilder = new ProcessBuilder("cmd", "/c", command);	
+				procBuilder = new ProcessBuilder("cmd", "/c", command);
 			}
 			Process process = procBuilder.start();
 
