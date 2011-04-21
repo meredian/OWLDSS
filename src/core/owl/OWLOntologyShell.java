@@ -48,6 +48,8 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 			this.manager.saveOntology( this.ontology, IRI.create( "file:" + new File("dump.owl").getAbsoluteFile() ));
 		} catch (OWLOntologyStorageException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			System.err.println("OWLOntologyShell: Unable to dump Ontology");
 		}
 	}
 
@@ -109,6 +111,7 @@ public class OWLOntologyShell implements OWLIndividualFactory {
 		this.manager.removeAxiom( this.ontology, axiom );
 	}
 
+	@Override
 	public OWLIndividualBuilder createIndividual(String className) {
 		IRI individualIRI = this.individualIRIFactory.getNewIRI(className);
 
