@@ -1,7 +1,5 @@
 package core;
 
-import implementation.importers.MySqlBaseImporter;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -42,21 +40,22 @@ import core.supervisor.TaskProcessor;
 import core.utils.ConfigStorage;
 import core.utils.IndividualXMLParser;
 import core.utils.MethodSelectionMode;
+import data.SQLiteBackEnd;
 
 public class Launcher {
 
 	public static void main(String[] args) {
 		try {
-			//initMySqlConnection();
-			testSempTask();
+			//testSempTask();
+			testImporterTask();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static void initMySqlConnection(){
+	private static void initSqlConnection(){
 		System.out.println("START MYSQL INIT");
-		MySqlBaseImporter.connect();
+		new SQLiteBackEnd();
 		System.out.println("FINISH MYSQL INIT");
 	}
 
@@ -141,23 +140,43 @@ public class Launcher {
 					"<attr name='RowValue' type='string' value='real[0.12,0.11,0.10,0.10,0.10,0.08,0.07,0.05,0.04,0.03,0.01,0.00]'/>" + // warning in 7 hours
 				"</individual>" +
 				"<individual class='Pump' id='4'>" +
+					//"<attr name='Id' type='int' value='4'/>" +
 					"<attr name='HasPumpEfficiencyDeviationRow' type='object' id='3'/>" +
 					"<attr name='HasPumpReferenceData' type='object' id='1'/>" +
 				"</individual>" +
 			"</individuals>";
-		/*String testXML =
+		
+		TaskProcessor processor = new TaskProcessor(
+			new File("ontologies/Ontology1.owl").getAbsolutePath(),
+			"http://www.iis.nsk.su/ontologies/main.owl",
+			new MethodSelectionMode(true, true, true)
+		);
+		processor.onTaskReceived(testXML);
+		processor.cancel(); // process just one iteration
+		processor.process();
+		System.out.println("END SEMP SOLVER TEST");
+	}
+	
+	private static void testImporterTask() throws OWLOntologyCreationException {
+		System.out.println("STARING SEMP SOLVER TEST");
+		String testXML =
 			"<individuals>" +
-				"<individual class='RowTendencyAnalysisTask' id='0'>" +
-					"<attr name='HasInput' type='object' id='1'/>" +
+				"<individual class='PumpAnalysisTask' id='0'>" +
+					"<attr name='HasInputPump' type='object' id='3'/>" +
+					"<attr name='HasImport' type='object' id='1'/>" +
+					"<attr name='HasImport' type='object' id='2'/>" +
 				"</individual>" +
-				"<individual class='PumpEfficiencyDeviationRow' id='1'>" +
-					//"<attr name='RowValue' type='string' value='real[0.19,0.19,0.18,0.18,0.20,0.19,0.20,0.19,0.20,0.19,0.19,0.20]'/>" + // OK
-					//"<attr name='RowValue' type='string' value='real[0.27,0.26,0.25,0.25,0.25,0.23,0.22,0.20,0.19,0.18,0.16,0.15]'/>" + // big problem!
-					//"<attr name='RowValue' type='string' value='real[0.05,0.06,0.08,0.09,0.10,0.12,0.13,0.15,0.15,0.15,0.16,0.17]'/>" + // OK!
-					"<attr name='RowValue' type='string' value='real[0.12,0.11,0.10,0.10,0.10,0.08,0.07,0.05,0.04,0.03,0.01,0.00]'/>" + // 11
+				"<individual class='PumpReferenceData' id='1'>" +
 				"</individual>" +
-			"</individuals>";*/
-
+				"<individual class='OAGAReferenceData' id='2'>" +
+					"<attr name='MaxEfficiencyDeviation' type='double' value='20'/>" +
+				"</individual>" +
+				"<individual class='Pump' id='3'>" +
+					"<attr name='Id' type='int' value='4'/>" +
+					"<attr name='HasPumpReferenceData' type='object' id='1'/>" +
+				"</individual>" +
+			"</individuals>";
+		
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
 			"http://www.iis.nsk.su/ontologies/main.owl",
