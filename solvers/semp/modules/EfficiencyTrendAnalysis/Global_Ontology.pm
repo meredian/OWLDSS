@@ -8,6 +8,7 @@ uses CATNemNumbers, CATSempTypes, CATSempContainers;
 //Класс-предок всех объектов
 class  BaseObject
    iri    : string;	//Имя объекта
+   Id     : int;    //Идентификатор объекта
 end;
 
 
