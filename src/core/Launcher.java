@@ -140,12 +140,11 @@ public class Launcher {
 					"<attr name='RowValue' type='string' value='real[0.12,0.11,0.10,0.10,0.10,0.08,0.07,0.05,0.04,0.03,0.01,0.00]'/>" + // warning in 7 hours
 				"</individual>" +
 				"<individual class='Pump' id='4'>" +
-					//"<attr name='Id' type='int' value='4'/>" +
 					"<attr name='HasPumpEfficiencyDeviationRow' type='object' id='3'/>" +
 					"<attr name='HasPumpReferenceData' type='object' id='1'/>" +
 				"</individual>" +
 			"</individuals>";
-		
+
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
 			"http://www.iis.nsk.su/ontologies/main.owl",
@@ -156,7 +155,7 @@ public class Launcher {
 		processor.process();
 		System.out.println("END SEMP SOLVER TEST");
 	}
-	
+
 	private static void testImporterTask() throws OWLOntologyCreationException {
 		System.out.println("STARING SEMP SOLVER TEST");
 		String testXML =
@@ -172,11 +171,11 @@ public class Launcher {
 					"<attr name='MaxEfficiencyDeviation' type='double' value='20'/>" +
 				"</individual>" +
 				"<individual class='Pump' id='3'>" +
-					"<attr name='Id' type='int' value='4'/>" +
+					"<attr name='Uid' type='int' value='4'/>" +
 					"<attr name='HasPumpReferenceData' type='object' id='1'/>" +
 				"</individual>" +
 			"</individuals>";
-		
+
 		TaskProcessor processor = new TaskProcessor(
 			new File("ontologies/Ontology1.owl").getAbsolutePath(),
 			"http://www.iis.nsk.su/ontologies/main.owl",

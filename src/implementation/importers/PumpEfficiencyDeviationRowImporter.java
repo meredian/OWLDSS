@@ -20,7 +20,7 @@ public class PumpEfficiencyDeviationRowImporter implements Importer {
 	private static final String ROW_ATTR_VALUE = "RowValue";
 
 	private static final String PUMP_CLASS = "Pump";
-	private static final String PUMP_ATTR_ID = "Id";
+	private static final String PUMP_ATTR_ID = "Uid";
 	private static final String PUMP_ATTR_ROW = "HasPumpEfficiencyDeviationRow";
 	private SQLBackEnd backend;
 
@@ -35,7 +35,7 @@ public class PumpEfficiencyDeviationRowImporter implements Importer {
 			int rowId = pumpReader.getIntegerValue(PUMP_ATTR_ID);
 			try {
 				ResultSet pumpData = backend.getDataForClassFiltered(PUMP_CLASS,
-									new String[]{PUMP_ATTR_ID}, new String[]{"" + rowId});
+									new String[]{"id"}, new String[]{"" + rowId});
 				pumpData.getString("efficiency_deviation_row");
 				pumpData.next();
 
