@@ -36,6 +36,9 @@ public class FileOutputRenderer implements Renderer {
 		}
 
 		File file = new File(filePath);
+		if( file.getParentFile() != null ) {
+			file.getParentFile().mkdirs();
+		}
 		FileOutputStream stream = new FileOutputStream(file);
 		stream.write(value.getBytes());
 		stream.close();
